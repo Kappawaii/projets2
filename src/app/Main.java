@@ -22,6 +22,7 @@ public class Main extends Application {
 		
 		
 		root=loader.load();
+		System.out.println(root);
      	Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
