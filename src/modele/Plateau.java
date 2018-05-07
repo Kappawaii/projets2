@@ -8,10 +8,12 @@ public class Plateau {
 	 * 'a' : arbre
 	 * 'n' : case noir, vide?
 	 * 'b' : blanc
+	 * 'm' : mur
+	 * 's' : sol
 	 */
 	
 
-	char notreMap[][] = { {'c','c','c','c','c','c','c','c','c','c','c','c'},
+	private char notreMap[][] = { {'m','m','m','m','m','m','m','m','m','m','m','m'},
 						  {'c','c','c','c','c','c','c','c','c','c','c','c'},
 						  {'c','c','c','c','c','c','c','c','c','c','c','c'},
 						  {'c','c','c','c','c','c','c','c','c','c','c','c'},
@@ -24,4 +26,8 @@ public class Plateau {
 						  {'c','c','c','c','c','c','c','c','c','c','c','c'},
 						  {'c','c','c','c','c','c','c','c','c','c','c','c'}
 						};
+	
+	public char[][] getLePlateau() {
+		return this.notreMap;
+	}
 }

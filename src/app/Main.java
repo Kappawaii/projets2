@@ -18,7 +18,7 @@ public class Main extends Application {
 		try {
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("../vue/essai.fxml"));
+		loader.setLocation(Main.class.getResource("../vue/VueZelda.fxml"));
 		
 		
 		root=loader.load();
