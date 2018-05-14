@@ -28,7 +28,7 @@ public class ControleurZelda implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("gdyzeu");
-		Plateau unPlateau = new Plateau();
+		modele.Plateau.Plateau unPlateau = new modele.Plateau.Plateau();
 		for(int x = 0; x<12; x++) {
 			for(int y = 0; y<12; y++) {
 				if(unPlateau.getLePlateau()[x][y] == 'm') {
