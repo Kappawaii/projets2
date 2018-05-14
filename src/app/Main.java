@@ -1,12 +1,13 @@
 package app;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -22,9 +23,10 @@ public class Main extends Application {
 		
 		
 		root=loader.load();
-		System.out.println(root);
-     	Scene scene = new Scene(root);
+     	Scene scene = new Scene(root,400,400);
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.initStyle(StageStyle.DECORATED);
 		primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

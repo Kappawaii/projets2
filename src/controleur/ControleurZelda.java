@@ -13,35 +13,36 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import modele.Plateau.PlateauInt;
+import modele.Plateau.Plateau;
 
 public class ControleurZelda implements Initializable{
 	
 	@FXML
     private TilePane tuiles = new TilePane();
 	
-	 Image mur = new Image(new File("tilesets/tileset0.png").toURI().toString());
+	 Image img = new Image(new File("tilesets/tileset0.png").toURI().toString(),968*2.0,526*2.0,true,true);
+	 
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
-			PlateauInt unPlateau = new modele.Plateau.PlateauInt();
+			Plateau unPlateau = new modele.Plateau.Plateau();
 			for(int x = 0; x<12; x++) {
 				for(int y = 0; y<12; y++) {
-					afficherImage(unPlateau.getPlateauInt()[x][y],32,32);
+					afficherImage(unPlateau.getPlateauInt()[x][y],2);
 				}	
 			}	
 		}
 	 
 	 
-	 void afficherImage(int i,int x, int y) {
+	 void afficherImage(int i, int scale) {
 		 	int id = i-1;
-			ImageView temp = new ImageView(mur);
-			temp.setViewport(new Rectangle2D(((id%57)*16)+id%57, Math.floor(id/57)*17, 16, 16));
-			DoubleProperty tailleX = new SimpleDoubleProperty(x);
-			DoubleProperty tailleY = new SimpleDoubleProperty(y);
-			temp.setFitWidth(x);
-			temp.setFitHeight(y);
+			ImageView temp = new ImageView(img);
+			//temp.setViewport(new Rectangle2D((id%57*17)+1, Math.floor(id/57)*17+1, 16, 16));
+			temp.setViewport(new Rectangle2D(id%57*17*scale, id/57*17*scale, 16*scale, 16*scale));
+			temp.setFitWidth(16*scale);
+			temp.setFitHeight(16*scale);
+			temp.setSmooth(true);
 			tuiles.getChildren().add(temp);
+			
 	 }
 
 }
