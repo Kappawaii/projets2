@@ -15,7 +15,7 @@ public class Plateau {
 
 	private char notreMap[][] = {
 							{'m','m','m','m','m','m','m','m','m','m','m','m'},
-							{'m','s','s','s','s','s','s','s','s','s','s','m'},
+							{'s','s','s','s','s','s','s','s','s','s','s','m'},
 							{'m','s','s','s','s','s','s','s','s','s','s','m'},
 							{'m','s','s','s','s','s','s','s','s','s','s','m'},
 							{'m','s','s','s','s','s','s','s','s','s','s','m'},
