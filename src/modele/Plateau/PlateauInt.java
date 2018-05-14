@@ -4,15 +4,6 @@ import javafx.scene.image.ImageView;
 
 public class PlateauInt {
 
-	/*
-	 * 'a' : arbre
-	 * 'n' : case noir, vide?
-	 * 'b' : blanc
-	 * 0 : mur
-	 * 0 : sol
-	 */
-	
-
 	private int notreMap[][] = {
 							{348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348},
 							{348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348},
@@ -28,7 +19,7 @@ public class PlateauInt {
 							{348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348}
 						};
 	
-	public int[][] getPlateau() {
+	public int[][] getPlateauInt() {
 		return this.notreMap;
 	}
 }

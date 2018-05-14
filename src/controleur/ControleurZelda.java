@@ -24,14 +24,12 @@ public class ControleurZelda implements Initializable{
 	 Image mur = new Image(new File("tilesets/tileset0.png").toURI().toString());
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
-			modele.Plateau.PlateauInt unPlateau = new modele.Plateau.PlateauInt();
+			PlateauInt unPlateau = new modele.Plateau.PlateauInt();
 			for(int x = 0; x<12; x++) {
 				for(int y = 0; y<12; y++) {
-					afficherImage(unPlateau.getPlateau()[x][y],32,32);
-				}
-				
-			}
-			
+					afficherImage(unPlateau.getPlateauInt()[x][y],32,32);
+				}	
+			}	
 		}
 	 
 	 
