@@ -20,20 +20,21 @@ public class ControleurZelda implements Initializable{
 	@FXML
     private TilePane tuiles = new TilePane();
 	
-	 Image img = new Image(new File("tilesets/tileset0.png").toURI().toString(),968*2.0,526*2.0,true,true);
+	int scale = 4;
+	Image img = new Image(new File("tilesets/tileset0.png").toURI().toString(),968*scale,526*scale,true,true);
 	 
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 			Plateau unPlateau = new modele.Plateau.Plateau();
 			for(int x = 0; x<12; x++) {
 				for(int y = 0; y<12; y++) {
-					afficherImage(unPlateau.getPlateauInt()[x][y],2);
+					afficherImage(unPlateau.getPlateauInt()[x][y]);
 				}	
 			}	
 		}
 	 
 	 
-	 void afficherImage(int i, int scale) {
+	 void afficherImage(int i) {
 		 	int id = i-1;
 			ImageView temp = new ImageView(img);
 			//temp.setViewport(new Rectangle2D((id%57*17)+1, Math.floor(id/57)*17+1, 16, 16));

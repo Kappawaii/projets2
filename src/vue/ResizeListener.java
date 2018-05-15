@@ -3,10 +3,12 @@ package vue;
 import app.Main;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,6 +22,9 @@ class ResizeListener extends Application implements EventHandler<MouseEvent>{
   boolean moveV;
   boolean resizeH = false;
   boolean resizeV = false;
+  @FXML
+  BorderPane root;
+  
   @Override
   public void handle(MouseEvent t) {
     if(MouseEvent.MOUSE_MOVED.equals(t.getEventType())){
@@ -115,7 +120,7 @@ class ResizeListener extends Application implements EventHandler<MouseEvent>{
 		
 		
 		root=loader.load();
-   	Scene scene = new Scene(root,400,400);
+		Scene scene = new Scene(root,400,400);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.initStyle(StageStyle.DECORATED);

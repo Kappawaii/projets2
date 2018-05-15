@@ -1,7 +1,6 @@
 package app;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,7 +22,7 @@ public class Main extends Application {
 		
 		
 		root=loader.load();
-     	Scene scene = new Scene(root,400,400);
+     	Scene scene = new Scene(root,768,768);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.initStyle(StageStyle.DECORATED);
