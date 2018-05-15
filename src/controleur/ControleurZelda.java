@@ -33,7 +33,7 @@ public class ControleurZelda implements Initializable{
 			}	
 		}
 	 
-	 
+	 //Afficher l'image
 	 void afficherImage(int i) {
 		 	int id = i-1;
 			ImageView temp = new ImageView(img);
