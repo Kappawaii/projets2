@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import modele.Plateau.Plateau;
 
@@ -32,6 +34,27 @@ public class ControleurZelda implements Initializable{
 				}	
 			}	
 		}
+	 
+
+	 public void keyPressed(KeyEvent e) {
+
+	       System.out.println(e.getCode());
+	   
+//	       if (e.getCode().equals(KeyCode.RIGHT)) {
+//	            System.out.println("Right key pressed");
+//	        }
+//	        else if (e.getCode().equals(KeyCode.LEFT)) {
+//	            System.out.println("Left key pressed");
+//	        }
+//	        else if (e.getCode().equals(KeyCode.UP)) {
+//	            System.out.println("Left key pressed");
+//	        }
+//	        else if (e.getCode().equals(KeyCode.DOWN)) {
+//	            System.out.println("Left key pressed");
+//	        }
+
+	       
+	    }
 	 
 	 //Afficher l'image
 	 void afficherImage(int i) {
