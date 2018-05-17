@@ -53,7 +53,7 @@ public abstract class Personnage {
 		}
 		
 	}
-	
+
 	public String getNom() {
 		return this.nom;
 	}
@@ -65,9 +65,5 @@ public abstract class Personnage {
 	public int getVitesse() {
 		return this.vitesse;
 	}
-	
-	
-	
-	
 	
 }
