@@ -8,7 +8,7 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <TilePane fx:id="layer0" prefColumns="12" prefRows="12" />
+            <TilePane fx:id="tuiles" prefColumns="12" prefRows="12" />
             <TilePane fx:id="layer1" layoutX="10.0" layoutY="10.0" prefColumns="12" prefRows="12" />
          </children>
       </StackPane>
