@@ -42,22 +42,22 @@ public class ControleurZelda implements Initializable{
 		 System.out.println("click");
 	 }
 	 
-     void keyPressed(KeyEvent e) {
-	       System.out.println(e.getCode());
-  	   
-	       if (e.getCode().equals(KeyCode.RIGHT)) {
-	            System.out.println("Right key pressed");
-	        }
-	        else if (e.getCode().equals(KeyCode.LEFT)) {
-	            System.out.println("Left key pressed");
-	        }
-	        else if (e.getCode().equals(KeyCode.UP)) {
-	            System.out.println("Left key pressed");	        }
-	        else if (e.getCode().equals(KeyCode.DOWN)) {
-	            System.out.println("Left key pressed");
-	        }
-		 
-     }
+//     void keyPressed(KeyEvent e) {
+//	       System.out.println(e.getCode());
+//  	   
+//	       if (e.getCode().equals(KeyCode.RIGHT)) {
+//	            System.out.println("Right key pressed");
+//	        }
+//	        else if (e.getCode().equals(KeyCode.LEFT)) {
+//	            System.out.println("Left key pressed");
+//	        }
+//	        else if (e.getCode().equals(KeyCode.UP)) {
+//	            System.out.println("Left key pressed");	        }
+//	        else if (e.getCode().equals(KeyCode.DOWN)) {
+//	            System.out.println("Left key pressed");
+//	        }
+//		 
+//     }
 	 
 	 //Afficher l'image
 	 void afficherImage(int i) {

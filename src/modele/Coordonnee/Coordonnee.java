@@ -1,11 +1,11 @@
 package modele.Coordonnee;
 
-public class Coordonne {
+public class Coordonnee {
 
 	private int x;
 	private int y;
 	
-	public Coordonne (int x, int y) {
+	public Coordonnee (int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
