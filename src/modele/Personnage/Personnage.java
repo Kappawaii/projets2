@@ -29,10 +29,29 @@ public abstract class Personnage {
 		this.inventaire.remove(unObjet);
 	}
 	
-
-	
 	public String parle(String phrase) {
 		return phrase;
+	}
+	
+	public void seDeplace(char direction) {
+		switch(direction) {
+		case('N') :
+			this.position.plusUnY();;
+		break;
+		case('S') :
+			this.position.moinsUnY();
+		break;
+		case('E'):
+			this.position.plusUnY();
+		break;
+		case('O') :
+			this.position.moinsUnY();
+		break;
+		default :
+			throw new Error("Ce n'est pas une bonne direction !! : 'N,S,O,E'");
+		
+		}
+		
 	}
 	
 	

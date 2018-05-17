@@ -25,4 +25,20 @@ public class Coordonnee {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public void plusUnY() {
+		this.y++;
+	}
+	
+	public void plusUnX() {
+		this.x++;
+	}
+	
+	public void moinsUnY() {
+		this.y--;
+	}
+	
+	public void moinsUnX() {
+		this.x--;
+	}
 }
