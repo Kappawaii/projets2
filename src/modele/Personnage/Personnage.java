@@ -42,10 +42,10 @@ public abstract class Personnage {
 			this.position.moinsUnY();
 		break;
 		case('E'):
-			this.position.plusUnY();
+			this.position.plusUnX();
 		break;
 		case('O') :
-			this.position.moinsUnY();
+			this.position.moinsUnX();
 		break;
 		default :
 			throw new Error("Ce n'est pas une bonne direction !! : 'N,S,O,E'");
@@ -53,12 +53,9 @@ public abstract class Personnage {
 		}
 		
 	}
+
 	
-	
-	
-	
-	
-	
+		
 	
 	
 	
