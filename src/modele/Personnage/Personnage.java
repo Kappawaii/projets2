@@ -66,4 +66,12 @@ public abstract class Personnage {
 		return this.vitesse;
 	}
 	
+	public Coordonnee getPosition() {
+		return this.position;
+	}
+	
+	public void setPosition(int x, int y) {
+		this.position.setXandY(x, y);
+	}
+	
 }
