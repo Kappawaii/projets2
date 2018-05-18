@@ -1,6 +1,6 @@
 package app;
 
-import controleur.ControleurZelda;
+import controleur.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +11,7 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+
 	@FXML
 	BorderPane root;
 	public static Scene scene;
@@ -20,8 +21,8 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueZelda.fxml"));
 			root=loader.load();
-			ControleurZelda controller = loader.<ControleurZelda>getController();			
-			scale = loader.<ControleurZelda>getController().getScale();
+			Controleur controller = loader.<Controleur>getController();			
+			scale = loader.<Controleur>getController().getScale();
 			scene = new Scene(root,12*16*scale,12*16*scale);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
@@ -41,4 +42,6 @@ public class Main extends Application {
 		return scene;
 
 	}
+	
+
 }

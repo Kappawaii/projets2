@@ -1,6 +1,8 @@
 package modele.Coordonnee;
 
+
 public class Coordonnee {
+	
 
 	private int x;
 	private int y;
@@ -29,21 +31,5 @@ public class Coordonnee {
 	public void setXandY(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-	
-	public void plusUnY() {
-		this.y++;
-	}
-	
-	public void plusUnX() {
-		this.x++;
-	}
-	
-	public void moinsUnY() {
-		this.y--;
-	}
-	
-	public void moinsUnX() {
-		this.x--;
 	}
 }
