@@ -4,12 +4,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import modele.Tileset.Tileset;
 
-public class Case {
+public class Case{
 
 	Tileset tileset;
 	int id;
 	ImageView view;
-	
+
 	public Case(Tileset tileset,int id, int scale) {
 		this.tileset = tileset;
 		this.id = id-1;
@@ -19,7 +19,7 @@ public class Case {
 		view.setFitHeight(16*scale);
 		view.setSmooth(true);
 	}
-	
+
 	public ImageView getImageView() {
 		return view;
 	}
