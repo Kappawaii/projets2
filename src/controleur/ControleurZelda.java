@@ -8,12 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.shape.Circle;
 import modele.Case.Case;
 import modele.Plateau.Plateau;
 import modele.Tileset.Tileset;
 
 public class ControleurZelda implements Initializable{
-	
 	
 	
 	@FXML
@@ -59,7 +59,7 @@ public class ControleurZelda implements Initializable{
 //		 
 //     }
 	 
-	 //Afficher l'image
+	
 	 void afficherImage(int i) {
 		 	int id = i-1;
 		 	//tuiles.getChildren().add(new ImageView(new Image(new File("tilesets/tileset0.png").toURI().toString())));

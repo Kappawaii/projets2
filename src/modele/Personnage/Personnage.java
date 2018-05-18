@@ -74,4 +74,30 @@ public abstract class Personnage {
 		this.position.setXandY(x, y);
 	}
 	
+	/*
+	// return the character which is in front of this character
+    public Character talkWith() {
+        int nextX = 0;
+        int nextY = 0;
+        switch (direction) {
+        case LEFT:
+            nextX = x - 1;
+            nextY = y;
+            break;
+        case RIGHT:
+            nextX = x + 1;
+            nextY = y;
+            break;
+        case UP:
+            nextX = x;
+            nextY = y - 1;
+            break;
+        case DOWN:
+            nextX = x;
+            nextY = y + 1;
+            break;
+        }
+        */
+
+	
 }
