@@ -33,10 +33,10 @@ import javafx.scene.input.KeyEvent;
 		if (isKeyUsed(nom,bind))
 			keystates.get(keystates.indexOf(new Key(nom,bind))).set(state);
 		else if (state) {
-			System.out.println("Debug : Key not used pressed :" + bind);
+			System.out.println("unmapped Key pressed :" + bind);
 		}
 		else {
-			System.out.println("Debug : Key not used released :" + bind);
+			System.out.println("unmapped Key released :" + bind);
 		}
 			
 	}

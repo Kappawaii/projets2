@@ -4,7 +4,6 @@ package controleur;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Circle;
 import modele.Case.Case;
 import modele.Plateau.Plateau;
 import modele.Tileset.Tileset;
@@ -18,7 +17,7 @@ public class ControleurZelda {
     private BorderPane borderpane = new BorderPane();
 
 	
-	static int scale = 1;
+	static int scale = 4;
 	KeyManager keymanager;
 	Tileset tileset = new Tileset("tilesets/tileset0.png",scale, 968, 526);
 
@@ -31,6 +30,9 @@ public class ControleurZelda {
 		
 	}
 	
+	public int getScale() {
+		return scale;
+	}
 	public void init() {
 		System.out.println(borderpane.getScene());
 		keymanager = new KeyManager(borderpane.getScene());

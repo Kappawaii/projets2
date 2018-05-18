@@ -14,19 +14,19 @@ public class Main extends Application {
 	@FXML
 	BorderPane root;
 	public static Scene scene;
-
+	private int scale;
 	@Override
 	public void start(Stage primaryStage) {	
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueZelda.fxml"));	
-			//loader.setLocation(Main.class.getResource("../vue/VueZelda.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueZelda.fxml"));
 			root=loader.load();
-			scene = new Scene(root,768/4,768/4);
+			ControleurZelda controller = loader.<ControleurZelda>getController();			
+			scale = loader.<ControleurZelda>getController().getScale();
+			scene = new Scene(root,12*16*scale,12*16*scale);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.show();
-			ControleurZelda controller = loader.<ControleurZelda>getController();
 			controller.init();
 		} catch (Exception e) {
 			e.printStackTrace();
