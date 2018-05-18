@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="leborderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.ControleurZelda">
+<BorderPane id="leborderpane" fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.Controleur">
+   <Circle fx:id="leCercle" fill="DODGERBLUE" layoutX="400.0" layoutY="200.0" radius="32.0" stroke="BLACK" strokeType="INSIDE"/>
    <center>
-      <TilePane fx:id="tuiles" prefColumns="12" prefRows="12" BorderPane.alignment="CENTER" />
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <TilePane fx:id="tuiles" prefColumns="12" prefRows="12" />
+            
+         </children>
+      </StackPane>
    </center>
 </BorderPane>

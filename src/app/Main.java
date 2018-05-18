@@ -1,5 +1,6 @@
 package app;
 
+import controleur.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,23 +11,24 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+
 	@FXML
 	BorderPane root;
-
+	public static Scene scene;
+	private int scale;
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) {	
 		try {
-
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("../vue/VueZelda.fxml"));
-		
-		
-		root=loader.load();
-     	Scene scene = new Scene(root,768,768);
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.initStyle(StageStyle.DECORATED);
-		primaryStage.show();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueZelda.fxml"));
+			root=loader.load();
+			Controleur controller = loader.<Controleur>getController();			
+			scale = loader.<Controleur>getController().getScale();
+			scene = new Scene(root,12*16*scale,12*16*scale);
+			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
+			primaryStage.initStyle(StageStyle.DECORATED);
+			primaryStage.show();
+			controller.init();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,5 +37,11 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+	public Scene getScene()  {
+		return scene;
+
+	}
+	
 
 }
