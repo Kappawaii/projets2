@@ -103,24 +103,24 @@ public class Controleur {
 						leCercle.setLayoutY(leCercle.getLayoutY()+5);
 						joueur.getView().setY(joueur.getPosition().getY());
 						joueur.getView().setX(joueur.getPosition().getX());
-						joueur.seDeplace(keymanager.getMovementInputs());
 						
-						if(keymanager.getKeyState(Axe.HAUT)) {
-							joueur.seDeplace(Axe.HAUT);
-							joueur.getView().setY(joueur.getPosition().getY());
-						}
-						if(keymanager.getKeyState(Axe.BAS)) {
-							joueur.seDeplace(Axe.BAS);
-							joueur.getView().setY(joueur.getPosition().getY());
-						}
-						if(keymanager.getKeyState(Axe.GAUCHE)) {
-							joueur.seDeplace(Axe.GAUCHE);
-							joueur.getView().setX(joueur.getPosition().getX());
-						}
-						if(keymanager.getKeyState(Axe.DROITE)) {
-							joueur.seDeplace(Axe.DROITE);
-							joueur.getView().setX(joueur.getPosition().getX());
-						}
+						joueur.seDeplace(keymanager.getMovementInputs(temps));
+//						if(keymanager.getKeyState(Axe.HAUT)) {
+//							joueur.seDeplace(Axe.HAUT);
+//							joueur.getView().setY(joueur.getPosition().getY());
+//						}
+//						if(keymanager.getKeyState(Axe.BAS)) {
+//							joueur.seDeplace(Axe.BAS);
+//							joueur.getView().setY(joueur.getPosition().getY());
+//						}
+//						if(keymanager.getKeyState(Axe.GAUCHE)) {
+//							joueur.seDeplace(Axe.GAUCHE);
+//							joueur.getView().setX(joueur.getPosition().getX());
+//						}
+//						if(keymanager.getKeyState(Axe.DROITE)) {
+//							joueur.seDeplace(Axe.DROITE);
+//							joueur.getView().setX(joueur.getPosition().getX());
+//						}
 					}
 					temps++;
 				}));

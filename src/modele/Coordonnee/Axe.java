@@ -52,6 +52,20 @@ public enum Axe{
 	public boolean isMovement() {
 		return movement;
 	}
+	
+	public String toString() {
+		return this.name() + " " + x + ";" + y;
+	}
+	
+	/**
+	 * à utiliser seulement sur empty
+	 */
+	public void clear() {
+		if (!this.name().equals("EMPTY"))
+			throw new Error("Only use on empty");
+		this.x = 0;
+		this.y = 0;
+	}
 }
 
 

@@ -82,14 +82,14 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 			throw new Error("getKeyState : key '" + nom + "' not found");
 	}
 	
-	public Axe getMovementInputs() {
+	public Axe getMovementInputs(int a) {
 		Axe inputs = Axe.EMPTY;
+		inputs.clear();
 		for (Key key : keystates) {
 			if (key.get())
 				inputs.add(key.nom);
 		}
 		return inputs;
-		
 	}
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
