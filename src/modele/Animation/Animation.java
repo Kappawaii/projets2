@@ -2,9 +2,13 @@ package modele.Animation;
 
 import java.awt.image.BufferedImage;
 
+import modele.Plateau.Plateau;
+import modele.Tileset.Tileset;
+
 public abstract class Animation {
 	
-	private BufferedImage[] frames;
+//	private BufferedImage[] frames;
+	Plateau notrePlateau;
 	private int currentFrame;
 	private int numFrames;
 	
@@ -17,13 +21,13 @@ public abstract class Animation {
 		timesPlayed = 0;
 	}
 	
-	public void setFrames(BufferedImage[] frames) {
-		this.frames = frames;
+	public void setFrames(Plateau unPlateau) {
+		this.notrePlateau = unPlateau;
 		currentFrame = 0;
 		count = 0;
 		timesPlayed = 0;
 		retard = 2;
-		numFrames = frames.length;
+		numFrames = 144;
 	}
 	
 	public void setRetard(int i) {
@@ -62,9 +66,6 @@ public abstract class Animation {
 		return count;
 	}
 	
-	public BufferedImage getImage() {
-		return frames[currentFrame];
-	}
 	
 	public boolean hasplayedOne() {
 		return timesPlayed > 0 ;
