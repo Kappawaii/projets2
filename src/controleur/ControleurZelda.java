@@ -9,14 +9,8 @@ import modele.Case.Case;
 import modele.Plateau.Plateau;
 import modele.Tileset.Tileset;
 
-<<<<<<< HEAD
 public class ControleurZelda {
 
-=======
-public class ControleurZelda implements Initializable{
-	
-	
->>>>>>> refs/remotes/origin/dev
 	@FXML
 	private TilePane tuiles = new TilePane();
 	
@@ -59,7 +53,6 @@ public class ControleurZelda implements Initializable{
 				afficherImage(plateau[x][y]);
 			}		
 		}
-<<<<<<< HEAD
 	}
 	
 	//Afficher l'image
@@ -67,40 +60,5 @@ public class ControleurZelda implements Initializable{
 		int id = i-1;
 		tuiles.getChildren().add(new Case(tileset,id,scale).getImageView());
 	}
-=======
-	 
-
-	 public void mouseClicked() {
-
-		 System.out.println("click");
-	 }
-	 
-//     void keyPressed(KeyEvent e) {
-//	       System.out.println(e.getCode());
-//  	   
-//	       if (e.getCode().equals(KeyCode.RIGHT)) {
-//	            System.out.println("Right key pressed");
-//	        }
-//	        else if (e.getCode().equals(KeyCode.LEFT)) {
-//	            System.out.println("Left key pressed");
-//	        }
-//	        else if (e.getCode().equals(KeyCode.UP)) {
-//	            System.out.println("Left key pressed");	        }
-//	        else if (e.getCode().equals(KeyCode.DOWN)) {
-//	            System.out.println("Left key pressed");
-//	        }
-//		 
-//     }
-	 
-	
-	 void afficherImage(int i) {
-		 	int id = i-1;
-		 	//tuiles.getChildren().add(new ImageView(new Image(new File("tilesets/tileset0.png").toURI().toString())));
-			tuiles.getChildren().add(new Case(tileset,id,scale).getImageView());
-			
-	 }
-	 
-	 
->>>>>>> refs/remotes/origin/dev
 }
 

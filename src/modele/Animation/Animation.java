@@ -1,17 +1,12 @@
 package modele.Animation;
 
-import java.awt.image.BufferedImage;
-
 import modele.Plateau.Plateau;
-import modele.Tileset.Tileset;
 
 public abstract class Animation {
-<<<<<<< HEAD
 
 	protected int vitesse; 
 	protected int x;
 	protected int y;
-=======
 	
 //	private BufferedImage[] frames;
 	Plateau notrePlateau;
@@ -80,8 +75,5 @@ public abstract class Animation {
 	public boolean hasPlayed(int i) {
 		return timesPlayed == i;
 	}
-	
-	
->>>>>>> refs/remotes/origin/dev
 
 }
