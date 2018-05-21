@@ -37,7 +37,7 @@ public abstract class Personnage {
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
 		if (direction.isMovement()) {
-			if (nextPosY > 500 || nextPosY < 320 || nextPosX < 205 || nextPosX > 500 ) {
+			if (nextPosY > 500 || nextPosY < 320 || nextPosX < 205 || nextPosX > 500 ) { // limite de la map
 				position.setY(position.getY());
 				position.setX(position.getX());
 			}
