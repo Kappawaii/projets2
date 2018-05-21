@@ -40,4 +40,8 @@ public class Case{
 	public ImageView getImageView() {
 		return view;
 	}
+	
+	public int getId() {
+		return this.id;
+	}
 }

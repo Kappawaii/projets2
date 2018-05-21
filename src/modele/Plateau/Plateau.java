@@ -20,4 +20,6 @@ public class Plateau {
 	public int[][] getPlateauInt() {
 		return this.notreMap;
 	}
+	
+	
 }

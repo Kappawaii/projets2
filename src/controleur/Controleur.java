@@ -105,6 +105,7 @@ public class Controleur {
 						joueur.getView().setX(joueur.getPosition().getX());
 						
 						joueur.seDeplace(keymanager.getMovementInputs(temps));
+						
 //						if(keymanager.getKeyState(Axe.HAUT)) {
 //							joueur.seDeplace(Axe.HAUT);
 //							joueur.getView().setY(joueur.getPosition().getY());
