@@ -1,4 +1,4 @@
-package modele.Coordonnee;
+package modele.coordonnee;
 
 public enum Axe{
 

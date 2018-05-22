@@ -1,28 +1,23 @@
-package modele.Case;
+package modele.plateau;
 
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.ImageView;
-import modele.Coordonnee.Coordonnee;
-import modele.Tileset.Tileset;
+import modele.coordonnee.Coordonnee;
+import vue.sprite.Sprite;
+import vue.tileset.Tileset;
 
-public class Case{
+public class Cellule{
 
 	Tileset tileset;
 	int id;
-	ImageView view;
+//	ImageView view;
 	Coordonnee pos;
 	int scale;
+	Sprite spr;
 	
-	public Case(Tileset tileset,int id, int scale) {
+	public Cellule(Tileset tileset,int id, int scale) {
 		this.tileset = tileset;
 		this.scale = scale;
 		this.id = id-1;
-		view = new ImageView(tileset.getImage());
-		pos = new Coordonnee(id%57*17*scale, id/57*17*scale);
-		view.setViewport(new Rectangle2D(pos.getX(), pos.getY(), 16*scale, 16*scale));
-		view.setFitWidth(16*scale);
-		view.setFitHeight(16*scale);
-		view.setSmooth(true);
+		spr = new Sprite(tileset,scale,id,id%57*17*scale, id/57*17*scale);
 	}
 	
 	public Coordonnee getPosition() {
@@ -37,8 +32,8 @@ public class Case{
 		return true;
 	}
 
-	public ImageView getImageView() {
-		return view;
+	public Sprite getSprite() {
+		return spr;
 	}
 	
 	public int getId() {

@@ -1,6 +1,8 @@
-package modele.Plateau;
+package modele.plateau;
 
-public class Plateau {
+import vue.tileset.Tileset;
+
+public class BuilderPlateau {
 
 	private int notreMap[][] = {
 			{348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348},
@@ -21,5 +23,13 @@ public class Plateau {
 		return this.notreMap;
 	}
 	
+	public void remplirPlateau(Plateau plateau, Tileset tileset, int scale) {
+		plateau.initCellules(notreMap.length, notreMap[0].length);
+		for (int x = 0; x < plateau.getPlateau().length; x++) {
+			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
+				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale);
+			}
+		}
+	}
 	
 }

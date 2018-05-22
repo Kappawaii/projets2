@@ -1,4 +1,4 @@
-package modele.Objet;
+package modele.objet;
 
 public abstract class Objet {
 

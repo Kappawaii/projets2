@@ -1,9 +1,11 @@
-package modele.Personnage;
+package modele.personnage;
 
 import java.util.ArrayList;
 
-import modele.Coordonnee.*;
-import modele.Objet.Objet;
+import modele.coordonnee.*;
+import modele.objet.Objet;
+import vue.sprite.Sprite;
+import vue.tileset.Tileset;
 
 public abstract class Personnage {
 
@@ -12,13 +14,17 @@ public abstract class Personnage {
 	private Coordonnee position;
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
-
-	public Personnage(String nom, int pv, Coordonnee position, int vitesse) {
+	protected Tileset tileset;
+	String url;
+	Sprite spr;
+	
+	public Personnage(String nom, int pv, Coordonnee position, int vitesse, Tileset tileset) {
 		this.nom = nom;
 		this.pv = pv;
 		this.position = position;
 		this.vitesse = vitesse;
 		this.inventaire = new ArrayList<>(); 
+		this.tileset = tileset;
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
@@ -72,6 +78,18 @@ public abstract class Personnage {
 
 	public void setPosition(int x, int y) {
 		this.position.setXandY(x, y);
+	}
+	
+	public void setImage(String path, int scale) {
+		spr = new Sprite(tileset, scale, scale, scale, scale);
+	}
+	
+	public Sprite getSprite() {
+		return spr;
+	}
+
+	public void setSprite(Sprite spr) {
+		this.spr = spr;
 	}
 
 }

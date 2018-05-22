@@ -1,6 +1,6 @@
-package modele.Animation;
+package modele.animation;
 
-import modele.Plateau.Plateau;
+import modele.plateau.BuilderPlateau;
 
 public abstract class Animation {
 
@@ -9,7 +9,7 @@ public abstract class Animation {
 	protected int y;
 	
 //	private BufferedImage[] frames;
-	Plateau notrePlateau;
+	BuilderPlateau notrePlateau;
 	private int currentFrame;
 	private int numFrames;
 	
@@ -22,7 +22,7 @@ public abstract class Animation {
 		timesPlayed = 0;
 	}
 	
-	public void setFrames(Plateau unPlateau) {
+	public void setFrames(BuilderPlateau unPlateau) {
 		this.notrePlateau = unPlateau;
 		currentFrame = 0;
 		count = 0;

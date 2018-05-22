@@ -11,7 +11,6 @@
       <StackPane BorderPane.alignment="CENTER">
          <children>
             <TilePane fx:id="tuiles" prefColumns="12" prefRows="12" />
-            
          </children>
       </StackPane>
    </center>
