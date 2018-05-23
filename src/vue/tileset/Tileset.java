@@ -1,4 +1,4 @@
-package modele.Tileset;
+package vue.tileset;
 
 import java.io.File;
 
@@ -11,10 +11,6 @@ public class Tileset {
 	
 	public Tileset(String path, int scale, int x, int y) {
 		this.url = new File(path).toURI().toString();
-//		this.img = new Image(url);
-//		double x, y;
-//		x = this.img.getWidth();
-//		y = this.img.getHeight();
 		System.out.println(x + "" + y);
 		this.img = new Image(url,x*scale,y*scale,true,true);
 	}

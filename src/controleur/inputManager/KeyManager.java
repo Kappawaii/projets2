@@ -1,11 +1,12 @@
-package controleur;
+package controleur.inputManager;
 
 import java.util.ArrayList;
+
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import modele.Coordonnee.Axe;
+import modele.coordonnee.Axe;
 
- class KeyManager {
+ public class KeyManager {
 	 
 	
 	 

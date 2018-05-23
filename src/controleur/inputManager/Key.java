@@ -1,6 +1,6 @@
-package controleur;
+package controleur.inputManager;
 
-import modele.Coordonnee.Axe;
+import modele.coordonnee.Axe;
 
 class Key {
 	
