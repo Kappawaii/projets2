@@ -19,18 +19,19 @@ import vue.tileset.Tileset;
 
 public class Controleur {
 
-	// permet de definir l'animation
-	private Timeline gameLoop;
-	private int temps;
-	private Modele modele;
 	
 	@FXML
 	private TilePane tuiles = new TilePane();
 	@FXML
 	private BorderPane borderpane = new BorderPane();
 
-	boolean stop = false;
-	static int scale = 4;
+	// permet de definir l'animation
+	private Timeline gameLoop;
+	private int temps;
+	private Modele modele;
+	
+	boolean stopjeu = false;
+	static int displayScale = 4;
 	KeyManager keymanager;
 	
 
@@ -40,20 +41,20 @@ public class Controleur {
 		modele = new Modele();
 		modele.setJoueur(new Joueur("test", 0, 
 				 		 new Coordonnee(400,400),1,
-				 		 new Tileset("src/vue/personnage.png", scale, 16, 16)));
+				 		 new Tileset("src/vue/personnage.png", displayScale, 16, 16)));
 		
-		modele.addTileset(new Tileset("tilesets/tileset0.png",scale, 968, 526));
+		modele.addTileset(new Tileset("tilesets/tileset0.png",displayScale, 968, 526));
 		modele.addPlateau(new Plateau());
 		System.out.println(modele.getPlateau(0));
 		BuilderPlateau a = new BuilderPlateau();
-		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), scale);
+		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
 		afficherCarte(modele.getPlateau(0).getPlateau());
 		initAnimation();
 		gameLoop.play();
 	}
 	
 	public int getScale() {
-		return scale;
+		return displayScale;
 	}
 	
 	public void init() {
@@ -88,26 +89,25 @@ public class Controleur {
 	//Afficher l'image
 	void afficherImage(int i) {
 		int id = i-1;
-		tuiles.getChildren().add(new Cellule(modele.getTileset(0),id,scale).getSprite().getView());
+		tuiles.getChildren().add(new Cellule(modele.getTileset(0),id,displayScale).getSprite().getView());
 	}
 
 	private void initAnimation() {
 		gameLoop = new Timeline();
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		modele.getJoueur().setImage("file:src/vue/personnage.png", scale);
+		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale);
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
-					if(stop){
+					if(stopjeu){
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps>5){
+					else {
 						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY());
 						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX());
-						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));
-						
+						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));						
 					}
 					temps++;
 				}));
