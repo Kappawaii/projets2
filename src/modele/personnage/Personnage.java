@@ -2,6 +2,7 @@ package modele.personnage;
 
 import java.util.ArrayList;
 
+import modele.animation.Animation;
 import modele.coordonnee.*;
 import modele.objet.Objet;
 import vue.sprite.Sprite;
@@ -15,6 +16,7 @@ public abstract class Personnage {
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
 	protected Tileset tileset;
+	private ArrayList<Animation> animations = new ArrayList<Animation>();
 	String url;
 	Sprite spr;
 	
@@ -42,18 +44,18 @@ public abstract class Personnage {
 	public void seDeplace(Axe direction) {
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
-		if (direction.isMovement()) {
-			if (nextPosY > 500 || nextPosY < 320 || nextPosX < 205 || nextPosX > 500 ) { // limite de la map
-				position.setY(position.getY());
-				position.setX(position.getX());
-			}
-			else {
+//		if (direction.isMovement()) {
+//			if (nextPosY > 500 || nextPosY < 320 || nextPosX < 205 || nextPosX > 500 ) { // limite de la map
+//				position.setY(position.getY());
+//				position.setX(position.getX());
+//			}
+//			else {
 				position.setX(nextPosX);
 				position.setY(nextPosY);
-			}
-		}
-		else 
-			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
+//			}
+//		}
+//		else 
+//			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
 
 	}
 

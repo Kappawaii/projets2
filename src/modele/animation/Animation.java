@@ -1,79 +1,24 @@
 package modele.animation;
+import vue.sprite.Sprite;
 
-import modele.plateau.BuilderPlateau;
+public class Animation {
 
-public abstract class Animation {
-
-	protected int vitesse; 
-	protected int x;
-	protected int y;
+	private final Sprite[] sprites;
 	
-//	private BufferedImage[] frames;
-	BuilderPlateau notrePlateau;
-	private int currentFrame;
-	private int numFrames;
-	
-	private int count;
-	private int retard;
-	
-	private int timesPlayed;
-	
-	public Animation() {
-		timesPlayed = 0;
+	public Animation(int length) {
+		sprites = new Sprite[length];
 	}
 	
-	public void setFrames(BuilderPlateau unPlateau) {
-		this.notrePlateau = unPlateau;
-		currentFrame = 0;
-		count = 0;
-		timesPlayed = 0;
-		retard = 2;
-		numFrames = 144;
-	}
-	
-	public void setRetard(int i) {
-		retard = i;
-	}
-	
-	public void setFrame(int i) {
-		currentFrame = i;
-	}
-	
-	public void setNumFrames(int i) {
-		numFrames = i;
-	}
-	
-	public void update() {
-		if (retard == -1) {
-			return;
+	public void addFrame(Sprite spr) {
+		boolean spriteAdded = false;
+		for(int i=0;i<sprites.length;i++) {
+			if(sprites[i] != null) {
+				sprites[i] = spr;
+				spriteAdded = true;
+			}
 		}
-		count++;
-		if (count == retard) {
-			currentFrame++;
-			count = 0;
-		}
-		if (currentFrame == numFrames) {
-			currentFrame = 0;
-			timesPlayed++;
-		}
-	}
-	
-	
-	public int getFrame() {
-		return currentFrame;
-	}
-	
-	public int getCount() {
-		return count;
-	}
-	
-	
-	public boolean hasplayedOne() {
-		return timesPlayed > 0 ;
-	}
-	
-	public boolean hasPlayed(int i) {
-		return timesPlayed == i;
+		if(!spriteAdded)
+			throw new Error("sprite non ajouté : tableau plein");
 	}
 
 }

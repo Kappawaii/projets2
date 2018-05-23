@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import modele.Modele;
@@ -19,44 +20,43 @@ import vue.tileset.Tileset;
 
 public class Controleur {
 
-	
+
 	@FXML
 	private TilePane tuiles = new TilePane();
 	@FXML
 	private BorderPane borderpane = new BorderPane();
-
+	@FXML
+	private StackPane stackpane = new StackPane();
+	
 	// permet de definir l'animation
 	private Timeline gameLoop;
 	private int temps;
 	private Modele modele;
-	
+
 	boolean stopjeu = false;
 	static int displayScale = 4;
 	KeyManager keymanager;
-	
+
 
 	@FXML
 	public void initialize() {
-		//TODO sync scale with main
 		modele = new Modele();
 		modele.setJoueur(new Joueur("test", 0, 
-				 		 new Coordonnee(400,400),1,
-				 		 new Tileset("src/vue/personnage.png", displayScale, 16, 16)));
-		
+				new Coordonnee(100,100),1,
+				new Tileset("src/vue/personnage.png", displayScale, 16, 16)));
 		modele.addTileset(new Tileset("tilesets/tileset0.png",displayScale, 968, 526));
 		modele.addPlateau(new Plateau());
-		System.out.println(modele.getPlateau(0));
 		BuilderPlateau a = new BuilderPlateau();
 		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
 		afficherCarte(modele.getPlateau(0).getPlateau());
 		initAnimation();
 		gameLoop.play();
 	}
-	
+
 	public int getScale() {
 		return displayScale;
 	}
-	
+
 	public void init() {
 		System.out.println(borderpane.getScene());
 		keymanager = new KeyManager(borderpane.getScene());
@@ -64,16 +64,17 @@ public class Controleur {
 		keymanager.addKey(Axe.GAUCHE,"Q");
 		keymanager.addKey(Axe.BAS,"S");
 		keymanager.addKey(Axe.DROITE,"D");
-		keymanager.addKey(Axe.ENTREE,"ENTER");
+		keymanager.addKey(Axe.ENTREE,"enter");
 		keymanager.addKey(Axe.UTILISER, "E");
 		keymanager.addKey(Axe.AHAUT, "UP");
 		keymanager.addKey(Axe.AGAUCHE, "LEFT");
-		keymanager.addKey(Axe.ADROITE, "DROITE");
+		keymanager.addKey(Axe.ADROITE, "right");
 		keymanager.addKey(Axe.ABAS, "DOWN");
 	}
 
 	public void mouseClicked() {
 		System.out.println(keymanager);
+		modele.getJoueur().seDeplace(Axe.GAUCHE);
 	}
 
 
@@ -105,8 +106,8 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
-						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY());
-						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX());
+						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY()*displayScale);
+						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX()*displayScale);
 						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));						
 					}
 					temps++;
