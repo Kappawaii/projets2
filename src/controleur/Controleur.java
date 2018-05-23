@@ -78,8 +78,8 @@ public class Controleur {
 
 
 	void afficherCarte(Cellule cellules[][]) {
-		for(int x = 0; x<12; x++) {
-			for(int y = 0; y<12; y++) {
+		for(int x = 0; x < cellules.length; x++) {
+			for(int y = 0; y < cellules[x].length; y++) {
 				//afficherImage(cellules[x][y]);
 				tuiles.getChildren().add(cellules[x][y].getSprite().getView());
 			}		
