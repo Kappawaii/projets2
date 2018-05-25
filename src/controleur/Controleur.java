@@ -98,6 +98,7 @@ public class Controleur {
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale);
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
+		//int precX=0, precY=0;
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopjeu){
@@ -105,9 +106,17 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
+						/*precX=modele.getJoueur().getPosition().getX();
+						precY=modele.getJoueur().getPosition().getY(); */
 						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY());
 						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX());
-						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));						
+						//System.out.println("avant le deplacement" + modele.getJoueur().getPosition().getX() + " " + modele.getJoueur().getPosition().getY());
+						
+						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));
+					/*	if (modele.getPlateau(0).getCellule(modele.getJoueur().getPosition().getX(),modele.getJoueur().getPosition().getY()).getId()!=1126){
+							
+						}*/
+						System.out.println("après deplacement "  + modele.getJoueur().getPosition().getX() + " " + modele.getJoueur().getPosition().getY());
 					}
 					temps++;
 				}));
