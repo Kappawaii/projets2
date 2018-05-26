@@ -1,7 +1,6 @@
 package modele.personnage;
 
 import java.util.ArrayList;
-
 import modele.animation.Animation;
 import modele.coordonnee.*;
 import modele.objet.Objet;
@@ -16,7 +15,7 @@ public abstract class Personnage {
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
 	protected Tileset tileset;
-	private ArrayList<Animation> animations = new ArrayList<Animation>();
+	private ArrayList<Animation> animations;
 	String url;
 	Sprite spr;
 	
@@ -27,6 +26,7 @@ public abstract class Personnage {
 		this.vitesse = vitesse;
 		this.inventaire = new ArrayList<>(); 
 		this.tileset = tileset;
+		animations = new ArrayList<Animation>();
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
@@ -44,18 +44,18 @@ public abstract class Personnage {
 	public void seDeplace(Axe direction) {
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
-//		if (direction.isMovement()) {
-//			if (nextPosY > 500 || nextPosY < 320 || nextPosX < 205 || nextPosX > 500 ) { // limite de la map
-//				position.setY(position.getY());
-//				position.setX(position.getX());
-//			}
-//			else {
+		if (direction.isMovement()) {
+			if (nextPosY > 125 || nextPosY < 80 || nextPosX < 51 || nextPosX > 125 ) { // limite de la map
+				position.setY(position.getY());
+				position.setX(position.getX());
+			}
+			else {
 				position.setX(nextPosX);
 				position.setY(nextPosY);
-//			}
-//		}
-//		else 
-//			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
+			}
+		}
+		else 
+			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
 
 	}
 
@@ -72,7 +72,6 @@ public abstract class Personnage {
 		return this.vitesse;
 	}
 	
-	
 
 	public Coordonnee getPosition() {
 		return this.position;
@@ -82,8 +81,12 @@ public abstract class Personnage {
 		this.position.setXandY(x, y);
 	}
 	
-	public void setImage(String path, int scale) {
-		spr = new Sprite(tileset, scale, scale, scale, scale);
+	public void setImage(String path, int scale, int id) {
+		spr = new Sprite(tileset,scale,id);
+	}
+	
+	public void setImage(Sprite newSprite) {
+		spr.setView(newSprite.getView());
 	}
 	
 	public Sprite getSprite() {
@@ -93,5 +96,10 @@ public abstract class Personnage {
 	public void setSprite(Sprite spr) {
 		this.spr = spr;
 	}
+
+	public ArrayList<Animation> getAnimations() {
+		return animations;
+	}
+
 
 }

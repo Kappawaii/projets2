@@ -17,7 +17,7 @@ public class Cellule{
 		this.tileset = tileset;
 		this.scale = scale;
 		this.id = id-1;
-		spr = new Sprite(tileset,scale,id,id%57*17*scale, id/57*17*scale);
+		spr = new Sprite(tileset,scale,id);
 	}
 	
 	public Coordonnee getPosition() {

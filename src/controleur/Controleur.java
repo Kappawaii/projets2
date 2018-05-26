@@ -10,12 +10,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import modele.Modele;
+import modele.animation.Animation;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.joueur.Joueur;
 import modele.plateau.Cellule;
 import modele.plateau.Plateau;
 import modele.plateau.BuilderPlateau;
+import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 
 public class Controleur {
@@ -36,15 +38,16 @@ public class Controleur {
 	boolean stopjeu = false;
 	static int displayScale = 4;
 	KeyManager keymanager;
-
+	int marqueur;
 
 	@FXML
 	public void initialize() {
 		modele = new Modele();
 		modele.setJoueur(new Joueur("test", 0, 
 				new Coordonnee(100,100),1,
-				new Tileset("src/vue/personnage.png", displayScale, 16, 16)));
-		modele.addTileset(new Tileset("tilesets/tileset0.png",displayScale, 968, 526));
+				new Tileset("sprites/personnages/joueur/personnage.png", displayScale, 16, 16)));
+		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale, 968, 526));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/rgb.png", displayScale, 50, 16));
 		modele.addPlateau(new Plateau());
 		BuilderPlateau a = new BuilderPlateau();
 		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
@@ -97,8 +100,16 @@ public class Controleur {
 		gameLoop = new Timeline();
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale);
+		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale,0);
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
+		for (int i = 0; i < borderpane.getChildren().size(); i++) {
+			borderpane.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
+			marqueur = i;
+		}
+		
+		modele.getJoueur().getAnimations().add(new Animation(3));
+		modele.getJoueur().getAnimations().get(0).genererAnimation(modele.getTileset(1), displayScale);
+		
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopjeu){
@@ -106,6 +117,12 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
+						if(temps%60>50) {
+							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimations().get(0).nextSprite().getView());
+							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
+						}
+						//borderpane.getChildren().set(marqueur, modele.getJoueur().getAnimations().get(0).nextSprite().getView());
+						
 						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY()*displayScale);
 						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX()*displayScale);
 						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));						
