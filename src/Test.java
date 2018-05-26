@@ -1,51 +1,21 @@
-package modele.plateau;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-//import java.util.List;
+import java.util.Iterator;
 import java.util.Scanner;
 
-import vue.tileset.Tileset;
+public class Test {
 
-public class BuilderPlateau {
-	
-//	public void lireFichier(){
-//		ArrayList<Integer> entiers = new ArrayList<Integer>();
-//		Scanner scan = null;
-//		try {
-//			scan = new Scanner(new File("maps/level0.tmx"));
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		while (scan.hasNextInt()){
-//			 entiers.add(scan.nextInt());
-//		}
-//		for(int i=0;i<entiers.size();i++) {
-//			System.out.println(entiers.get(i));
-//		}
-//	}
-
-	private int notreMap[][] = fileReader("maps/level0.tmx");
-
-	public int[][] getPlateauInt() {
-		return this.notreMap;
+	public static void main(String[] args){
+		fileReader("maps/level0.tmx");
 	}
-	
-	public void remplirPlateau(Plateau plateau, Tileset tileset, int scale) {
-		plateau.initCellules(notreMap.length, notreMap[0].length);
-		for (int x = 0; x < plateau.getPlateau().length; x++) {
-			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
-				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale);
-			}
-		}
-	}
-	
+
 	private static int[][] fileReader(String url){
 		int[][] plateau = new int[12][12];
 		FileInputStream fis = null;
@@ -124,5 +94,5 @@ public class BuilderPlateau {
 			}
 			System.out.println("},");
 		}
-	}	
+	}
 }

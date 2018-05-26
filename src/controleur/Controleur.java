@@ -117,6 +117,8 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
+						/*precX=modele.getJoueur().getPosition().getX();
+						precY=modele.getJoueur().getPosition().getY(); */
 						if(temps%60>50) {
 							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimations().get(0).nextSprite().getView());
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
@@ -125,7 +127,13 @@ public class Controleur {
 						
 						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY()*displayScale);
 						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX()*displayScale);
-						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));						
+						//System.out.println("avant le deplacement" + modele.getJoueur().getPosition().getX() + " " + modele.getJoueur().getPosition().getY());
+						
+						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));
+					/*	if (modele.getPlateau(0).getCellule(modele.getJoueur().getPosition().getX(),modele.getJoueur().getPosition().getY()).getId()!=1126){
+							
+						}*/
+						System.out.println("après deplacement "  + modele.getJoueur().getPosition().getX() + " " + modele.getJoueur().getPosition().getY());
 					}
 					temps++;
 				}));
