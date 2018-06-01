@@ -56,9 +56,7 @@ public abstract class Personnage {
 		}
 		else 
 			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
-
 	}
-
 
 	public String getNom() {
 		return this.nom;
@@ -70,8 +68,7 @@ public abstract class Personnage {
 
 	public int getVitesse() {
 		return this.vitesse;
-	}
-	
+	}	
 
 	public Coordonnee getPosition() {
 		return this.position;
@@ -100,6 +97,5 @@ public abstract class Personnage {
 	public ArrayList<Animation> getAnimations() {
 		return animations;
 	}
-
 
 }

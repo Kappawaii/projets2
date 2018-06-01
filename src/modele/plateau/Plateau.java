@@ -26,4 +26,11 @@ public class Plateau {
 		cellules = new Cellule[x][y];
 	}
 	
+	public int getHeight() {
+		return cellules.length;
+	}
+	public int getWidth() {
+		return cellules[0].length;
+	}
+		
 }

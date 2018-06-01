@@ -8,22 +8,31 @@ public class Tileset {
 	
 	String url;
 	Image img;
-	int longueurImg;
-	int hauteurImg;
-	
-	public Tileset(String path, int scale, int x, int y) {
-		this.url = new File(path).toURI().toString();
-		System.out.println(x + "" + y);
-		this.img = new Image(url,x*scale,y*scale,true,true);
-		longueurImg = x;
-		hauteurImg = y;
+	double longueurImg;
+	double hauteurImg;
+	int casesParLigne;
+	public Tileset(String path, int scale) {
+		this.url = new File(path).toURI().toString();	
+		double[] tempDimensions = getImageDimensions(this.url);
+		this.img = new Image(url,tempDimensions[0]*scale,tempDimensions[1]*scale,true,true);
+		longueurImg = tempDimensions[0];
+		hauteurImg = tempDimensions[1];
+		casesParLigne =(int) tempDimensions[0]/17;
 	}
 	
-	public int getLongueurImg() {
+	private double[] getImageDimensions(String path) {
+		Image tmp = new Image(url);
+		return new double[] {tmp.getWidth(), tmp.getHeight()};
+	}
+	
+	public int getCasesParLigne() {
+		return casesParLigne;
+	}
+	public double getLongueurImg() {
 		return longueurImg;
 	}
 
-	public int getHauteurImg() {
+	public double getHauteurImg() {
 		return hauteurImg;
 	}
 

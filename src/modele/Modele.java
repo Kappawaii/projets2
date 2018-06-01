@@ -12,8 +12,8 @@ public class Modele {
 	ArrayList<Tileset> tilesets;
 	ArrayList<Personnage> personnages;
 	Joueur joueur;
-	
-	
+	private int VitesseAnimations;
+
 	public Joueur getJoueur() {
 		return joueur;
 	}
@@ -44,6 +44,13 @@ public class Modele {
 		return tilesets.get(index);
 	}
 	
+	public int getVitesseAnimations() {
+		return VitesseAnimations;
+	}
+
+	public void setVitesseAnimations(int vitesseAnimations) {
+		VitesseAnimations = vitesseAnimations;
+	}	
 	
 	
 }

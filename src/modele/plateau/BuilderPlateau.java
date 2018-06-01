@@ -86,7 +86,6 @@ public class BuilderPlateau {
 				i++;
 				ligne= br.readLine(); 
 			}
-			affichePlateau(plateau);
 		}
 		catch(IOException e) {
 			e.printStackTrace();

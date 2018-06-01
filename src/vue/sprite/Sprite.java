@@ -8,24 +8,31 @@ public class Sprite {
 
 	ImageView view;
 	
+	//sprite pour les tuiles
 	public Sprite(Tileset tileset, int scale, int id) {
 		view = new ImageView(tileset.getImage());
-		view.setViewport(new Rectangle2D(id%((tileset.getLongueurImg()+1)/17)*17*scale, id/57*17*scale, 16*scale, 16*scale));
+		view.setViewport(
+				new Rectangle2D(id%((tileset.getLongueurImg()+1)/17)*17*scale,
+								id/(tileset.getCasesParLigne()+1)*17*scale,
+								16*scale,
+								16*scale));
 		view.setFitWidth(16*scale);
 		view.setFitHeight(16*scale);
 		view.setSmooth(true);
 	}
 	
-	public Sprite(Tileset tileset, int scale, int x, int y) {
+	//sprite pour les animations
+	public Sprite(Tileset tileset, int scale, int id, int xlength, int yLength) {
 		view = new ImageView(tileset.getImage());
-		view.setViewport(new Rectangle2D(x, y, 16*scale, 16*scale));
+		view.setViewport(
+				new Rectangle2D(id*scale*xlength,
+								id/(tileset.getCasesParLigne()+1)*scale,
+								xlength*scale,
+								yLength*scale));
+		//view.setViewport(new Rectangle2D(id%((tileset.getImage().getWidth()+1)/17)*17, id/57*17*scale, 16*scale, 16*scale));
 		view.setFitWidth(16*scale);
 		view.setFitHeight(16*scale);
 		view.setSmooth(true);
-	}
-	
-	public Sprite getSprite() {
-		return this;
 	}
 	
 	public ImageView getView() {
