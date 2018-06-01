@@ -5,12 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="leborderpane" fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClicked" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.Controleur">
-   <center>
-      <StackPane BorderPane.alignment="CENTER">
-         <children>
-            <TilePane fx:id="tuiles" prefColumns="12" prefRows="12" />
-         </children>
-      </StackPane>
-   </center>
+<BorderPane id="leborderpane" fx:id="borderpane"
+	maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" onMouseClicked="#mouseClicked"
+	xmlns="http://javafx.com/javafx/8.0.40"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controleur.Controleur">
+	<center>
+		<Pane fx:id="tuiles" />
+	</center>
 </BorderPane>

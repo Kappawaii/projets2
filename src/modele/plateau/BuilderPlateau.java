@@ -38,7 +38,8 @@ public class BuilderPlateau {
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.getPlateau().length; x++) {
 			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
-				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16);
+				boolean walkable = notreMap[x][y] == 348;
+				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, walkable);
 			}
 		}
 	}

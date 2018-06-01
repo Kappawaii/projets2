@@ -6,8 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
@@ -25,12 +24,10 @@ public class Controleur {
 
 
 	@FXML
-	private TilePane tuiles = new TilePane();
+	private Pane tuiles = new Pane();
 	@FXML
 	private BorderPane borderpane = new BorderPane();
-	@FXML
-	private StackPane stackpane = new StackPane();
-	
+
 	int testAnimationManager = 0;
 	private Timeline gameLoop;
 	private int temps;
@@ -40,7 +37,7 @@ public class Controleur {
 	static int displayScale = 4;
 	KeyManager keymanager;
 	int marqueur;
-
+	int remind;
 	@FXML
 	public void initialize() {
 		modele = new Modele();
@@ -56,7 +53,7 @@ public class Controleur {
 		modele.addPlateau(new Plateau());
 		BuilderPlateau a = new BuilderPlateau();
 		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
-		afficherCarte(modele.getPlateau(0).getPlateau());
+		ajouterCarte(modele.getPlateau(0).getPlateau());
 		initAnimation();
 		gameLoop.play();
 	}
@@ -82,17 +79,21 @@ public class Controleur {
 	public void mouseClicked() {
 //		System.out.println(keymanager);
 //		modele.getJoueur().seDeplace(Axe.GAUCHE);
-		
-		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
-
+//
+//		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
+//		tuiles.getChildren().get(remind).setLayoutX(tuiles.getChildren().get(remind).getLayoutX()+1);
 	}
 
 
-	void afficherCarte(Cellule cellules[][]) {
+	void ajouterCarte(Cellule cellules[][]) {
+		int index = tuiles.getChildren().size();
+		remind = index;
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
-				tuiles.getChildren().add(cellules[x][y].getSprite().getView());
-				System.out.println(cellules[x][y].getPos());
+				//TODO pourquoi X et y inversés ?
+				cellules[x][y].getSprite().getView().setX(cellules[x][y].getPos().getY()*displayScale*1);
+				cellules[x][y].getSprite().getView().setY(cellules[x][y].getPos().getX()*displayScale*1);
+				tuiles.getChildren().add(index, cellules[x][y].getSprite().getView());
 			}		
 		}
 	}
@@ -118,7 +119,7 @@ public class Controleur {
 
 						if(temps%10==0) {
 							//Animations
-							
+
 							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
 						}
@@ -128,7 +129,7 @@ public class Controleur {
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
-	
+
 	private void updatePositionPersonnage(Personnage pers,Coordonnee pos) {
 		pers.seDeplace(keymanager.getMovementInputs(temps));
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
@@ -145,8 +146,6 @@ public class Controleur {
 		modele.getJoueur().getAnimations().add(walking_down);
 		modele.getJoueur().getAnimations().add(walking_left);
 		modele.getJoueur().getAnimations().add(walking_up);
-		System.out.println(modele.getTileset(1).getPxParImage());
-		System.out.println(modele.getTileset(2).getPxParImage());
 	}
 }
 
