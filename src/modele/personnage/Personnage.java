@@ -1,9 +1,11 @@
 package modele.personnage;
 
 import java.util.ArrayList;
+
 import modele.animation.Animation;
 import modele.animation.AnimationManager;
-import modele.coordonnee.*;
+import modele.coordonnee.Axe;
+import modele.coordonnee.Coordonnee;
 import modele.objet.Objet;
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
@@ -43,9 +45,9 @@ public abstract class Personnage {
 		this.inventaire.remove(unObjet);
 	}
 
-	public String parle(String phrase) {
-		return phrase;
-	}
+//	public String parle(String phrase) {
+//		return phrase;
+//	}
 
 	public void seDeplace(Axe direction) {
 		int nextPosX = position.getX()+direction.x()*vitesse;

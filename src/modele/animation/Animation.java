@@ -5,8 +5,6 @@ import vue.tileset.Tileset;
 public class Animation {
 
 	private Sprite[] sprites;
-
-
 	private int animIndex;
 	private int framesBetweenSprites;
 	private int counter;
@@ -50,8 +48,8 @@ public class Animation {
 	public Sprite next() {
 		if(counter++%framesBetweenSprites==0) {
 			counter = 0;
+			animIndex = (animIndex+1)%(sprites.length);
 		}
-		animIndex = (animIndex+1)%(sprites.length);
 		return sprites[animIndex];
 	}
 

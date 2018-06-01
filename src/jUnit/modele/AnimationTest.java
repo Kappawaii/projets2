@@ -1,7 +1,9 @@
 package jUnit.modele;
 
 import static org.junit.Assert.assertTrue;
+
 import org.junit.jupiter.api.Test;
+
 import modele.animation.Animation;
 
 public class AnimationTest {
@@ -11,7 +13,7 @@ public class AnimationTest {
 		
 
 		try {
-			Animation animation = new Animation(2, null, 0);
+			new Animation(2, null, 0);
 		} catch (Throwable ex) {
 			e = ex;
 		}

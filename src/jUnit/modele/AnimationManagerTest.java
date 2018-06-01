@@ -1,7 +1,9 @@
 package jUnit.modele;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.jupiter.api.Test;
+
 import modele.animation.AnimationManager;
 
 public class AnimationManagerTest {

@@ -3,3 +3,5 @@ Index des tilesets :
 0 - tileset auberge
 1 - joueur : walking_right
 2 - joueur : walking_down
+3 - joueur : walking_left
+4 - joueur : walking_up

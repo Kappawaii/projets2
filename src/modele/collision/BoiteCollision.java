@@ -1,7 +1,4 @@
 package modele.collision;
-
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import modele.coordonnee.Coordonnee;
 
 public class BoiteCollision {

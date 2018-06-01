@@ -1,6 +1,7 @@
 package modele.animation;
 
 import java.util.ArrayList;
+
 import vue.sprite.Sprite;
 
 public class AnimationManager {

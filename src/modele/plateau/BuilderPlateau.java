@@ -6,9 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-//import java.util.List;
-import java.util.Scanner;
 
 import vue.tileset.Tileset;
 
@@ -41,7 +38,7 @@ public class BuilderPlateau {
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.getPlateau().length; x++) {
 			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
-				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale);
+				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16);
 			}
 		}
 	}

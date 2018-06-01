@@ -15,9 +15,9 @@ import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
+import modele.plateau.BuilderPlateau;
 import modele.plateau.Cellule;
 import modele.plateau.Plateau;
-import modele.plateau.BuilderPlateau;
 import vue.tileset.Tileset;
 
 
@@ -36,7 +36,7 @@ public class Controleur {
 	private int temps;
 	private Modele modele;
 
-	boolean stopjeu = false;
+	boolean stopJeu = false;
 	static int displayScale = 4;
 	KeyManager keymanager;
 	int marqueur;
@@ -51,6 +51,8 @@ public class Controleur {
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_right.png", displayScale));
 		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_down.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_left.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_up.png", displayScale));
 		modele.addPlateau(new Plateau());
 		BuilderPlateau a = new BuilderPlateau();
 		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
@@ -80,32 +82,19 @@ public class Controleur {
 	public void mouseClicked() {
 //		System.out.println(keymanager);
 //		modele.getJoueur().seDeplace(Axe.GAUCHE);
-		if (testAnimationManager == 0) {
-			modele.getJoueur().getAnimationManager().setCurrentAnimation(0);
-			testAnimationManager = 1;
-			System.out.println("anim = 1");
-		} else if (testAnimationManager == 1) {
-			modele.getJoueur().getAnimationManager().setCurrentAnimation(1);
-			testAnimationManager = 0;
-			System.out.println("anim = 0");
-		}
 		
+		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
+
 	}
 
 
 	void afficherCarte(Cellule cellules[][]) {
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
-				//afficherImage(cellules[x][y]);
 				tuiles.getChildren().add(cellules[x][y].getSprite().getView());
+				System.out.println(cellules[x][y].getPos());
 			}		
 		}
-	}
-
-	//Afficher l'image
-	void afficherImage(int i) {
-		int id = i-1;
-		tuiles.getChildren().add(new Cellule(modele.getTileset(0),id,displayScale).getSprite().getView());
 	}
 
 	private void initAnimation() {
@@ -121,7 +110,7 @@ public class Controleur {
 		}
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
-					if(stopjeu){
+					if(stopJeu){
 						System.out.println("fini");
 						gameLoop.stop();
 					}
@@ -129,6 +118,7 @@ public class Controleur {
 
 						if(temps%10==0) {
 							//Animations
+							
 							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
 						}
@@ -149,8 +139,12 @@ public class Controleur {
 		//initialisation joueur
 		Animation walking_right = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
 		Animation walking_down = new Animation(1/*framesBetweenSprites*/, modele.getTileset(2),displayScale);
+		Animation walking_left = new Animation(1/*framesBetweenSprites*/, modele.getTileset(3),displayScale);
+		Animation walking_up = new Animation(1/*framesBetweenSprites*/, modele.getTileset(4),displayScale);
 		modele.getJoueur().getAnimations().add(walking_right);
 		modele.getJoueur().getAnimations().add(walking_down);
+		modele.getJoueur().getAnimations().add(walking_left);
+		modele.getJoueur().getAnimations().add(walking_up);
 		System.out.println(modele.getTileset(1).getPxParImage());
 		System.out.println(modele.getTileset(2).getPxParImage());
 	}

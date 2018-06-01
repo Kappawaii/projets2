@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+
 import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import modele.plateau.Plateau;

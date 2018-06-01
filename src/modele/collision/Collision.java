@@ -1,7 +1,5 @@
 package modele.collision;
 
-import modele.coordonnee.Coordonnee;
-
 public class Collision {
 	
 	BoiteCollision b1;
