@@ -2,6 +2,7 @@ package modele.personnage;
 
 import java.util.ArrayList;
 import modele.animation.Animation;
+import modele.animation.AnimationManager;
 import modele.coordonnee.*;
 import modele.objet.Objet;
 import vue.sprite.Sprite;
@@ -15,7 +16,12 @@ public abstract class Personnage {
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
 	protected Tileset tileset;
-	private ArrayList<Animation> animations;
+	private AnimationManager animationManager;
+	
+	public AnimationManager getAnimationManager() {
+		return animationManager;
+	}
+
 	String url;
 	Sprite spr;
 	
@@ -26,7 +32,7 @@ public abstract class Personnage {
 		this.vitesse = vitesse;
 		this.inventaire = new ArrayList<>(); 
 		this.tileset = tileset;
-		animations = new ArrayList<Animation>();
+		animationManager = new AnimationManager();
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
@@ -95,7 +101,7 @@ public abstract class Personnage {
 	}
 
 	public ArrayList<Animation> getAnimations() {
-		return animations;
+		return animationManager.getAnimations();
 	}
 
 }

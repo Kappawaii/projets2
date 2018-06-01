@@ -1,5 +1,6 @@
 package modele.plateau;
 
+import modele.collision.BoiteCollision;
 import modele.coordonnee.Coordonnee;
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
@@ -12,12 +13,14 @@ public class Cellule{
 	Coordonnee pos;
 	int scale;
 	Sprite spr;
+	BoiteCollision collider;
 	
-	public Cellule(Tileset tileset,int id, int scale) {
+	public Cellule(Tileset tileset,int id, int taille) {
 		this.tileset = tileset;
-		this.scale = scale;
+		this.scale = taille;
 		this.id = id-1;
-		spr = new Sprite(tileset,scale,id);
+		spr = new Sprite(tileset,taille,id);
+		collider = new BoiteCollision(pos, taille);
 	}
 	
 	public Coordonnee getPosition() {

@@ -13,6 +13,7 @@ import modele.Modele;
 import modele.animation.Animation;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
+import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import modele.plateau.Cellule;
 import modele.plateau.Plateau;
@@ -30,7 +31,7 @@ public class Controleur {
 	@FXML
 	private StackPane stackpane = new StackPane();
 	
-
+	int testAnimationManager = 0;
 	private Timeline gameLoop;
 	private int temps;
 	private Modele modele;
@@ -48,6 +49,7 @@ public class Controleur {
 				new Coordonnee(100,100),1,
 				new Tileset("sprites/personnages/joueur/personnage.png", displayScale)));
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_right.png", displayScale));
 		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_down.png", displayScale));
 		modele.addPlateau(new Plateau());
 		BuilderPlateau a = new BuilderPlateau();
@@ -62,7 +64,6 @@ public class Controleur {
 	}
 
 	public void init() {
-		System.out.println(borderpane.getScene());
 		keymanager = new KeyManager(borderpane.getScene());
 		keymanager.addKey(Axe.HAUT,"Z");
 		keymanager.addKey(Axe.GAUCHE,"Q");
@@ -79,6 +80,15 @@ public class Controleur {
 	public void mouseClicked() {
 //		System.out.println(keymanager);
 //		modele.getJoueur().seDeplace(Axe.GAUCHE);
+		if (testAnimationManager == 0) {
+			modele.getJoueur().getAnimationManager().setCurrentAnimation(0);
+			testAnimationManager = 1;
+			System.out.println("anim = 1");
+		} else if (testAnimationManager == 1) {
+			modele.getJoueur().getAnimationManager().setCurrentAnimation(1);
+			testAnimationManager = 0;
+			System.out.println("anim = 0");
+		}
 		
 	}
 
@@ -103,15 +113,12 @@ public class Controleur {
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale,0);
-		Animation temp = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
-		modele.getJoueur().getAnimations().add(temp);
+		initJoueur();
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
 		for (int i = 0; i < borderpane.getChildren().size(); i++) {
 			borderpane.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
 			marqueur = i;
-			System.out.println(i);
 		}
-		
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopjeu){
@@ -120,20 +127,32 @@ public class Controleur {
 					}
 					else {
 
-						if(temps%20==0) {
+						if(temps%10==0) {
 							//Animations
-							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimations().get(0).next().getView());
+							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
 						}
-						modele.getJoueur().getSprite().getView().setY(modele.getJoueur().getPosition().getY()*displayScale);
-						modele.getJoueur().getSprite().getView().setX(modele.getJoueur().getPosition().getX()*displayScale);
-						modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps));
+						updatePositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
 					}
 					temps++;
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
+	
+	private void updatePositionPersonnage(Personnage pers,Coordonnee pos) {
+		pers.seDeplace(keymanager.getMovementInputs(temps));
+		pers.getSprite().getView().setY(pos.getY()*displayScale);
+		pers.getSprite().getView().setX(pos.getX()*displayScale);
+	}
 
-
+	private void initJoueur() {
+		//initialisation joueur
+		Animation walking_right = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
+		Animation walking_down = new Animation(1/*framesBetweenSprites*/, modele.getTileset(2),displayScale);
+		modele.getJoueur().getAnimations().add(walking_right);
+		modele.getJoueur().getAnimations().add(walking_down);
+		System.out.println(modele.getTileset(1).getPxParImage());
+		System.out.println(modele.getTileset(2).getPxParImage());
+	}
 }
 

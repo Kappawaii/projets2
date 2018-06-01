@@ -21,11 +21,11 @@ public class Animation {
 		else if (displayScale == 0) {
 			throw new IllegalArgumentException("Valeur de displayScale : 0");
 		}
-		this.sprites = new Sprite[tileset.getCasesParLigne()+1];
+		this.sprites = new Sprite[tileset.getCasesParLigne()];
 		this.animIndex = 0;
 		this.counter = 0;
 		this.framesBetweenSprites = framesBetweenSprites;
-		genererAnimation(tileset,displayScale);
+		genererAnimation(tileset,displayScale, tileset.getPxParImage(),(int) tileset.getHauteurImg());
 	}
 
 	/**
@@ -36,10 +36,15 @@ public class Animation {
 		return animIndex;
 	}
 
-	private void genererAnimation(Tileset tileset, int scale) {
+	private void genererAnimation(Tileset tileset, int scale, int xLength, int yLength) {
 		for (int i = 0; i < sprites.length; i++) {
-			sprites[i] = new Sprite(tileset,4,i,16,22);
+			sprites[i] = new Sprite(tileset,4,i,xLength,yLength);
 		}
+	}
+	
+	protected void resetAnimation() {
+		counter = 0;
+		animIndex = 0;
 	}
 
 	public Sprite next() {

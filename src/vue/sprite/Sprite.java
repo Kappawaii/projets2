@@ -13,7 +13,7 @@ public class Sprite {
 		view = new ImageView(tileset.getImage());
 		view.setViewport(
 				new Rectangle2D(id%((tileset.getLongueurImg()+1)/17)*17*scale,
-								id/(tileset.getCasesParLigne()+1)*17*scale,
+								id/(tileset.getCasesParLigne())*17*scale,
 								16*scale,
 								16*scale));
 		view.setFitWidth(16*scale);
@@ -26,7 +26,7 @@ public class Sprite {
 		view = new ImageView(tileset.getImage());
 		view.setViewport(
 				new Rectangle2D(id*scale*xlength,
-								id/(tileset.getCasesParLigne()+1)*scale,
+								id/(tileset.getCasesParLigne())*scale,
 								xlength*scale,
 								yLength*scale));
 		//view.setViewport(new Rectangle2D(id%((tileset.getImage().getWidth()+1)/17)*17, id/57*17*scale, 16*scale, 16*scale));
