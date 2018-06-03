@@ -1,5 +1,6 @@
 package modele.plateau;
 
+import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
 public class Plateau {

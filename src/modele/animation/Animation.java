@@ -52,6 +52,10 @@ public class Animation {
 		}
 		return sprites[animIndex];
 	}
+	
+	protected Sprite[] getAllSprites() {
+		return sprites;
+	}
 
 	@SuppressWarnings("unused")
 	private boolean isFull() {

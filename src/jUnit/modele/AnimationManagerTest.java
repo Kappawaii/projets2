@@ -12,7 +12,7 @@ public class AnimationManagerTest {
 	public void casInferieurAZero() {
 		Throwable e = null;
 		AnimationManager animationManager = new AnimationManager();
-
+		
 		try {
 			animationManager.setCurrentAnimation(-1);
 		} catch (Throwable ex) {

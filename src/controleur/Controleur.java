@@ -1,6 +1,5 @@
 package controleur;
 
-
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,19 +9,17 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
+import modele.cellule.Cellule;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import modele.plateau.BuilderPlateau;
-import modele.plateau.Cellule;
 import modele.plateau.Plateau;
 import vue.tileset.Tileset;
 
-
 public class Controleur {
-
-
+	
 	@FXML
 	private Pane tuiles = new Pane();
 	@FXML
@@ -38,6 +35,9 @@ public class Controleur {
 	KeyManager keymanager;
 	int marqueur;
 	int remind;
+	boolean jeuEnPause = false;
+	boolean debugMode = false;
+	
 	@FXML
 	public void initialize() {
 		modele = new Modele();
@@ -57,7 +57,7 @@ public class Controleur {
 		initAnimation();
 		gameLoop.play();
 	}
-
+	
 	public int getScale() {
 		return displayScale;
 	}
@@ -82,6 +82,9 @@ public class Controleur {
 //
 //		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
 //		tuiles.getChildren().get(remind).setLayoutX(tuiles.getChildren().get(remind).getLayoutX()+1);
+//		System.out.println(tuiles.getLayoutX());
+		if(debugMode)
+			jeuEnPause = false;
 	}
 
 
@@ -91,11 +94,16 @@ public class Controleur {
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				//TODO pourquoi X et y inversés ?
-				cellules[x][y].getSprite().getView().setX(cellules[x][y].getPos().getY()*displayScale*1);
-				cellules[x][y].getSprite().getView().setY(cellules[x][y].getPos().getX()*displayScale*1);
+				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getY()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getX()*displayScale);
 				tuiles.getChildren().add(index, cellules[x][y].getSprite().getView());
 			}		
 		}
+		//		tuiles.getChildren().get(40).setLayoutX(-30);
+		//		System.out.println(tuiles.getChildren().get(41).getLayoutX());
+		//		System.out.println(tuiles.getChildren().get(42).getLayoutX());
+		//		tuiles.getChildren().get(15).setLayoutX(-30);
+		//		System.out.println();
 	}
 
 	private void initAnimation() {
@@ -105,6 +113,7 @@ public class Controleur {
 		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale,0);
 		initJoueur();
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
+
 		for (int i = 0; i < borderpane.getChildren().size(); i++) {
 			borderpane.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
 			marqueur = i;
@@ -116,14 +125,26 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
-
 						if(temps%10==0) {
 							//Animations
 
 							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
 						}
-						updatePositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
+						if(!jeuEnPause) {
+							if(debugMode && !jeuEnPause)
+								jeuEnPause = true;
+							
+							
+							System.out.println(modele.getJoueur().getCollider().getO());
+							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
+							//non-scrolling map
+							updatePositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
+							
+							//centerMaptoPosition(modele.getJoueur().getPosition());
+							//updatePositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));
+						}
+						
 					}
 					temps++;
 				}));
@@ -131,9 +152,15 @@ public class Controleur {
 	}
 
 	private void updatePositionPersonnage(Personnage pers,Coordonnee pos) {
-		pers.seDeplace(keymanager.getMovementInputs(temps));
-		pers.getSprite().getView().setY(pos.getY()*displayScale);
-		pers.getSprite().getView().setX(pos.getX()*displayScale);
+		modele.getJoueur().getAnimationManager().updateAnimationsPos(pos, displayScale);
+//		pers.getSprite().getView().setY(pos.getY()*displayScale);
+//		pers.getSprite().getView().setX(pos.getX()*displayScale);
+	}
+	
+	//scrolling map
+	private void centerMaptoPosition(Coordonnee coordonnee) {
+		tuiles.setTranslateX(tuiles.getLayoutBounds().getMaxX()/2-coordonnee.getX()*displayScale);
+		tuiles.setTranslateY(tuiles.getLayoutBounds().getMaxY()/2-coordonnee.getY()*displayScale);
 	}
 
 	private void initJoueur() {

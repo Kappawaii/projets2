@@ -42,5 +42,4 @@ public class Sprite {
 	public void setView(ImageView other) {
 		view = other;
 	}
-	
 }

@@ -10,6 +10,10 @@ public class Coordonnee {
 		this.x = x;
 		this.y = y;
 	}
+	public Coordonnee() {
+		this.x = 0;
+		this.y = 0;
+	}
 	
 	public int getX() {
 		return this.x;

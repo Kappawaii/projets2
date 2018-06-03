@@ -2,6 +2,7 @@ package modele.animation;
 
 import java.util.ArrayList;
 
+import modele.coordonnee.Coordonnee;
 import vue.sprite.Sprite;
 
 public class AnimationManager {
@@ -38,7 +39,16 @@ public class AnimationManager {
 	public Sprite nextFrame() {
 		return animations.get(currentAnimation).next();
 	}
-
+	
+	public void updateAnimationsPos(Coordonnee pos, int scale) {
+		for (int i = 0; i < animations.size(); i++) {
+			for (int j = 0; j < animations.get(i).getAllSprites().length; j++) {
+				animations.get(i).getAllSprites()[j].getView().setX(pos.getX() * scale);
+				animations.get(i).getAllSprites()[j].getView().setY(pos.getY() * scale);
+			}
+		}
+	}
+	
 	public ArrayList<Animation> getAnimations() {
 		return animations;
 	}

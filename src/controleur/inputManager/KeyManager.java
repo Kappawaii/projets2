@@ -6,12 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import modele.coordonnee.Axe;
 
- public class KeyManager {
-	 
-	
-	 
+public class KeyManager {
+
+
+
 	private static final Axe axenull = null;
-private ArrayList<Key> keystates = new ArrayList<Key>();
+	private ArrayList<Key> keystates = new ArrayList<Key>();
+	
 	public KeyManager(Scene scene) {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 			setKeyState(axenull,key.getCode().toString(), true);
@@ -29,8 +30,8 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 		}
 		return temp;
 	}
-	
-	
+
+
 	private void setKeyState(Axe nom, String bind, boolean state) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
@@ -41,9 +42,9 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 		else {
 			System.out.println("unmapped Key released :" + bind);
 		}
-			
+
 	}
-	
+
 	/**
 	 * ajoute une Key 
 	 * @param nom
@@ -57,7 +58,7 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 		}
 		else throw new Error("Key already used");
 	}
-	
+
 	/**
 	 * Retourne vrai si une key avec un des deux paramètres égaux existe, sinon retourne faux
 	 * @param nom
@@ -70,7 +71,7 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -78,11 +79,11 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 	 */
 	public boolean getKeyState(Axe nom) {
 		if (isKeyUsed(nom,""))
-				return keystates.get(keystates.indexOf(new Key(nom,""))).get();
+			return keystates.get(keystates.indexOf(new Key(nom,""))).get();
 		else 
 			throw new Error("getKeyState : key '" + nom + "' not found");
 	}
-	
+
 	public Axe getMovementInputs(int a) {
 		Axe inputs = Axe.EMPTY;
 		inputs.clear();
@@ -104,7 +105,7 @@ private ArrayList<Key> keystates = new ArrayList<Key>();
 		else 
 			throw new Error("getKeyState : key '" + bind + "' not found");
 	}
-	
+
 	private String refactorNom(String nom) {
 		return nom.toLowerCase();
 	}

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {
@@ -38,8 +39,8 @@ public class BuilderPlateau {
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.getPlateau().length; x++) {
 			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
-				boolean walkable = notreMap[x][y] == 348;
-				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, walkable);
+				boolean isTrigger = (notreMap[x][y] != 348);
+				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, isTrigger);
 			}
 		}
 	}

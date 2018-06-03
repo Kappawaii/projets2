@@ -2,8 +2,10 @@ package modele.personnage;
 
 import java.util.ArrayList;
 
+import modele.Modele;
 import modele.animation.Animation;
 import modele.animation.AnimationManager;
+import modele.collision.Collider;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.objet.Objet;
@@ -17,17 +19,22 @@ public abstract class Personnage {
 	private Coordonnee position;
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
-	protected Tileset tileset;
 	private AnimationManager animationManager;
-	
+	private Collider collider;
+	protected Tileset tileset;
+
+	public Collider getCollider() {
+		return collider;
+	}
+
 	public AnimationManager getAnimationManager() {
 		return animationManager;
 	}
 
 	String url;
 	Sprite spr;
-	
-	public Personnage(String nom, int pv, Coordonnee position, int vitesse, Tileset tileset) {
+
+	public Personnage(String nom, int pv, Coordonnee position, int vitesse, Tileset tileset, int taille) {
 		this.nom = nom;
 		this.pv = pv;
 		this.position = position;
@@ -35,6 +42,7 @@ public abstract class Personnage {
 		this.inventaire = new ArrayList<>(); 
 		this.tileset = tileset;
 		animationManager = new AnimationManager();
+		collider = new Collider(position, taille, true);
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
@@ -45,21 +53,18 @@ public abstract class Personnage {
 		this.inventaire.remove(unObjet);
 	}
 
-//	public String parle(String phrase) {
-//		return phrase;
-//	}
-
-	public void seDeplace(Axe direction) {
+	public void seDeplace(Axe direction, Modele modele) {
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
 		if (direction.isMovement()) {
-			if (nextPosY > 125 || nextPosY < 80 || nextPosX < 51 || nextPosX > 125 ) { // limite de la map
-				position.setY(position.getY());
-				position.setX(position.getX());
-			}
-			else {
+			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger());
+			if (!nextPosCollider.detecterCollision(modele.getAllColliders())){
 				position.setX(nextPosX);
 				position.setY(nextPosY);
+				collider.setPosition(position);
+			}
+			else {
+				//System.out.println("collision détectée");
 			}
 		}
 		else 
@@ -85,15 +90,15 @@ public abstract class Personnage {
 	public void setPosition(int x, int y) {
 		this.position.setXandY(x, y);
 	}
-	
+
 	public void setImage(String path, int scale, int id) {
 		spr = new Sprite(tileset,scale,id);
 	}
-	
+
 	public void setImage(Sprite newSprite) {
 		spr.setView(newSprite.getView());
 	}
-	
+
 	public Sprite getSprite() {
 		return spr;
 	}
