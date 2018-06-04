@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.ArrayList;
+
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +12,7 @@ import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
 import modele.cellule.Cellule;
+import modele.chemin.PathFinding;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
@@ -78,6 +81,7 @@ public class Controleur {
 		keymanager.addKey(Axe.ABAS, "DOWN");
 	}
 
+	@SuppressWarnings("static-access")
 	public void mouseClicked() {
 //		System.out.println(keymanager);
 //		modele.getJoueur().seDeplace(Axe.GAUCHE);
@@ -87,6 +91,11 @@ public class Controleur {
 //		System.out.println(tuiles.getLayoutX());
 		if(debugMode)
 			jeuEnPause = false;
+		PathFinding chemin = new PathFinding();
+		ArrayList<Coordonnee> a = chemin.chemin(modele.getPlateau(0), modele.getJoueur().getPosition(), new Coordonnee(100,100));
+		for (int i = 0; i < a.size(); i++) {
+			System.out.println(a.get(i));
+		}
 	}
 
 	private void initAnimation() {

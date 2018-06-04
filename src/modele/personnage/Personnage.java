@@ -43,7 +43,7 @@ public abstract class Personnage {
 		this.inventaire = new ArrayList<>(); 
 		this.tileset = tileset;
 		animationManager = new AnimationManager();
-		collider = new Collider(position, taille, true);
+		collider = new Collider(position, taille, true,0);
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
@@ -58,16 +58,18 @@ public abstract class Personnage {
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
 		if (direction.isMovement()) {
-			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger());
+			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger(), 0);
 			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getAllColliders());
 			boolean result = false;
 			for (int i = 0; (i < collisions.size()); i++) {
 				if(collisions.get(i).isTrigger())
 					if(i+1 == collisions.size())
-						result = true;
-//				System.out.print("Collider:");
-//				collisions.get(i).sysout();
+						result = true;		
 			}
+//			for (int j = 0; j < collisions.size(); j++) {
+//				System.out.print("Collider:");
+//				System.out.print(collisions.get(j).id);	
+//			}
 			if (result) {
 				this.direction = direction;
 //				System.out.println(direction);
@@ -124,12 +126,12 @@ public abstract class Personnage {
 	}
 
 	public void updateAnimation() {
-		System.out.println("Nouvelle direction");
-		System.out.println(direction);
+		//System.out.println("Nouvelle direction");
+		//System.out.println(direction);
 		if(direction != null) {
 			int[] orientation = direction.directiontoArray();
 			orientation[0] = orientation[0]*10 + orientation[1];
-			System.out.println(orientation[0]);
+			//System.out.println(orientation[0]);
 			switch (orientation[0]) {
 			case 10: case 11: case 9:
 				if(animationManager.getCurrentAnimation() != 0)

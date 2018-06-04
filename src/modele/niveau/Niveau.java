@@ -25,4 +25,12 @@ public class Niveau {
 		}
 	}
 	
+	public Plateau getPlateau() {
+		return plateau;
+	}
+	
+	public ArrayList<Entity> getEntites(){
+		return entites;
+	}
+	
 }

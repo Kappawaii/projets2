@@ -21,7 +21,7 @@ public class Cellule{
 		this.spr = new Sprite(tileset,taille,id);
 		this.pos = new Coordonnee(x, y);
 		this.isWalkable = isTrigger;
-		this.collider = new Collider(pos, taille, isTrigger);
+		this.collider = new Collider(pos, taille, isTrigger, id);
 	}
 	
 	public Coordonnee getPos() {

@@ -10,7 +10,8 @@ public class Collider {
 	Coordonnee xy;
 	int taille;
 	boolean isTrigger;
-
+	public int id;
+	
 	public boolean isTrigger() {
 		return isTrigger;
 	}
@@ -31,7 +32,7 @@ public class Collider {
 		return xy;
 	}
 
-	public Collider(Coordonnee coordonnee, int taille, boolean isTrigger) {
+	public Collider(Coordonnee coordonnee, int taille, boolean isTrigger, int id) {
 		this.taille = taille;
 		o = new Coordonnee();
 		x = new Coordonnee();
