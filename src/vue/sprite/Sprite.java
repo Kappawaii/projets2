@@ -27,7 +27,7 @@ public class Sprite {
 		view.setViewport(
 				new Rectangle2D(id*scale*xlength,
 								id/(tileset.getCasesParLigne())*scale,
-								xlength*scale,
+								(xlength-1)*scale,
 								yLength*scale));
 		//view.setViewport(new Rectangle2D(id%((tileset.getImage().getWidth()+1)/17)*17, id/57*17*scale, 16*scale, 16*scale));
 		view.setFitWidth(16*scale);

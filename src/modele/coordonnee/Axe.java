@@ -13,7 +13,7 @@ public enum Axe{
 	AGAUCHE(1,0,false,false),
 	ADROITE(-1,0,false,false),
 	EMPTY(0,0,true,true);
-	
+
 	private int x; 
 	private int y;
 	private final boolean addable;
@@ -29,11 +29,11 @@ public enum Axe{
 		this.movement = movement;
 		this.addable = movement;
 	}
-	
+
 	public int x() {
 		return x;
 	}
-	
+
 	public int y() {
 		return y;
 	}
@@ -48,15 +48,15 @@ public enum Axe{
 			this.y = this.y+other.y;
 		}
 	}
-	
+
 	public boolean isMovement() {
 		return movement;
 	}
-	
+
 	public String toString() {
 		return this.name() + " " + x + ";" + y;
 	}
-	
+
 	/**
 	 * à utiliser seulement sur empty
 	 */
@@ -65,6 +65,10 @@ public enum Axe{
 			throw new Error("Only use on empty");
 		this.x = 0;
 		this.y = 0;
+	}
+
+	public int[] directiontoArray() {
+		return new int[] {x,y};
 	}
 }
 

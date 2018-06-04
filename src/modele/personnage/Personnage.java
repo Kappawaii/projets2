@@ -22,6 +22,7 @@ public abstract class Personnage {
 	private AnimationManager animationManager;
 	private Collider collider;
 	protected Tileset tileset;
+	private Axe direction;
 
 	public Collider getCollider() {
 		return collider;
@@ -58,13 +59,24 @@ public abstract class Personnage {
 		int nextPosY = position.getY()+direction.y()*vitesse;
 		if (direction.isMovement()) {
 			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger());
-			if (!nextPosCollider.detecterCollision(modele.getAllColliders())){
+			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getAllColliders());
+			boolean result = false;
+			for (int i = 0; (i < collisions.size()); i++) {
+				if(collisions.get(i).isTrigger())
+					if(i+1 == collisions.size())
+						result = true;
+//				System.out.print("Collider:");
+//				collisions.get(i).sysout();
+			}
+			if (result) {
+				this.direction = direction;
+//				System.out.println(direction);
+//				System.out.println(this.direction);
+//				System.out.println("Déplacement");
 				position.setX(nextPosX);
 				position.setY(nextPosY);
 				collider.setPosition(position);
-			}
-			else {
-				//System.out.println("collision détectée");
+				updateAnimation();
 			}
 		}
 		else 
@@ -109,6 +121,36 @@ public abstract class Personnage {
 
 	public ArrayList<Animation> getAnimations() {
 		return animationManager.getAnimations();
+	}
+
+	public void updateAnimation() {
+		System.out.println("Nouvelle direction");
+		System.out.println(direction);
+		if(direction != null) {
+			int[] orientation = direction.directiontoArray();
+			orientation[0] = orientation[0]*10 + orientation[1];
+			System.out.println(orientation[0]);
+			switch (orientation[0]) {
+			case 10: case 11: case 9:
+				if(animationManager.getCurrentAnimation() != 0)
+					animationManager.setCurrentAnimation(0);
+				break;
+			case 1:
+				if(animationManager.getCurrentAnimation() != 1)
+					animationManager.setCurrentAnimation(1);
+				break;
+			case -10: case -11: case -9:
+				if(animationManager.getCurrentAnimation() != 2)
+					animationManager.setCurrentAnimation(2);
+				break;			
+			case -1:
+				if(animationManager.getCurrentAnimation() != 3)
+					animationManager.setCurrentAnimation(3);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 }

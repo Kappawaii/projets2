@@ -56,19 +56,15 @@ public class Collider {
 		return taille;
 	}
 
-	public boolean detecterCollision(ArrayList<Collider> other) {
+	public ArrayList<Collider> detecterCollisions(ArrayList<Collider> other) {
+		ArrayList<Collider> colliders = new ArrayList<Collider>();
 		for (int index = 0; index < other.size(); index++) {
 			if(!this.equals(other.get(index)))
 					if(this.detecterCollision(other.get(index))) {
-							if(other.get(index).isTrigger) {
-								System.out.println("Collided with trigger : " + other.get(index).o );
-								return false;
-							}
-						//System.out.println("Collision entre "+this+" et "+other);
-						return true;						
+						colliders.add(other.get(index));
 					}
 		}
-		return false;
+		return colliders;
 	}
 
 	public boolean detecterCollision(Collider other) {
@@ -92,8 +88,12 @@ public class Collider {
 		}
 		return true;
 	}
-
-	public Collision creerCollision(Collider other) {
-		return new Collision(this,other);
+	
+	public void sysout() {
+		System.out.print(getO());
+		System.out.print(getX());
+		System.out.print(getY());
+		System.out.print(getXY());
+		System.out.println(isTrigger);
 	}
 }

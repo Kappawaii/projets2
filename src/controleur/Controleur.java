@@ -35,8 +35,10 @@ public class Controleur {
 	KeyManager keymanager;
 	int marqueur;
 	int remind;
+	int remindend;
 	boolean jeuEnPause = false;
 	boolean debugMode = false;
+	boolean scrollingMap;
 	
 	@FXML
 	public void initialize() {
@@ -46,10 +48,10 @@ public class Controleur {
 				new Coordonnee(100,100),1,
 				new Tileset("sprites/personnages/joueur/personnage.png", displayScale)));
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_right.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_down.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_left.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_up.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_right.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_down.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_left.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_up.png", displayScale));
 		modele.addPlateau(new Plateau());
 		BuilderPlateau a = new BuilderPlateau();
 		a.remplirPlateau(modele.getPlateau(0), modele.getTileset(0), displayScale);
@@ -87,25 +89,6 @@ public class Controleur {
 			jeuEnPause = false;
 	}
 
-
-	void ajouterCarte(Cellule cellules[][]) {
-		int index = tuiles.getChildren().size();
-		remind = index;
-		for(int x = 0; x < cellules.length; x++) {
-			for(int y = 0; y < cellules[x].length; y++) {
-				//TODO pourquoi X et y inversés ?
-				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getY()*displayScale);
-				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getX()*displayScale);
-				tuiles.getChildren().add(index, cellules[x][y].getSprite().getView());
-			}		
-		}
-		//		tuiles.getChildren().get(40).setLayoutX(-30);
-		//		System.out.println(tuiles.getChildren().get(41).getLayoutX());
-		//		System.out.println(tuiles.getChildren().get(42).getLayoutX());
-		//		tuiles.getChildren().get(15).setLayoutX(-30);
-		//		System.out.println();
-	}
-
 	private void initAnimation() {
 		gameLoop = new Timeline();
 		temps=0;
@@ -113,11 +96,11 @@ public class Controleur {
 		modele.getJoueur().setImage("file:src/vue/personnage.png", displayScale,0);
 		initJoueur();
 		borderpane.getChildren().add(modele.getJoueur().getSprite().getView());
-
 		for (int i = 0; i < borderpane.getChildren().size(); i++) {
 			borderpane.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
 			marqueur = i;
 		}
+		borderpane.getChildren().get(borderpane.getChildren().size()-1).toFront();
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopJeu){
@@ -127,22 +110,20 @@ public class Controleur {
 					else {
 						if(temps%10==0) {
 							//Animations
-
 							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
 							borderpane.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
-						}
-						if(!jeuEnPause) {
+						}if(!jeuEnPause) {
 							if(debugMode && !jeuEnPause)
 								jeuEnPause = true;
-							
-							
-							System.out.println(modele.getJoueur().getCollider().getO());
 							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
 							//non-scrolling map
-							updatePositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
-							
-							//centerMaptoPosition(modele.getJoueur().getPosition());
+							mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
+							mettreAJourCarte(modele.getPlateau(0).getPlateau());
 							//updatePositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));
+//							System.out.print("Joueur :");
+//							modele.getJoueur().getCollider().sysout();
+							if(scrollingMap)
+							centerMaptoPosition(modele.getJoueur().getPosition());
 						}
 						
 					}
@@ -150,8 +131,37 @@ public class Controleur {
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
+	
+	void ajouterCarte(Cellule cellules[][]) {
+		int index = tuiles.getChildren().size();
+		remind = index;
+		for(int x = 0; x < cellules.length; x++) {
+			for(int y = 0; y < cellules[x].length; y++) {
+				//TODO pourquoi X et y inversés ?
+				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getY()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getX()*displayScale);
+				tuiles.getChildren().add(index+x*cellules.length+y, cellules[x][y].getSprite().getView());
+				remindend = index;
+			}		
+		}
+		//		tuiles.getChildren().get(40).setLayoutX(-30);
+		//		System.out.println(tuiles.getChildren().get(41).getLayoutX());
+		//		System.out.println(tuiles.getChildren().get(42).getLayoutX());
+		//		tuiles.getChildren().get(15).setLayoutX(-30);
+		//		System.out.println();
+	}
+	
+	private void mettreAJourCarte(Cellule cellules[][]) {
+		for(int x = 0; x < cellules.length; x++) {
+			for(int y = 0; y < cellules[x].length; y++) {
+				//TODO pourquoi X et y inversés ?
+				tuiles.getChildren().set(remind+x*cellules.length+y, cellules[x][y].getSprite().getView());
+				
+			}		
+		}		
+	}
 
-	private void updatePositionPersonnage(Personnage pers,Coordonnee pos) {
+	private void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
 		modele.getJoueur().getAnimationManager().updateAnimationsPos(pos, displayScale);
 //		pers.getSprite().getView().setY(pos.getY()*displayScale);
 //		pers.getSprite().getView().setX(pos.getX()*displayScale);

@@ -9,7 +9,7 @@ public class AnimationManager {
 
 	private ArrayList<Animation> animations;
 	private int currentAnimation;
-	
+
 	public AnimationManager() {
 		animations = new ArrayList<Animation>();
 		currentAnimation = 0;
@@ -51,5 +51,9 @@ public class AnimationManager {
 	
 	public ArrayList<Animation> getAnimations() {
 		return animations;
+	}
+	
+	public int getCurrentAnimation() {
+		return currentAnimation;
 	}
 }
