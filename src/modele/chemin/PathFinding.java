@@ -18,10 +18,7 @@ public class PathFinding {
         System.out.println(depart.getY());
         visiter[depart.getX()/16][depart.getY()/16] = false;
         ArrayList<Node> last = new ArrayList<>();
-<<<<<<< e826d886b60c5d550b55cefe3cfc211f6f09918e
 //        ArrayList<Node> all = new ArrayList<>();
-=======
->>>>>>> Animation finie
         last.add(genNode(depart, map, false, null, 0, 0, visiter));
         Node victoire;
         

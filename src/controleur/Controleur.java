@@ -91,11 +91,6 @@ public class Controleur {
 //		System.out.println(tuiles.getLayoutX());
 		if(debugMode)
 			jeuEnPause = false;
-		PathFinding chemin = new PathFinding();
-		ArrayList<Coordonnee> a = chemin.chemin(modele.getPlateau(0), modele.getJoueur().getPosition(), new Coordonnee(100,100));
-		for (int i = 0; i < a.size(); i++) {
-			System.out.println(a.get(i));
-		}
 	}
 
 	private void initAnimation() {
