@@ -1,7 +1,6 @@
 package modele.chemin;
 
 import modele.cellule.Cellule;
-import modele.coordonnee.Coordonnee;
 
 public class Node {
 

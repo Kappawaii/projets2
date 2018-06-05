@@ -15,7 +15,7 @@ public class Plateau {
 		return cellules[x][y];
 	}
 	
-	public Cellule[][] getPlateau() {
+	public Cellule[][] get() {
 		return cellules;
 	}
 	

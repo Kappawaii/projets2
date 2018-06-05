@@ -1,4 +1,5 @@
 package modele.animation;
+
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 

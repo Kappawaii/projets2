@@ -35,6 +35,10 @@ public class Sprite {
 		view.setSmooth(true);
 	}
 	
+	public Sprite() {
+		view = new ImageView();
+	}
+
 	public ImageView getView() {
 		return view;
 	}

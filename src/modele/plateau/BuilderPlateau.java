@@ -11,41 +11,20 @@ import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {
-	
-//	public void lireFichier(){
-//		ArrayList<Integer> entiers = new ArrayList<Integer>();
-//		Scanner scan = null;
-//		try {
-//			scan = new Scanner(new File("maps/level0.tmx"));
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		while (scan.hasNextInt()){
-//			 entiers.add(scan.nextInt());
-//		}
-//		for(int i=0;i<entiers.size();i++) {
-//			System.out.println(entiers.get(i));
-//		}
-//	}
 
-	private int notreMap[][] = fileReader("maps/level0.tmx");
-
-	public int[][] getPlateauInt() {
-		return this.notreMap;
-	}
+	private int notreMap[][];
 	
 	public void remplirPlateau(Plateau plateau, Tileset tileset, int scale) {
 		plateau.initCellules(notreMap.length, notreMap[0].length);
-		for (int x = 0; x < plateau.getPlateau().length; x++) {
-			for (int y = 0; y < plateau.getPlateau()[x].length; y++) {
+		for (int x = 0; x < plateau.get().length; x++) {
+			for (int y = 0; y < plateau.get()[x].length; y++) {
 				boolean isTrigger = (notreMap[x][y] != 348);
-				plateau.getPlateau()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, isTrigger);
+				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, isTrigger);
 			}
 		}
 	}
 	
-	private static int[][] fileReader(String url){
+	public void fileReader(String url){
 		int[][] plateau = new int[12][12];
 		FileInputStream fis = null;
 		String[] sampleString = new String[12];
@@ -105,11 +84,11 @@ public class BuilderPlateau {
 				returntableau[i][j] = plateau[j][i];
 			}
 		}
-		return returntableau;
+		notreMap =  returntableau;
 	}
 
 
-	public static int[] stringTableCaster(String[] tab) {
+	public int[] stringTableCaster(String[] tab) {
 		int[] res = new int[tab.length];
 		for(int i = 0; i < tab.length; i++) {
 			res[i] = Integer.parseInt(tab[i]);
@@ -117,7 +96,7 @@ public class BuilderPlateau {
 		return res;
 	}
 
-	public static void affichePlateau(int[][] tab) {
+	public void affichePlateau(int[][] tab) {
 		for(int i = 0; i < tab.length; i++) {
 			System.out.print("{");
 			for(int j = 0; j < tab[i].length; j++) {

@@ -19,7 +19,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {	
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueZelda.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../vue/VueJeu.fxml"));
 			root=loader.load();
 			Controleur controller = loader.<Controleur>getController();			
 			scale = loader.<Controleur>getController().getScale();
@@ -28,7 +28,7 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.show();
-			controller.init();
+			controller.initInputs();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

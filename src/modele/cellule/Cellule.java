@@ -14,7 +14,7 @@ public class Cellule extends Entity{
 	public Cellule(Tileset tileset,int id, int taille,int x, int y, boolean isTrigger) {
 		this.spr = new Sprite(tileset,taille,id);
 		position = new Coordonnee(x, y);
-		this.collider = new Collider(position, taille, isTrigger, id);
+		this.collider = new Collider(position, taille, isTrigger);
 	}
 	
 	public Coordonnee getPos() {
