@@ -9,10 +9,12 @@ public class AnimationManager {
 
 	private ArrayList<Animation> animations;
 	private int currentAnimation;
-
+	boolean nextFrameEnabled;
+	
 	public AnimationManager() {
 		animations = new ArrayList<Animation>();
 		currentAnimation = 0;
+		nextFrameEnabled = false;
 	}
 	
 	public void addAnimations(Animation animation) {
@@ -37,7 +39,12 @@ public class AnimationManager {
 	}
 	
 	public Sprite nextFrame() {
-		return animations.get(currentAnimation).next();
+		if(nextFrameEnabled) {
+			nextFrameEnabled = false;
+			System.out.println("NextFrame");
+			return animations.get(currentAnimation).next();
+		}
+		return animations.get(currentAnimation).getAllSprites()[animations.get(currentAnimation).getAnimIndex()];
 	}
 	
 	public void updateAnimationsPos(Coordonnee pos, int scale) {
@@ -55,5 +62,9 @@ public class AnimationManager {
 	
 	public int getCurrentAnimation() {
 		return currentAnimation;
+	}
+
+	public void enableNextFrame() {
+		nextFrameEnabled = true;		
 	}
 }

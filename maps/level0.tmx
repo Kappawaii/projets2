@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
- <tileset firstgid="1" source="../tilesets/roguelikeSheet_transparent.tsx"/>
+ <tileset firstgid="1" source="../sprites/tilesets/roguelikeSheet_transparent.tsx"/>
  <layer name="Tile Layer 1" width="12" height="12">
   <data encoding="csv">
 348,348,348,348,348,348,348,348,348,348,348,348,
@@ -8,7 +8,7 @@
 348,348,348,348,348,348,348,348,348,348,348,348,
 348,348,348,348,348,348,348,348,348,348,348,348,
 348,348,348,1186,90,1074,1075,1188,1186,348,348,348,
-348,348,348,1071,1243,348,1132,1189,1127,348,348,348,
+348,348,348,1071,1243,1131,1132,1189,1127,348,348,348,
 348,348,348,1125,1126,1126,1246,1244,1245,348,348,348,
 348,348,348,130,131,1126,1126,1126,1127,348,348,348,
 348,348,348,1182,1183,1183,1183,1183,1184,348,348,348,
