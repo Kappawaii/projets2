@@ -18,7 +18,10 @@ public class PathFinding {
         System.out.println(depart.getY());
         visiter[depart.getX()/16][depart.getY()/16] = false;
         ArrayList<Node> last = new ArrayList<>();
+<<<<<<< e826d886b60c5d550b55cefe3cfc211f6f09918e
 //        ArrayList<Node> all = new ArrayList<>();
+=======
+>>>>>>> Animation finie
         last.add(genNode(depart, map, false, null, 0, 0, visiter));
         Node victoire;
         
@@ -85,7 +88,6 @@ public class PathFinding {
      * @param test
      * @return
      */
-    @SuppressWarnings("unused")
     private static Node genNode(Coordonnee cord, Plateau map, boolean test, Node last, int decalx, int decaly, boolean[][] visite) {
         
         if (!test || (true && cord.getX()>=0 && cord.getY()>=0 && cord.getX()< map.getPlateau().length && cord.getX()< map.getPlateau()[0].length )) {//collision Ã  mettre Ã  la place du troueeeee!

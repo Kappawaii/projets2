@@ -136,18 +136,26 @@ public abstract class Personnage {
 			case 10: case 11: case 9:
 				if(animationManager.getCurrentAnimation() != 0)
 					animationManager.setCurrentAnimation(0);
+				else 
+					animationManager.enableNextFrame();
 				break;
 			case 1:
 				if(animationManager.getCurrentAnimation() != 1)
 					animationManager.setCurrentAnimation(1);
+				else 
+					animationManager.enableNextFrame();
 				break;
 			case -10: case -11: case -9:
 				if(animationManager.getCurrentAnimation() != 2)
 					animationManager.setCurrentAnimation(2);
+				else 
+					animationManager.enableNextFrame();
 				break;			
 			case -1:
 				if(animationManager.getCurrentAnimation() != 3)
 					animationManager.setCurrentAnimation(3);
+				else 
+					animationManager.enableNextFrame();
 				break;
 			default:
 				break;

@@ -1,11 +1,12 @@
 package modele.niveau;
 
 import java.util.ArrayList;
+
+import modele.Entity.Entity;
 import modele.plateau.Plateau;
 
 public class Niveau {
 
-	private int id;
 	Plateau plateau;
 	ArrayList<Entity> entites;
 	
