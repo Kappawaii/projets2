@@ -72,19 +72,19 @@ public class Collider {
 		/*
 		 * Test de non-collision horizontale
 		 */
-		if (this.o.getX() > other.getX().getX())
+		if (this.o.getX() >= other.getX().getX())
 			return false;
-		else if (this.x.getX() < other.getO().getX()) {
+		else if (this.x.getX() <= other.getO().getX()) {
 			return false;
 		}
 		/*
 		 * A partir d'ici, il y a forcément une intersection entre les deux
 		 * polygones sur le plan horizontal (x)
 		 */
-		if (this.x.getY() > other.getY().getY()) {
+		if (this.x.getY() >= other.getY().getY()) {
 			return false;
 		}
-		else if (this.getXY().getY() < other.getO().getY()) {
+		else if (this.getXY().getY() <= other.getO().getY()) {
 			return false;
 		}
 		return true;

@@ -99,7 +99,13 @@ public class BuilderPlateau {
 				}
 			}
 		}
-		return plateau;
+		int[][] returntableau = new int[plateau[0].length][plateau.length];
+		for (int i = 0; i < returntableau.length; i++) {
+			for (int j = 0; j < returntableau[i].length; j++) {
+				returntableau[i][j] = plateau[j][i];
+			}
+		}
+		return returntableau;
 	}
 
 

@@ -4,6 +4,7 @@ import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import modele.Modele;
@@ -15,6 +16,7 @@ import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import modele.plateau.BuilderPlateau;
 import modele.plateau.Plateau;
+import vue.Affichage;
 import vue.tileset.Tileset;
 
 public class Controleur {
@@ -26,6 +28,7 @@ public class Controleur {
 	@FXML
 	private Pane entites = new Pane();
 
+	static Affichage affichage;
 	int testAnimationManager = 0;
 	private Timeline gameLoop;
 	private int temps;
@@ -79,6 +82,18 @@ public class Controleur {
 		keymanager.addKey(Axe.ABAS, "DOWN");
 	}
 
+	private void initJoueur() {
+		//initialisation joueur
+		Animation walking_right = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
+		Animation walking_down = new Animation(1/*framesBetweenSprites*/, modele.getTileset(2),displayScale);
+		Animation walking_left = new Animation(1/*framesBetweenSprites*/, modele.getTileset(3),displayScale);
+		Animation walking_up = new Animation(1/*framesBetweenSprites*/, modele.getTileset(4),displayScale);
+		modele.getJoueur().getAnimations().add(walking_right);
+		modele.getJoueur().getAnimations().add(walking_down);
+		modele.getJoueur().getAnimations().add(walking_left);
+		modele.getJoueur().getAnimations().add(walking_up);
+	}
+	
 	public void mouseClicked() {
 //		System.out.println(keymanager);
 //		modele.getJoueur().seDeplace(Axe.GAUCHE);
@@ -121,12 +136,12 @@ public class Controleur {
 							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
 							//non-scrolling map
 							mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
-							mettreAJourCarte(modele.getPlateau(0).getPlateau());
+							//mettreAJourCarte(modele.getPlateau(0).getPlateau());
 							//updatePositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));
 //							System.out.print("Joueur :");
 //							modele.getJoueur().getCollider().sysout();
 							if(scrollingMap)
-							centerMaptoPosition(modele.getJoueur().getPosition());
+								centerMaptoPosition(modele.getJoueur().getPosition());
 						}
 						
 					}
@@ -134,66 +149,58 @@ public class Controleur {
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
+
 	
-	void nettoyerPlateau() {
-		tuiles.getChildren().clear();
+	
+	
+	
+	public void nettoyerPlateau() {
+		nettoyerPane(tuiles);
 	}
 	
-	void nettoyerEntites() {
-		entites.getChildren().clear();
+	public void nettoyerEntites() {
+		nettoyerPane(entites);
+	}
+
+	public void nettoyerPane(Pane pane) {
+		pane.getChildren().clear();
 	}
 	
-	void ajouterCarte(Cellule cellules[][]) {
+	public void ajouterCarte(Cellule[][] cellules) {
 		int index = tuiles.getChildren().size();
-		remind = index;
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
-				//TODO pourquoi X et y inversés ?
-				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getY()*displayScale);
-				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getX()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getX()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getY()*displayScale);
 				tuiles.getChildren().add(index+x*cellules.length+y, cellules[x][y].getSprite().getView());
-				remindend = index;
+				Label a = new Label(""+cellules[x][y].getCollider().isTrigger());
+				a.setLayoutX(cellules[x][y].getPos().getX()*displayScale);
+				a.setLayoutY(cellules[x][y].getPos().getY()*displayScale);
+				tuiles.getChildren().add(a);
 			}		
 		}
-		//		tuiles.getChildren().get(40).setLayoutX(-30);
-		//		System.out.println(tuiles.getChildren().get(41).getLayoutX());
-		//		System.out.println(tuiles.getChildren().get(42).getLayoutX());
-		//		tuiles.getChildren().get(15).setLayoutX(-30);
-		//		System.out.println();
 	}
 	
-	private void mettreAJourCarte(Cellule cellules[][]) {
+	public void mettreAJourCarte(Cellule[][] cellules) {
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				//TODO pourquoi X et y inversés ?
-				tuiles.getChildren().set(remind+x*cellules.length+y, cellules[x][y].getSprite().getView());
+				tuiles.getChildren().set(x*cellules.length+y, cellules[x][y].getSprite().getView());
 				
 			}		
 		}		
 	}
 
-	private void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
+	public void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
 		modele.getJoueur().getAnimationManager().updateAnimationsPos(pos, displayScale);
 //		pers.getSprite().getView().setY(pos.getY()*displayScale);
 //		pers.getSprite().getView().setX(pos.getX()*displayScale);
 	}
 	
 	//scrolling map
-	private void centerMaptoPosition(Coordonnee coordonnee) {
+	public void centerMaptoPosition(Coordonnee coordonnee) {
 		tuiles.setTranslateX(tuiles.getLayoutBounds().getMaxX()/2-coordonnee.getX()*displayScale);
 		tuiles.setTranslateY(tuiles.getLayoutBounds().getMaxY()/2-coordonnee.getY()*displayScale);
-	}
-
-	private void initJoueur() {
-		//initialisation joueur
-		Animation walking_right = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
-		Animation walking_down = new Animation(1/*framesBetweenSprites*/, modele.getTileset(2),displayScale);
-		Animation walking_left = new Animation(1/*framesBetweenSprites*/, modele.getTileset(3),displayScale);
-		Animation walking_up = new Animation(1/*framesBetweenSprites*/, modele.getTileset(4),displayScale);
-		modele.getJoueur().getAnimations().add(walking_right);
-		modele.getJoueur().getAnimations().add(walking_down);
-		modele.getJoueur().getAnimations().add(walking_left);
-		modele.getJoueur().getAnimations().add(walking_up);
 	}
 }
 
