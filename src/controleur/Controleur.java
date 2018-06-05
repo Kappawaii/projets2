@@ -6,6 +6,7 @@ import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.control.Cell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -61,6 +62,11 @@ public class Controleur {
 		ajouterCarte(modele.getPlateau(0).getPlateau());
 		initAnimation();
 		gameLoop.play();
+		ArrayList<Cellule> ccc = PathFinding.chemin(modele.getPlateau(0), modele.getPlateau(0).getCellule(3, 1), modele.getPlateau(0).getCellule(1, 1));
+		for (int i = 0; i < ccc.size(); i++) {
+			Cellule cell = ccc.get(i);
+			System.out.println("Passe par la case " + cell.getPos());
+		}
 	}
 	
 	public int getScale() {
@@ -89,13 +95,13 @@ public class Controleur {
 //		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
 //		tuiles.getChildren().get(remind).setLayoutX(tuiles.getChildren().get(remind).getLayoutX()+1);
 //		System.out.println(tuiles.getLayoutX());
-		if(debugMode)
-			jeuEnPause = false;
-		PathFinding chemin = new PathFinding();
-		ArrayList<Coordonnee> a = chemin.chemin(modele.getPlateau(0), modele.getJoueur().getPosition(), new Coordonnee(100,100));
-		for (int i = 0; i < a.size(); i++) {
-			System.out.println(a.get(i));
-		}
+//		if(debugMode)
+//			jeuEnPause = false;
+//		PathFinding chemin = new PathFinding();
+//		ArrayList<Coordonnee> a = chemin.chemin(modele.getPlateau(0), modele.getJoueur().getPosition(), new Coordonnee(100,100));
+//		for (int i = 0; i < a.size(); i++) {
+//			System.out.println(a.get(i));
+//		}
 	}
 
 	private void initAnimation() {
