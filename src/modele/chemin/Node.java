@@ -1,15 +1,16 @@
 package modele.chemin;
 
+import modele.cellule.Cellule;
 import modele.coordonnee.Coordonnee;
 
 public class Node {
 
 
     Node avant;
-    Coordonnee cord;
+    Cellule cord;
     
     
-    public Node(Node avant, Coordonnee cord) {
+    public Node(Node avant, Cellule cord) {
         this.avant=avant;
         this.cord=cord;
     }
@@ -19,7 +20,7 @@ public class Node {
     }
 
 
-    public Coordonnee getCord() {
+    public Cellule getCord() {
         return cord;
     }
 

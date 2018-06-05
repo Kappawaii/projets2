@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.ArrayList;
+
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,6 +11,7 @@ import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
 import modele.cellule.Cellule;
+import modele.chemin.PathFinding;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
@@ -59,6 +62,11 @@ public class Controleur {
 		ajouterCarte(modele.getPlateau(0).getPlateau());
 		initAnimation();
 		gameLoop.play();
+		ArrayList<Cellule> ccc = PathFinding.chemin(modele.getPlateau(0), modele.getPlateau(0).getCellule(3, 1), modele.getPlateau(0).getCellule(1, 1));
+        for (int i = 0; i < ccc.size(); i++) {
+            Cellule cell = ccc.get(i);
+            System.out.println("Passe par la case " + cell.getPos());
+        }
 	}
 	
 	public int getScale() {
