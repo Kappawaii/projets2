@@ -3,6 +3,7 @@ package modele.personnage;
 import java.util.ArrayList;
 
 import modele.Modele;
+import modele.Entity.Entity;
 import modele.animation.Animation;
 import modele.animation.AnimationManager;
 import modele.collision.Collider;
@@ -12,11 +13,8 @@ import modele.objet.Objet;
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 
-public abstract class Personnage {
+public abstract class Personnage extends Entity {
 
-	private String nom;
-	private int pv;
-	private Coordonnee position;
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
 	private AnimationManager animationManager;
@@ -37,7 +35,6 @@ public abstract class Personnage {
 
 	public Personnage(String nom, int pv, Coordonnee position, int vitesse, Tileset tileset, int taille) {
 		this.nom = nom;
-		this.pv = pv;
 		this.position = position;
 		this.vitesse = vitesse;
 		this.inventaire = new ArrayList<>(); 
@@ -87,10 +84,6 @@ public abstract class Personnage {
 
 	public String getNom() {
 		return this.nom;
-	}
-
-	public int getVie() {
-		return this.pv;
 	}
 
 	public int getVitesse() {

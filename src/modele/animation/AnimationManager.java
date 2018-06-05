@@ -41,7 +41,6 @@ public class AnimationManager {
 	public Sprite nextFrame() {
 		if(nextFrameEnabled) {
 			nextFrameEnabled = false;
-			System.out.println("NextFrame");
 			return animations.get(currentAnimation).next();
 		}
 		return animations.get(currentAnimation).getAllSprites()[animations.get(currentAnimation).getAnimIndex()];

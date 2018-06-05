@@ -39,7 +39,7 @@ public class Animation {
 			sprites[i] = new Sprite(tileset,4,i,xLength,yLength);
 		}
 	}
-	
+
 	protected void resetAnimation() {
 		counter = 0;
 		animIndex = 0;
@@ -52,19 +52,8 @@ public class Animation {
 		}
 		return sprites[animIndex];
 	}
-	
+
 	protected Sprite[] getAllSprites() {
 		return sprites;
 	}
-
-	@SuppressWarnings("unused")
-	private boolean isFull() {
-		for(int i=0;i<sprites.length;i++) {
-			if(sprites[i] == null) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 }
