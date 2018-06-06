@@ -44,12 +44,12 @@ public class Collider {
 	public void setPosition(Coordonnee coordonnee) {
 		o.setX(coordonnee.getX());
 		o.setY(coordonnee.getY());
-		x.setX(o.getX()+taille);
-		x.setY(o.getY());
-		y.setX(o.getX());
-		y.setY(o.getY()+taille);
-		xy.setX(o.getX()+taille);
-		xy.setY(o.getY()+taille);
+		x.setX(coordonnee.getX()+taille);
+		x.setY(coordonnee.getY());
+		y.setX(coordonnee.getX());
+		y.setY(coordonnee.getY()+taille);
+		xy.setX(coordonnee.getX()+taille);
+		xy.setY(coordonnee.getY()+taille);
 	}
 
 	public int getTaille() {
@@ -60,7 +60,7 @@ public class Collider {
 		ArrayList<Collider> colliders = new ArrayList<Collider>();
 		for (int index = 0; index < other.size(); index++) {
 			if(!this.equals(other.get(index)))
-					if(this.detecterCollision(other.get(index))) {
+					if(detecterCollision(other.get(index))) {
 						colliders.add(other.get(index));
 					}
 		}
@@ -71,8 +71,9 @@ public class Collider {
 		/*
 		 * Test de non-collision horizontale
 		 */
-		if (this.o.getX() >= other.getX().getX())
+		if (this.o.getX() >= other.getX().getX()) {
 			return false;
+		}
 		else if (this.x.getX() <= other.getO().getX()) {
 			return false;
 		}
@@ -95,5 +96,10 @@ public class Collider {
 		System.out.print(getY());
 		System.out.print(getXY());
 		System.out.println(isTrigger);
+	}
+
+	public void setTrigger(boolean b) {
+		isTrigger = b;
+		
 	}
 }

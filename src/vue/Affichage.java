@@ -8,13 +8,13 @@ import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
 
 public class Affichage {
-	
+
 	Pane tuiles;
 	Pane entites;
 	Cellule[][] cellules;
 	int displayScale;
 	Modele modele;
-	
+
 	public Affichage(Modele modele, Pane tuiles, Pane entites,int displayScale) {
 		this.tuiles = tuiles;
 		this.entites = entites;
@@ -26,7 +26,7 @@ public class Affichage {
 	public void nettoyerPane(Pane pane) {
 		pane.getChildren().clear();
 	}
-	
+
 	public void ajouterCarte(Cellule[][] cellules) {
 		int index = tuiles.getChildren().size();
 		for(int x = 0; x < cellules.length; x++) {
@@ -41,13 +41,13 @@ public class Affichage {
 			}		
 		}
 	}
-	
+
 	public void mettreAJourCarte(Cellule[][] cellules) {
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				//TODO pourquoi X et y inversés ?
 				tuiles.getChildren().set(x*cellules.length+y, cellules[x][y].getSprite().getView());
-				
+
 			}		
 		}		
 	}
@@ -57,7 +57,7 @@ public class Affichage {
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
 		pers.getSprite().getView().setX(pos.getX()*displayScale);
 	}
-	
+
 	//scrolling map
 	public void centerMaptoPosition(Coordonnee coordonnee) {
 		tuiles.setTranslateX(tuiles.getLayoutBounds().getMaxX()/2-coordonnee.getX()*displayScale);

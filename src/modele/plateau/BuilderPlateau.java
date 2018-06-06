@@ -8,18 +8,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import modele.cellule.Cellule;
+import sun.jvm.hotspot.types.OopField;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {
 
 	private int notreMap[][];
 	
-	public void remplirPlateau(Plateau plateau, Tileset tileset, int scale) {
+	public void remplirPlateau(Plateau plateau, Tileset tileset, int tailleCases) {
+		int offsetTaille;
+		int offsetX;
+		int offsetY;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
 			for (int y = 0; y < plateau.get()[x].length; y++) {
+				offsetTaille = 0;
+				offsetX = 0;
+				offsetY = 0;
 				boolean isTrigger = (notreMap[x][y] != 348);
-				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, scale,x*16,y*16, isTrigger);
+				if(notreMap[x][y] == 1246) {
+					tailleCases = 12;
+					offsetX = 3;
+					offsetY = 4;
+					isTrigger = false;
+				}
+				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille);
 			}
 		}
 	}

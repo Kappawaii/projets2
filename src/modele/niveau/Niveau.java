@@ -30,7 +30,7 @@ public class Niveau {
 		plateau = new Plateau();
 		BuilderPlateau a = new BuilderPlateau();
 		a.fileReader(url);
-		a.remplirPlateau(plateau, tileset, displayScale);
+		a.remplirPlateau(plateau, tileset, 16);
 	}
 
 	public Plateau getPlateau() {

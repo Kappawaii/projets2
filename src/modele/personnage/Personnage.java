@@ -1,6 +1,7 @@
 package modele.personnage;
 
 import java.util.ArrayList;
+
 import modele.Entity.Entity;
 import modele.animation.Animation;
 import modele.animation.AnimationManager;

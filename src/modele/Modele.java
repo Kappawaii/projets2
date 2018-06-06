@@ -6,7 +6,6 @@ import modele.collision.Collider;
 import modele.niveau.Niveau;
 import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
-import modele.plateau.Plateau;
 import vue.tileset.Tileset;
 
 public class Modele {

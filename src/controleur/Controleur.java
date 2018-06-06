@@ -12,8 +12,6 @@ import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.niveau.Niveau;
 import modele.personnage.joueur.Joueur;
-import modele.plateau.BuilderPlateau;
-import modele.plateau.Plateau;
 import vue.Affichage;
 import vue.tileset.Tileset;
 
@@ -50,10 +48,10 @@ public class Controleur {
 				new Coordonnee(100,100),1,
 				new Tileset("sprites/personnages/joueur/personnage.png", displayScale)));
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_right.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_down.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_left.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/debug_up.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_right.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_down.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_left.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_up.png", displayScale));
 		initRessources();
 		initAnimation();
 		gameLoop.play();
@@ -153,6 +151,7 @@ public class Controleur {
 							//non-scrolling map
 //							System.out.print("Joueur :");
 //							modele.getJoueur().getCollider().sysout();
+
 							if(scrollingMap) {
 								affichage.centerMaptoPosition(modele.getJoueur().getPosition());
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));

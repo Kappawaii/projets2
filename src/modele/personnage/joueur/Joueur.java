@@ -27,11 +27,10 @@ public class Joueur extends Personnage{
 		if (direction.isMovement()) {
 			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger());
 			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getPlateauCollider(modele.getIdNiveau()));
-			boolean result = false;
+			boolean result = true;
 			for (int i = 0; (i < collisions.size()); i++) {
-				if(collisions.get(i).isTrigger())
-					if(i+1 == collisions.size())
-						result = true;		
+				if(!collisions.get(i).isTrigger())
+					result = false;		
 			}
 			if (result) {
 				this.direction = direction;
