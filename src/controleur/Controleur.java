@@ -48,10 +48,7 @@ public class Controleur {
 				new Coordonnee(100,100),1,
 				new Tileset("sprites/personnages/joueur/personnage.png", displayScale)));
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_right.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_down.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_left.png", displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking_up.png", displayScale));
+		modele.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
 		initRessources();
 		initAnimation();
 		gameLoop.play();
@@ -76,14 +73,12 @@ public class Controleur {
 	}
 
 	private void initRessources() {
-		Animation walking_right = new Animation(1/*framesBetweenSprites*/, modele.getTileset(1),displayScale);
-		Animation walking_down = new Animation(1/*framesBetweenSprites*/, modele.getTileset(2),displayScale);
-		Animation walking_left = new Animation(1/*framesBetweenSprites*/, modele.getTileset(3),displayScale);
-		Animation walking_up = new Animation(1/*framesBetweenSprites*/, modele.getTileset(4),displayScale);
-		modele.getJoueur().getAnimations().add(walking_right);
-		modele.getJoueur().getAnimations().add(walking_down);
-		modele.getJoueur().getAnimations().add(walking_left);
-		modele.getJoueur().getAnimations().add(walking_up);
+		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
+		modele.getJoueur().getAnimations().add(walking);
+//		modele.getJoueur().getAnimations().add(walking_right);
+//		modele.getJoueur().getAnimations().add(walking_down);
+//		modele.getJoueur().getAnimations().add(walking_left);
+//		modele.getJoueur().getAnimations().add(walking_up);
 		modele.addNiveau(new Niveau("maps/level0.tmx", modele.getTileset(0), null, displayScale));
 		modele.addNiveau(new Niveau("maps/sans titre.tmx", modele.getTileset(0), null, displayScale));
 	}
@@ -123,8 +118,7 @@ public class Controleur {
 		changerMap(0);
 		gameLoop = new Timeline();
 		temps=0;
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		modele.getJoueur().resetImage();		
+		gameLoop.setCycleCount(Timeline.INDEFINITE);	
 		entites.getChildren().add(modele.getJoueur().getSprite().getView());
 		for (int i = 0; i < entites.getChildren().size(); i++) {
 			entites.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
@@ -132,6 +126,7 @@ public class Controleur {
 		}
 		
 		entites.getChildren().get(entites.getChildren().size()-1).toFront();
+		entites.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopJeu){
@@ -141,8 +136,8 @@ public class Controleur {
 					else {
 						if(temps%10==0) {
 							//Animations
-							modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());;
-							entites.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
+							//modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());
+							
 							
 						}if(!jeuEnPause) {
 							if(debugMode && !jeuEnPause)

@@ -9,14 +9,12 @@ import modele.collision.Collider;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import vue.sprite.Sprite;
-import vue.tileset.Tileset;
 
 public abstract class Personnage extends Entity {
 
 	private AnimationManager animationManager;
 	protected Collider collider;
 	protected Axe direction;
-	Sprite spr;
 
 	public Personnage(String nom, int pv, Coordonnee position, int taille) {
 		super.nom = nom;
@@ -31,28 +29,28 @@ public abstract class Personnage extends Entity {
 			orientation[0] = orientation[0]*10 + orientation[1];
 			switch (orientation[0]) {
 			case 10: case 11: case 9:
-				if(animationManager.getCurrentAnimation() != 0)
+				if(animationManager.getCurrentLigne() != 0)
 					animationManager.setCurrentAnimation(0);
 				else 
-					animationManager.enableNextFrame();
+					animationManager.nextFrame();
 				break;
 			case 1:
-				if(animationManager.getCurrentAnimation() != 1)
+				if(animationManager.getCurrentLigne() != 1)
 					animationManager.setCurrentAnimation(1);
 				else 
-					animationManager.enableNextFrame();
+					animationManager.nextFrame();
 				break;
 			case -10: case -11: case -9:
-				if(animationManager.getCurrentAnimation() != 2)
+				if(animationManager.getCurrentLigne() != 2)
 					animationManager.setCurrentAnimation(2);
 				else 
-					animationManager.enableNextFrame();
+					animationManager.nextFrame();
 				break;			
 			case -1:
-				if(animationManager.getCurrentAnimation() != 3)
+				if(animationManager.getCurrentLigne() != 3)
 					animationManager.setCurrentAnimation(3);
 				else 
-					animationManager.enableNextFrame();
+					animationManager.nextFrame();
 				break;
 			default:
 				break;
@@ -80,24 +78,8 @@ public abstract class Personnage extends Entity {
 		this.position.setXandY(x, y);
 	}
 
-	public void setImage(String path, int scale, int id, Tileset tileset) {
-		spr = new Sprite(tileset,scale,id);
-	}
-
-	public void setImage(Sprite newSprite) {
-		spr.setView(newSprite.getView());
-	}
-	
-	public void resetImage() {
-		spr = new Sprite();
-	}
-
 	public Sprite getSprite() {
-		return spr;
-	}
-
-	public void setSprite(Sprite spr) {
-		this.spr = spr;
+		return animationManager.getCurrentAnimation();
 	}
 
 	public ArrayList<Animation> getAnimations() {

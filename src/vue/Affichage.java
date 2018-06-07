@@ -53,7 +53,7 @@ public class Affichage {
 	}
 
 	public void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
-		modele.getJoueur().getAnimationManager().updateAnimationsPos(pos, displayScale);
+//		modele.getJoueur().getAnimationManager().updateAnimationsPos(pos, displayScale);
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
 		pers.getSprite().getView().setX(pos.getX()*displayScale);
 	}

@@ -1,16 +1,19 @@
 package modele.animation;
 
+import vue.sprite.AnimatedSprite;
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 
 public class Animation {
 
-	private Sprite[] sprites;
+	private AnimatedSprite spr;
 	private int animIndex;
+	private int ligneIndex;
 	private int framesBetweenSprites;
 	private int counter;
+	private int numberOfFrames;
 
-	public Animation(int framesBetweenSprites, Tileset tileset, int displayScale) {
+	public Animation(int framesBetweenSprites, Tileset tileset, int displayScale, int ligne) {
 		if (framesBetweenSprites == 0) {
 
 		}
@@ -20,11 +23,12 @@ public class Animation {
 		else if (displayScale == 0) {
 			throw new IllegalArgumentException("Valeur de displayScale : 0");
 		}
-		this.sprites = new Sprite[tileset.getCasesParLigne()];
 		this.animIndex = 0;
 		this.counter = 0;
+		this.ligneIndex = ligne;
 		this.framesBetweenSprites = framesBetweenSprites;
-		genererAnimation(tileset,displayScale, tileset.getPxParImage(),(int) tileset.getHauteurImg());
+		numberOfFrames = tileset.getCasesParLigne();
+		spr = new AnimatedSprite(tileset,displayScale, tileset.getPxParImage(), (int)tileset.getHauteurImg(), ligne);
 	}
 
 	/**
@@ -35,26 +39,31 @@ public class Animation {
 		return animIndex;
 	}
 
-	private void genererAnimation(Tileset tileset, int scale, int xLength, int yLength) {
-		for (int i = 0; i < sprites.length; i++) {
-			sprites[i] = new Sprite(tileset,4,i,xLength,yLength);
-		}
-	}
 
 	protected void resetAnimation() {
 		counter = 0;
 		animIndex = 0;
 	}
 
-	public Sprite next() {
-		if(counter++%framesBetweenSprites==0) {
+	public void increment() {
+		counter++;
+		if(counter%framesBetweenSprites==0) {
 			counter = 0;
-			animIndex = (animIndex+1)%(sprites.length);
+			animIndex = (animIndex+1)%numberOfFrames;
+			spr.setFrame(animIndex,ligneIndex);
 		}
-		return sprites[animIndex];
 	}
 
-	protected Sprite[] getAllSprites() {
-		return sprites;
+	public Sprite getSprite() {
+		return spr;
+	}
+
+	public void setLigneIndex(int i) {
+		ligneIndex = i;
+		System.out.println(i);
+	}
+
+	public int getLigneIndex() {
+		return ligneIndex;
 	}
 }

@@ -4,21 +4,18 @@ import java.util.ArrayList;
 
 import modele.collision.Collider;
 import modele.niveau.Niveau;
-import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import vue.tileset.Tileset;
 
 public class Modele {
 
 	ArrayList<Tileset> tilesets;
-	ArrayList<Personnage> personnages;
 	ArrayList<Niveau> niveaux;
 	int idNiveau;
 	Joueur joueur;
 	
 	public Modele() {
 		tilesets = new ArrayList<Tileset>();
-		personnages = new ArrayList<Personnage>();
 		niveaux = new ArrayList<Niveau>();
 	}
 
@@ -50,9 +47,7 @@ public class Modele {
 			}
 			return colliders;
 		}
-	}
-	
-	
+	}	
 
 	public Joueur getJoueur() {
 		return joueur;
@@ -60,9 +55,7 @@ public class Modele {
 
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
-	}
-	
-	
+	}	
 
 	public void addTileset(Tileset tileset) {
 		tilesets.add(tileset);
@@ -70,8 +63,7 @@ public class Modele {
 
 	public Tileset getTileset(int index) {
 		return tilesets.get(index);
-	}
-	
+	}	
 	
 	
 	public void addNiveau(Niveau niveau) {
@@ -80,9 +72,7 @@ public class Modele {
 	
 	public Niveau getNiveau(int index) {
 		return niveaux.get(index);
-	}
-	
-	
+	}	
 	
 	public int getIdNiveau() {
 		return idNiveau;

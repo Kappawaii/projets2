@@ -13,7 +13,7 @@ public class AnimationTest {
 		
 
 		try {
-			new Animation(2, null, 0);
+			new Animation(2, null, 0, 0);
 		} catch (Throwable ex) {
 			e = ex;
 		}
