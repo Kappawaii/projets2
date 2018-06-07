@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import modele.cellule.Cellule;
-import sun.jvm.hotspot.types.OopField;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {

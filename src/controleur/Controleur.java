@@ -4,7 +4,10 @@ import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
@@ -23,6 +26,11 @@ public class Controleur {
 	private Pane tuiles = new Pane();
 	@FXML
 	private Pane entites = new Pane();
+	
+	@FXML
+	private Pane dialogueBox = new Pane();
+	@FXML
+    private Label saisieDialogue = new Label();
 
 	int testAnimationManager = 0;
 	private Timeline gameLoop;
@@ -55,6 +63,21 @@ public class Controleur {
 		initRessources();
 		initAnimation();
 		gameLoop.play();
+		String text = "TOC TOC TOC \nqui est là ??";
+        this.initDialogue(text);
+	}
+	
+	public void initDialogue(String text) {
+        dialogueBox.getChildren().add(saisieDialogue);
+        saisieDialogue.setLayoutX(290);
+        saisieDialogue.setLayoutY(600);
+        //-fx-font-weight: bold; 
+//        saisieDialogue.setStyle("-fx-font-size: 28pt; -fx-font-family: Open Sans;");
+        saisieDialogue.setTextFill(Color.web("#FFFFFF"));
+//      saisieDialogue.setFont(Font.font("Belgrano", FontWeight.BOLD, 28));
+        saisieDialogue.setFont(new Font("Open Sans", 28));
+        String qqchose = text;
+        saisieDialogue.setText(qqchose);
 	}
 	
 	public int getScale() {
