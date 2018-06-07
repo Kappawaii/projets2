@@ -13,7 +13,9 @@ import vue.tileset.Tileset;
 public class BuilderPlateau {
 
 	private int notreMap[][];
-	
+	private int width;
+	private int height;
+
 	public void remplirPlateau(Plateau plateau, Tileset tileset, int tailleCases) {
 		int offsetTaille;
 		int offsetX;
@@ -26,20 +28,23 @@ public class BuilderPlateau {
 				offsetY = 0;
 				boolean isTrigger = (notreMap[x][y] != 348);
 				if(notreMap[x][y] == 1246) {
-					tailleCases = 12;
+					tailleCases = 1;
 					offsetX = 3;
-					offsetY = 4;
+					offsetY = 2;
 					isTrigger = false;
 				}
 				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille);
 			}
 		}
 	}
-	
+
 	public void fileReader(String url){
-		int[][] plateau = new int[12][12];
+
+
+
+
 		FileInputStream fis = null;
-		String[] sampleString = new String[12];
+
 		String ligne = "";
 		try {
 			fis = new FileInputStream(new File(url));
@@ -54,17 +59,33 @@ public class BuilderPlateau {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+
+		try {
+			ligne=br.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ligne=ligne.substring(ligne.indexOf("width"), ligne.indexOf(" tilewidth"));
+		String[]taille=ligne.split("\"");
+		this.width=Integer.parseInt(taille[1]);
+		this.height=Integer.parseInt(taille[3]);
+		int[][] plateau = new int[this.width][this.height];
+		String[] sampleString = new String[this.width];
+
+
 		try {
 			int i = 0;
 			if(url.contains(".tmx")) {
-				//System.out.println("Fichier TMX détecté !");
-				while(!Character.isDigit(ligne.charAt(0))) {
-					try {
-						ligne = br.readLine();
-					}
-					catch(IOException e) {
-						e.printStackTrace();
-					}
+
+			}
+			//System.out.println("Fichier TMX détecté !");
+			while(!Character.isDigit(ligne.charAt(0))) {
+				try {
+					ligne = br.readLine();
+				}
+				catch(IOException e) {
+					e.printStackTrace();
 				}
 			}
 			//System.out.println("ligne " + ligne );
@@ -119,5 +140,13 @@ public class BuilderPlateau {
 			}
 			System.out.println("},");
 		}
-	}	
+	}
+	
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
 }
