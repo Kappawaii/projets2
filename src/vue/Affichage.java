@@ -1,5 +1,8 @@
 package vue;
 
+import java.util.ArrayList;
+
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import modele.Modele;
@@ -14,7 +17,8 @@ public class Affichage {
 	Cellule[][] cellules;
 	int displayScale;
 	Modele modele;
-
+	ArrayList<Node> nodes;
+	
 	public Affichage(Modele modele, Pane tuiles, Pane entites,int displayScale) {
 		this.tuiles = tuiles;
 		this.entites = entites;
@@ -27,17 +31,19 @@ public class Affichage {
 		pane.getChildren().clear();
 	}
 
-	public void ajouterCarte(Cellule[][] cellules) {
+	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
 		int index = tuiles.getChildren().size();
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getX()*displayScale);
 				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getY()*displayScale);
 				tuiles.getChildren().add(index+x*cellules.length+y, cellules[x][y].getSprite().getView());
+				if(debug) {
 				Label a = new Label(""+cellules[x][y].getCollider().isTrigger());
 				a.setLayoutX(cellules[x][y].getPos().getX()*displayScale);
 				a.setLayoutY(cellules[x][y].getPos().getY()*displayScale);
 				tuiles.getChildren().add(a);
+				}
 			}		
 		}
 	}

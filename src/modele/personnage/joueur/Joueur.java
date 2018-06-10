@@ -4,6 +4,7 @@ package modele.personnage.joueur;
 import java.util.ArrayList;
 
 import modele.Modele;
+import modele.animation.Animation;
 import modele.collision.Collider;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
@@ -15,8 +16,8 @@ public class Joueur extends Personnage{
 	private int vitesse;
 	private ArrayList<Objet> inventaire;
 
-	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Tileset tileset) {
-		super(nom, pv, position, 16);
+	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Tileset tileset, Animation a) {
+		super(nom, pv, position, 16, a);
 		this.vitesse = vitesse;
 		this.inventaire = new ArrayList<>(); 
 	}

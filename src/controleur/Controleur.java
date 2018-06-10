@@ -44,9 +44,6 @@ public class Controleur {
 	public void initialize() {
 		affichage = new Affichage(modele, tuiles, entites, displayScale);
 		//initialisation du joueur
-		modele.setJoueur(new Joueur("test", 0, 
-				new Coordonnee(100,100),1,
-				new Tileset("sprites/personnages/joueur/personnage.png", displayScale)));
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		modele.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
 		initRessources();
@@ -74,7 +71,9 @@ public class Controleur {
 
 	private void initRessources() {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
-		modele.getJoueur().getAnimations().add(walking);
+		modele.setJoueur(new Joueur("test", 0, 
+				new Coordonnee(100,100),1,
+				new Tileset("sprites/personnages/joueur/personnage.png", displayScale), walking));
 //		modele.getJoueur().getAnimations().add(walking_right);
 //		modele.getJoueur().getAnimations().add(walking_down);
 //		modele.getJoueur().getAnimations().add(walking_left);
@@ -102,7 +101,7 @@ public class Controleur {
 	public void changerMap(int idNiveau) {
 		nettoyerPlateau();
 		modele.setIdNiveau(idNiveau);
-		affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get());
+		affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get(), debugMode);
 		//affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get());
 	}
 	

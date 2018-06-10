@@ -13,11 +13,11 @@ public class AnimationTest {
 		
 
 		try {
-			new Animation(2, null, 0, 0);
+			new Animation(0, null, 0, 0);
 		} catch (Throwable ex) {
 			e = ex;
 		}
-		assertTrue(e instanceof IllegalArgumentException);
+		assertTrue(e instanceof  Exception);
 	}
 	
 }

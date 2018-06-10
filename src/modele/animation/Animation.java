@@ -39,13 +39,14 @@ public class Animation {
 		return animIndex;
 	}
 
-
-	protected void resetAnimation() {
+	public void setCurrentAnimation(int i) throws ArrayIndexOutOfBoundsException {
 		counter = 0;
 		animIndex = 0;
+		ligneIndex = i;
+		nextFrame();
 	}
 
-	public void increment() {
+	public void nextFrame() {
 		counter++;
 		if(counter%framesBetweenSprites==0) {
 			counter = 0;
@@ -58,12 +59,7 @@ public class Animation {
 		return spr;
 	}
 
-	public void setLigneIndex(int i) {
-		ligneIndex = i;
-		System.out.println(i);
-	}
-
-	public int getLigneIndex() {
+	public int getCurrentLigne() {
 		return ligneIndex;
 	}
 }
