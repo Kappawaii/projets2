@@ -13,12 +13,10 @@ import modele.personnage.Personnage;
 import vue.tileset.Tileset;
 
 public class Joueur extends Personnage{
-	private int vitesse;
 	private ArrayList<Objet> inventaire;
 
 	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Tileset tileset, Animation a) {
-		super(nom, pv, position, 16, a);
-		this.vitesse = vitesse;
+		super(nom, pv, position, 16,vitesse, a);
 		this.inventaire = new ArrayList<>(); 
 	}
 
@@ -46,10 +44,6 @@ public class Joueur extends Personnage{
 		}
 		else 
 			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
-	}
-
-	public int getVitesse() {
-		return this.vitesse;
 	}
 
 	public void gagneUnObjet(Objet unObjet) {
