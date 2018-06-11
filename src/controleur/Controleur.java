@@ -94,7 +94,7 @@ public class Controleur {
 	private void initRessources() {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
 		modele.setJoueur(new Joueur("test", 0, 
-				new Coordonnee(100,100),1,
+				new Coordonnee(80,100),1,
 				new Tileset("sprites/personnages/joueur/personnage.png", displayScale), walking));
 //		modele.getJoueur().getAnimations().add(walking_right);
 //		modele.getJoueur().getAnimations().add(walking_down);
