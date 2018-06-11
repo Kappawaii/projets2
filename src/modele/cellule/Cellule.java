@@ -19,6 +19,11 @@ public class Cellule extends Entity{
 		this.collider = new Collider(new Coordonnee(x+offsetX,y+offsetY), taille+offsetTaille, isTrigger);
 	}
 	
+	public Cellule(Tileset tileset,int id, int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY, Event event) {
+		this.spr = new Sprite(tileset,scale,id);
+		position = new Coordonnee(x, y);
+		this.collider = new Collider(new Coordonnee(x+offsetX,y+offsetY), isTrigger, tailleX, tailleY);
+	}	
 	public Coordonnee getPos() {
 		return position;
 	}

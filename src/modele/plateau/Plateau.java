@@ -20,7 +20,7 @@ public class Plateau {
 	}
 	
 	public void remplir(BuilderPlateau builder, Plateau plateau, Tileset tileset, int scale) {
-		builder.remplirPlateau(plateau, tileset, scale);
+		builder.remplirPlateau(plateau, tileset);
 	}
 	
 	public void initCellules(int x, int y) {

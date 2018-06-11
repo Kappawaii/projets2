@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import modele.Event.Event;
 import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
@@ -16,99 +17,104 @@ public class BuilderPlateau {
 	private int width;
 	private int height;
 
-	public void remplirPlateau(Plateau plateau, Tileset tileset, int tailleCases) {
-		int offsetTaille;
+	public void remplirPlateau(Plateau plateau, Tileset tileset) {
+		int tailleX;
+		int tailleY;
 		int offsetX;
 		int offsetY;
+		Event e;
+		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
 			for (int y = 0; y < plateau.get()[x].length; y++) {
-				offsetTaille = 0;
+				tailleX = 16;
+				tailleY = 16;
 				offsetX = 0;
 				offsetY = 0;
-
-				//Blocs noirs
-				boolean isTrigger = (notreMap[x][y] != 348);
-
+				e = null;
+				isTrigger = false;
 
 
-				//Chaises et table
-				if(notreMap[x][y] == 1246) {
-					tailleCases = 1;
+				switch (notreMap[x][y]) {
+				//tuiles noires
+				case 348:
+					isTrigger = false;
+					break;
+
+					//Chaises et table
+				case 1246: case 1244: case 1245:
+					tailleX = 1;
 					offsetX = 3;
 					offsetY = 4;
 					isTrigger = false;
-				}
-				if(notreMap[x][y] == 1244) {
-					tailleCases = 1;
-					offsetX = 3;
-					offsetY = 4;
-					isTrigger = false;
-				}
-				if(notreMap[x][y] == 1245) {
-					tailleCases = 1;
-					offsetX = 3;
-					offsetY = 4;
-					isTrigger = false;
-				}
+				default:
+					break;
 
-
-				//Bibliothèques
-				if(notreMap[x][y] == 1074) {
-					tailleCases = 8;
+					//Bibliothèques
+				case 1074:
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 1;
 					offsetY = 3;
 					isTrigger = false;
-				}
-				if(notreMap[x][y] == 1075) {
-					tailleCases = 8;
+					break;
+				case 1075:
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 2;
 					offsetY = 3;
 					isTrigger = false;
-				}
+					break;
 
 
-				//Lit
-				if(notreMap[x][y] == 131) {
-					tailleCases = 1;
+					//Lit
+				case 131:
+					tailleX = 1;
+					tailleY = 10;
 					offsetX = 5;
 					offsetY = 3;
 					isTrigger = false;
-				}
-				if(notreMap[x][y] == 130) {
-					tailleCases = 1;
+					break;
+
+				case 130:
+					tailleX = 1;
+					tailleY = 1;
 					offsetX = 3;
 					offsetY = 3;
 					isTrigger = false;
-				}
+					break;
 
 
-				//Armoire
-				if(notreMap[x][y] == 1188) {
-					tailleCases = 8;
+					//Armoire
+				case 1188:
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 7;
 					offsetY = 3;
 					isTrigger = false;
-				}
+					break;
 
 
-				//Mur
-				if(notreMap[x][y] == 1186) {
-					tailleCases = 4;
+					//Mur
+				case 1186 :
+					tailleX = 4;
+					tailleY = 4;
 					offsetX = 3;
 					offsetY = 2;
 					isTrigger = false;
-				}
+					break;
 
-				//Porte
-				if(notreMap[x][y] == 90) {
-					tailleCases = 4;
-					offsetX = 			//Armoire3;
-							offsetY = 2;
+					//Porte
+				case 90:
+					tailleX = 4;
+					tailleY = 4;
+					offsetX = 2;		//Armoire3;
+					offsetY = 2;
 					isTrigger = false;
+					break;
 				}
 
-				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille, null);
+				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1,x*16,y*16, isTrigger, 4, offsetX, offsetY, tailleX,offsetY, null);
 			}
 		}
 	}
