@@ -26,7 +26,7 @@ public class Joueur extends Personnage{
 		int nextPosX = position.getX()+direction.x()*vitesse;
 		int nextPosY = position.getY()+direction.y()*vitesse;
 		if (direction.isMovement()) {
-			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTaille(), collider.isTrigger());
+			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.getTailleX(), collider.getTailleY(),collider.isTrigger());
 			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getPlateauCollider(modele.getIdNiveau()));
 			boolean result = true;
 			for (int i = 0; (i < collisions.size()); i++) {

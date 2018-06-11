@@ -17,36 +17,44 @@ public class BuilderPlateau {
 	private int height;
 
 	public void remplirPlateau(Plateau plateau, Tileset tileset, int tailleCases) {
-		int offsetTaille;
+		int tailleX;
+		int tailleY;
 		int offsetX;
 		int offsetY;
+		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
 			for (int y = 0; y < plateau.get()[x].length; y++) {
-				offsetTaille = 0;
+				tailleX = 0;
+				tailleY = 0;
 				offsetX = 0;
 				offsetY = 0;
+				isTrigger = true;
 
-				//Blocs noirs
-				boolean isTrigger = (notreMap[x][y] != 348);
-
-
+				if(notreMap[x][y] == 348) {
+					tailleX = 16;
+					tailleY = 16;
+					isTrigger = false;
+				}
 
 				//Chaises et table
 				if(notreMap[x][y] == 1246) {
-					tailleCases = 1;
+					tailleX = 1;
+					tailleY = 4;
 					offsetX = 3;
 					offsetY = 4;
 					isTrigger = false;
 				}
 				if(notreMap[x][y] == 1244) {
-					tailleCases = 1;
+					tailleX = 1;
+					tailleY = 1;
 					offsetX = 3;
 					offsetY = 4;
 					isTrigger = false;
 				}
 				if(notreMap[x][y] == 1245) {
-					tailleCases = 1;
+					tailleX = 1;
+					tailleY = 1;
 					offsetX = 3;
 					offsetY = 4;
 					isTrigger = false;
@@ -55,13 +63,15 @@ public class BuilderPlateau {
 
 				//Bibliothèques
 				if(notreMap[x][y] == 1074) {
-					tailleCases = 8;
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 1;
 					offsetY = 3;
 					isTrigger = false;
 				}
 				if(notreMap[x][y] == 1075) {
-					tailleCases = 8;
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 2;
 					offsetY = 3;
 					isTrigger = false;
@@ -70,13 +80,15 @@ public class BuilderPlateau {
 
 				//Lit
 				if(notreMap[x][y] == 131) {
-					tailleCases = 1;
+					tailleX = 1;
+					tailleY = 1;
 					offsetX = 5;
 					offsetY = 3;
 					isTrigger = false;
 				}
 				if(notreMap[x][y] == 130) {
-					tailleCases = 1;
+					tailleX = 1;
+					tailleY = 1;
 					offsetX = 3;
 					offsetY = 3;
 					isTrigger = false;
@@ -85,7 +97,8 @@ public class BuilderPlateau {
 
 				//Armoire
 				if(notreMap[x][y] == 1188) {
-					tailleCases = 8;
+					tailleX = 8;
+					tailleY = 8;
 					offsetX = 7;
 					offsetY = 3;
 					isTrigger = false;
@@ -94,7 +107,8 @@ public class BuilderPlateau {
 
 				//Mur
 				if(notreMap[x][y] == 1186) {
-					tailleCases = 4;
+					tailleX = 4;
+					tailleY = 4;
 					offsetX = 3;
 					offsetY = 2;
 					isTrigger = false;
@@ -102,13 +116,15 @@ public class BuilderPlateau {
 
 				//Porte
 				if(notreMap[x][y] == 90) {
-					tailleCases = 4;
+					tailleX = 4;
+					tailleY = 4;
 					offsetX = 			//Armoire3;
 							offsetY = 2;
 					isTrigger = false;
 				}
 
-				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille, null);
+				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, x*16,y*16,isTrigger, 4, offsetX, offsetY, tailleX, tailleY, null);
+				System.out.println(plateau.get()[x][y].getCollider().getTailleX() + ";" + plateau.get()[x][y].getCollider().getTailleX());
 			}
 		}
 	}

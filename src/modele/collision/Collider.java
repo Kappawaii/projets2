@@ -8,7 +8,8 @@ public class Collider {
 	Coordonnee x;
 	Coordonnee y;
 	Coordonnee xy;
-	int taille;
+	int tailleX;
+	int tailleY;
 	boolean isTrigger;
 	
 	public boolean isTrigger() {
@@ -32,7 +33,19 @@ public class Collider {
 	}
 
 	public Collider(Coordonnee coordonnee, int taille, boolean isTrigger) {
-		this.taille = taille;
+		this.tailleX = taille;
+		this.tailleY = taille;
+		o = new Coordonnee();
+		x = new Coordonnee();
+		y = new Coordonnee();
+		xy = new Coordonnee();
+		setPosition(coordonnee);
+		this.isTrigger = isTrigger;
+	}
+	
+	public Collider(Coordonnee coordonnee, int tailleX, int tailleY, boolean isTrigger) {
+		this.tailleX = tailleX;
+		this.tailleY = tailleY;
 		o = new Coordonnee();
 		x = new Coordonnee();
 		y = new Coordonnee();
@@ -44,16 +57,20 @@ public class Collider {
 	public void setPosition(Coordonnee coordonnee) {
 		o.setX(coordonnee.getX());
 		o.setY(coordonnee.getY());
-		x.setX(coordonnee.getX()+taille);
+		x.setX(coordonnee.getX()+tailleX);
 		x.setY(coordonnee.getY());
 		y.setX(coordonnee.getX());
-		y.setY(coordonnee.getY()+taille);
-		xy.setX(coordonnee.getX()+taille);
-		xy.setY(coordonnee.getY()+taille);
+		y.setY(coordonnee.getY()+tailleY);
+		xy.setX(coordonnee.getX()+tailleX);
+		xy.setY(coordonnee.getY()+tailleY);
 	}
 
-	public int getTaille() {
-		return taille;
+	public int getTailleX() {
+		return tailleX;
+	}
+	
+	public int getTailleY() {
+		return tailleX;
 	}
 
 	public ArrayList<Collider> detecterCollisions(ArrayList<Collider> other) {

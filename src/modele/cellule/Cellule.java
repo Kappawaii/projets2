@@ -13,10 +13,10 @@ public class Cellule extends Entity{
 	Collider collider;
 	Event event;
 
-	public Cellule(Tileset tileset,int id, int taille,int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int offsetTaille, Event event) {
+	public Cellule(Tileset tileset,int id, int x,int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY,Event event) {
 		this.spr = new Sprite(tileset,scale,id);
 		position = new Coordonnee(x, y);
-		this.collider = new Collider(new Coordonnee(x+offsetX,y+offsetY), taille+offsetTaille, isTrigger);
+		this.collider = new Collider(new Coordonnee(x+offsetX,y+offsetY), tailleX, tailleY, isTrigger);
 	}
 	
 	public Coordonnee getPos() {
