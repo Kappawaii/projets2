@@ -121,14 +121,9 @@ public class Controleur {
 	}
 	
 	public void changerMap(int idNiveau) {
-		nettoyerPlateau();
 		modele.setIdNiveau(idNiveau);
 		affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get(), debugMode);
 		//affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get());
-	}
-	
-	public void nettoyerPlateau() {
-		affichage.nettoyerPane(tuiles);
 	}
 	
 	public void nettoyerEntites() {

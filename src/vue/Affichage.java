@@ -32,6 +32,7 @@ public class Affichage {
 	}
 
 	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
+		nettoyerPane(tuiles);
 		int index = tuiles.getChildren().size();
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {

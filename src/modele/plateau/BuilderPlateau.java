@@ -33,6 +33,10 @@ public class BuilderPlateau {
 					offsetY = 2;
 					isTrigger = false;
 				}
+				if(notreMap[x][y] == 90) {
+					tailleCases = 16;
+					offsetX = 0;
+				}
 				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille, null);
 			}
 		}
