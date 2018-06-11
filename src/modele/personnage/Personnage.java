@@ -12,12 +12,14 @@ public abstract class Personnage extends Entity {
 	private Animation animation;
 	protected Collider collider;
 	protected Axe direction;
-
+	private int pv;
+	
 	public Personnage(String nom, int pv, Coordonnee position, int taille, Animation a) {
 		super.nom = nom;
 		super.position = position;
 		animation = a;
 		collider = new Collider(position, true, taille, taille);
+		this.pv=pv;
 	}
 
 	public void updateAnimation() {
@@ -78,4 +80,11 @@ public abstract class Personnage extends Entity {
 	public Sprite getSprite() {
 		return animation.getSprite();
 	}
+	
+	public int getPV() {
+		return this.pv;
+	}
+	
+	public abstract void attaque(Personnage p);
+	
 }

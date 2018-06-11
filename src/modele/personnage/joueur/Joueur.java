@@ -59,4 +59,8 @@ public class Joueur extends Personnage{
 	public void perdUnObjet(Objet unObjet) {
 		this.inventaire.remove(unObjet);
 	}
+	
+	public void attaque(Personnage p) {
+		System.out.println("Je t'attaque "+p.getNom());
+	}
 }
