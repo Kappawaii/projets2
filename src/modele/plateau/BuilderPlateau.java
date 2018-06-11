@@ -26,17 +26,88 @@ public class BuilderPlateau {
 				offsetTaille = 0;
 				offsetX = 0;
 				offsetY = 0;
+
+				//Blocs noirs
 				boolean isTrigger = (notreMap[x][y] != 348);
+
+
+
+				//Chaises et table
 				if(notreMap[x][y] == 1246) {
 					tailleCases = 1;
+					offsetX = 3;
+					offsetY = 4;
+					isTrigger = false;
+				}
+				if(notreMap[x][y] == 1244) {
+					tailleCases = 1;
+					offsetX = 3;
+					offsetY = 4;
+					isTrigger = false;
+				}
+				if(notreMap[x][y] == 1245) {
+					tailleCases = 1;
+					offsetX = 3;
+					offsetY = 4;
+					isTrigger = false;
+				}
+
+
+				//Bibliothèques
+				if(notreMap[x][y] == 1074) {
+					tailleCases = 8;
+					offsetX = 1;
+					offsetY = 3;
+					isTrigger = false;
+				}
+				if(notreMap[x][y] == 1075) {
+					tailleCases = 8;
+					offsetX = 2;
+					offsetY = 3;
+					isTrigger = false;
+				}
+
+
+				//Lit
+				if(notreMap[x][y] == 131) {
+					tailleCases = 1;
+					offsetX = 5;
+					offsetY = 3;
+					isTrigger = false;
+				}
+				if(notreMap[x][y] == 130) {
+					tailleCases = 1;
+					offsetX = 3;
+					offsetY = 3;
+					isTrigger = false;
+				}
+
+
+				//Armoire
+				if(notreMap[x][y] == 1188) {
+					tailleCases = 8;
+					offsetX = 7;
+					offsetY = 3;
+					isTrigger = false;
+				}
+
+
+				//Mur
+				if(notreMap[x][y] == 1186) {
+					tailleCases = 4;
 					offsetX = 3;
 					offsetY = 2;
 					isTrigger = false;
 				}
+
+				//Porte
 				if(notreMap[x][y] == 90) {
-					tailleCases = 16;
-					offsetX = 0;
+					tailleCases = 4;
+					offsetX = 			//Armoire3;
+							offsetY = 2;
+					isTrigger = false;
 				}
+
 				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille, null);
 			}
 		}
@@ -145,11 +216,11 @@ public class BuilderPlateau {
 			System.out.println("},");
 		}
 	}
-	
+
 	public int getWidth() {
 		return this.width;
 	}
-	
+
 	public int getHeight() {
 		return this.height;
 	}
