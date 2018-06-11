@@ -31,7 +31,7 @@ public class Joueur extends Personnage{
 			boolean result = true;
 			for (int i = 0; (i < collisions.size()); i++) {
 				if(!collisions.get(i).isTrigger()) {
-					System.out.println("collision avec" + collisions.get(i));
+//					System.out.println("collision avec" + collisions.get(i));
 					result = false;		
 				}
 

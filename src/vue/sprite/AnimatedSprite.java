@@ -15,7 +15,6 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	public void setFrame(int animIndex, int ligne) {
-		System.out.println(yLength*ligne);
 		setViewPort(
 				new Rectangle2D(
 						xLength*animIndex,

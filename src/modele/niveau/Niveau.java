@@ -3,6 +3,7 @@ package modele.niveau;
 import java.util.ArrayList;
 
 import modele.Entity.Entity;
+import modele.personnage.joueur.Joueur;
 import modele.plateau.BuilderPlateau;
 import modele.plateau.Plateau;
 import vue.tileset.Tileset;
@@ -17,11 +18,8 @@ public class Niveau {
 		return url;
 	}
 
-	public Niveau() {
-		entites = new ArrayList<Entity>();
-	}
-
 	public Niveau(String url,Tileset tileset, ArrayList<Entity> liste, int displayScale) {
+		entites = new ArrayList<Entity>();
 		if(liste != null)
 			for (int i = 0; i < liste.size(); i++) {
 				entites.add(liste.get(i));

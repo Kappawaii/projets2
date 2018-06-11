@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import modele.collision.Collider;
 import modele.niveau.Niveau;
 import modele.personnage.joueur.Joueur;
+import vue.Affichage;
 import vue.tileset.Tileset;
 
 public class Modele {
@@ -13,26 +14,27 @@ public class Modele {
 	ArrayList<Niveau> niveaux;
 	int idNiveau;
 	Joueur joueur;
+	Affichage affichage;
 	
 	public Modele() {
 		tilesets = new ArrayList<Tileset>();
 		niveaux = new ArrayList<Niveau>();
 	}
-
-//	public ArrayList<Collider> getAllColliders(){
-//		ArrayList<Collider> colliders = new ArrayList<Collider>();
-//		System.out.println("taille = " +niveaux.get(idNiveau).size());
-//		for (int i = 0; i < niveaux.get(idNiveau).getPlateau().get().length; i++) {
-//			ArrayList<Collider> temp = getPlateauCollider(i);
-//			for (int j = 0; j < temp.size(); j++) {
-//				if (!colliders.contains(temp.get(j))) {
-//					colliders.add(temp.get(j));
-//				}
-//			}
-//		}
-//		return colliders;
-//	}
-
+	
+	public void setAffichage(Affichage affichage) {
+		this.affichage = affichage;
+	}
+	
+	public void changerMap(int idNewNiveau, boolean debugMode) {
+		idNiveau = idNewNiveau;
+		nettoyerEntites();
+		affichage.ajouterCarte(niveaux.get(idNiveau).getPlateau().get(), debugMode);
+	}
+	
+	public void nettoyerEntites() {
+		affichage.nettoyerEntites();
+	}
+	
 	public ArrayList<Collider> getPlateauCollider(int idNiveau){
 		if (niveaux.get(idNiveau).getPlateau() == null) {
 			throw new NullPointerException("Plateau non trouvé (idPlateau :" + idNiveau +  " )");
@@ -70,16 +72,12 @@ public class Modele {
 		niveaux.add(niveau);
 	}
 	
-	public Niveau getNiveau(int index) {
-		return niveaux.get(index);
+	public Niveau getNiveau() {
+		return niveaux.get(idNiveau);
 	}	
 	
 	public int getIdNiveau() {
 		return idNiveau;
-	}
-
-	public void setIdNiveau(int idMap) {
-		this.idNiveau = idMap;
 	}
 	
 }

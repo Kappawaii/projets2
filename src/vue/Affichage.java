@@ -30,6 +30,10 @@ public class Affichage {
 	public void nettoyerPane(Pane pane) {
 		pane.getChildren().clear();
 	}
+	
+	public void nettoyerEntites() {
+		nettoyerPane(entites);
+	}
 
 	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
 		nettoyerPane(tuiles);

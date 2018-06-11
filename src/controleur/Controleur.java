@@ -50,6 +50,7 @@ public class Controleur {
 	@FXML
 	public void initialize() {
 		affichage = new Affichage(modele, tuiles, entites, displayScale);
+		modele.setAffichage(affichage);
 		//initialisation du joueur
 		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		modele.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
@@ -116,22 +117,12 @@ public class Controleur {
 		
 		idNiveautest++;
 		idNiveautest = idNiveautest%2;
-		changerMap(idNiveautest);
+		modele.changerMap(idNiveautest, debugMode);
 		//nettoyerEntites();
 	}
 	
-	public void changerMap(int idNiveau) {
-		modele.setIdNiveau(idNiveau);
-		affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get(), debugMode);
-		//affichage.ajouterCarte(modele.getNiveau(idNiveau).getPlateau().get());
-	}
-	
-	public void nettoyerEntites() {
-		affichage.nettoyerPane(entites);
-	}
-	
 	private void initAnimation() {
-		changerMap(0);
+		modele.changerMap(0,debugMode);
 		gameLoop = new Timeline();
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);	
@@ -162,15 +153,15 @@ public class Controleur {
 							//non-scrolling map
 //							System.out.print("Joueur :");
 //							modele.getJoueur().getCollider().sysout();
-
 							if(scrollingMap) {
 								affichage.centerMaptoPosition(modele.getJoueur().getPosition());
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));
 							}
 							else {
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
-								affichage.mettreAJourCarte(modele.getNiveau(modele.getIdNiveau()).getPlateau().get());							
+								affichage.mettreAJourCarte(modele.getNiveau().getPlateau().get());							
 							}
+							
 						}
 						
 					}
