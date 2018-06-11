@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import modele.coordonnee.Coordonnee;
 
 public class Collider {
+	
 	Coordonnee o;
 	Coordonnee x;
 	Coordonnee y;
@@ -32,6 +33,17 @@ public class Collider {
 		return xy;
 	}
 
+	public Collider(Coordonnee coordonnee,boolean isTrigger, int tailleX, int tailleY) {
+		this.tailleX = tailleX;
+		this.tailleY = tailleY;
+		o = new Coordonnee();
+		x = new Coordonnee();
+		y = new Coordonnee();
+		xy = new Coordonnee();
+		setPosition(coordonnee);
+		this.isTrigger = isTrigger;
+	}
+	
 	public Collider(Coordonnee coordonnee, int taille, boolean isTrigger) {
 		this.tailleX = taille;
 		this.tailleY = taille;

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import modele.Event.Event;
 import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
@@ -16,11 +17,12 @@ public class BuilderPlateau {
 	private int width;
 	private int height;
 
-	public void remplirPlateau(Plateau plateau, Tileset tileset, int tailleCases) {
+	public void remplirPlateau(Plateau plateau, Tileset tileset) {
 		int tailleX;
 		int tailleY;
 		int offsetX;
 		int offsetY;
+		Event e;
 		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
@@ -30,17 +32,16 @@ public class BuilderPlateau {
 				offsetX = 0;
 				offsetY = 0;
 				isTrigger = true;
+				e = null;
 
 				if(notreMap[x][y] == 348) {
 					tailleX = 16;
 					tailleY = 16;
 					isTrigger = false;
 				}
-
-				//Chaises et table
 				if(notreMap[x][y] == 1246) {
 					tailleX = 1;
-					tailleY = 4;
+					tailleY = 1;
 					offsetX = 3;
 					offsetY = 4;
 					isTrigger = false;
@@ -122,9 +123,10 @@ public class BuilderPlateau {
 							offsetY = 2;
 					isTrigger = false;
 				}
-
+				
 				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, x*16,y*16,isTrigger, 4, offsetX, offsetY, tailleX, tailleY, null);
 				System.out.println(plateau.get()[x][y].getCollider().getTailleX() + ";" + plateau.get()[x][y].getCollider().getTailleX());
+
 			}
 		}
 	}

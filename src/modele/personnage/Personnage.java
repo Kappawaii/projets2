@@ -17,7 +17,7 @@ public abstract class Personnage extends Entity {
 		super.nom = nom;
 		super.position = position;
 		animation = a;
-		collider = new Collider(position, taille, true);
+		collider = new Collider(position, true, taille, taille);
 	}
 
 	public void updateAnimation() {

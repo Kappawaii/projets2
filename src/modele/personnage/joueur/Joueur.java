@@ -30,8 +30,11 @@ public class Joueur extends Personnage{
 			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getPlateauCollider(modele.getIdNiveau()));
 			boolean result = true;
 			for (int i = 0; (i < collisions.size()); i++) {
-				if(!collisions.get(i).isTrigger())
+				if(!collisions.get(i).isTrigger()) {
+					System.out.println("collision avec" + collisions.get(i));
 					result = false;		
+				}
+
 			}
 			if (result) {
 				this.direction = direction;
