@@ -1,5 +1,12 @@
 package modele.Event;
 
-public class Event {
+import modele.niveau.Niveau;
 
+public class Event {
+	
+	Niveau niveau;
+	
+	public Event(Niveau niveau) {
+		this.niveau = niveau;
+	}
 }

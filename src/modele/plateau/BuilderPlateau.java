@@ -33,7 +33,7 @@ public class BuilderPlateau {
 					offsetY = 2;
 					isTrigger = false;
 				}
-				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille);
+				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, tailleCases,x*16,y*16, isTrigger, 4, offsetX, offsetY, offsetTaille, null);
 			}
 		}
 	}

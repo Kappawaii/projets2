@@ -43,16 +43,20 @@ public class Animation {
 		counter = 0;
 		animIndex = 0;
 		ligneIndex = i;
-		nextFrame();
+		next();
 	}
 
 	public void nextFrame() {
 		counter++;
 		if(counter%framesBetweenSprites==0) {
-			counter = 0;
-			animIndex = (animIndex+1)%numberOfFrames;
-			spr.setFrame(animIndex,ligneIndex);
+			next();
 		}
+	}
+	
+	private void next() {
+		counter = 0;
+		animIndex = (animIndex+1)%numberOfFrames;
+		spr.setFrame(animIndex,ligneIndex);
 	}
 
 	public Sprite getSprite() {
