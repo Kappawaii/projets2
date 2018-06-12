@@ -8,8 +8,6 @@ import modele.coordonnee.Axe;
 
 public class KeyManager {
 
-
-
 	private static final Axe axenull = null;
 	private ArrayList<Key> keystates = new ArrayList<Key>();
 	
@@ -42,7 +40,6 @@ public class KeyManager {
 		else {
 			System.out.println("unmapped Key released :" + bind);
 		}
-
 	}
 
 	/**
@@ -72,27 +69,26 @@ public class KeyManager {
 		return false;
 	}
 
-	/**
-	 * Retourne vrai si la Key est appuyée, sinon retourne faux
-	 * @param key
-	 * @throws Key not found error si la Key n'existe pas
-	 */
-	public boolean getKeyState(Axe nom) {
-		if (isKeyUsed(nom,""))
-			return keystates.get(keystates.indexOf(new Key(nom,""))).get();
-		else 
-			throw new Error("getKeyState : key '" + nom + "' not found");
-	}
-
-	public Axe getMovementInputs(int a) {
-		Axe inputs = Axe.EMPTY;
-		inputs.clear();
+	public ArrayList<Axe> getMovementInputsList(int a) {
+		ArrayList<Axe> inputs = new ArrayList<Axe>();
 		for (Key key : keystates) {
-			if (key.get())
+			if (key.isPressed()) {
 				inputs.add(key.nom);
+			}
 		}
 		return inputs;
 	}
+	
+//	public Axe getMovementInputs(int a) {
+//		Axe inputs = Axe.EMPTY;
+//		inputs.clear();
+//		for (Key key : keystates) {
+//			if (key.isPressed())
+//				inputs.add(key.nom);
+//		}
+//		return inputs;
+//	}
+	
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -101,9 +97,21 @@ public class KeyManager {
 	public boolean getKeyState(String bind) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
-			return keystates.get(keystates.indexOf(new Key(axenull,bind))).get();
+			return keystates.get(keystates.indexOf(new Key(axenull,bind))).isPressed();
 		else 
 			throw new Error("getKeyState : key '" + bind + "' not found");
+	}
+	
+	/**
+	 * Retourne vrai si la Key est appuyée, sinon retourne faux
+	 * @param key
+	 * @throws Key not found error si la Key n'existe pas
+	 */
+	public boolean getKeyState(Axe nom) {
+		if (isKeyUsed(nom,""))
+			return keystates.get(keystates.indexOf(new Key(nom,""))).isPressed();
+		else 
+			throw new Error("getKeyState : key '" + nom + "' not found");
 	}
 
 	private String refactorNom(String nom) {

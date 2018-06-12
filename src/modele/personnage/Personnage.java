@@ -19,8 +19,10 @@ public abstract class Personnage extends Entity {
 	protected Axe direction;
 	private int pv;
 	protected int vitesse;
-	
-	public Personnage(String nom, int pv, Coordonnee position, int taille,int vitesse, Animation a) {
+	protected Modele modele;
+
+	public Personnage(String nom, int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
+		this.modele = modele;
 		super.nom = nom;
 		super.position = position;
 		animation = a;
@@ -28,35 +30,40 @@ public abstract class Personnage extends Entity {
 		this.pv=pv;
 		this.vitesse=vitesse;
 	}
-	
-	public void seDeplace(Axe direction, Modele modele) {
-		int nextPosX = position.getX()+direction.x()*vitesse;
-		int nextPosY = position.getY()+direction.y()*vitesse;
-		if (direction.isMovement()) {
+
+	public void seDeplace(ArrayList<Axe> inputs) {
+		int xInput = 0;
+		int yInput = 0;
+		for (int i = 0; i < inputs.size(); i++) {
+			if(inputs.get(i).isMovement()) {
+				xInput += inputs.get(i).x()*vitesse;
+				yInput += inputs.get(i).y()*vitesse;
+			}
+		}
+		int nextPosX = position.getX() + xInput;
+		int nextPosY = position.getY() + yInput;
+		if (xInput != 0 || yInput != 0) {
 			Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.isTrigger(), collider.getTailleX(), collider.getTailleY());
-			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getPlateauCollider(modele.getIdNiveau()));
-			boolean result = true;
+			ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getAllColliders(modele.getIdNiveau()));
+			boolean collision = true;
 			for (int i = 0; (i < collisions.size()); i++) {
-				if(!collisions.get(i).isTrigger()) {
-//					System.out.println("collision avec" + collisions.get(i));
-					if(collisions.get(i) instanceof EventCollider)
+				if(!collisions.get(i).isTrigger())
+					collision = false;		
+				if(collisions.get(i) instanceof EventCollider)
 					((EventCollider) collisions.get(i)).triggerEvent();
-					result = false;		
-				}
 
 			}
-			if (result) {
-				this.direction = direction;
+			if (collision) {
+				this.direction = Axe.arrayToDirection(new int[]{xInput,yInput});
 				position.setX(nextPosX);
 				position.setY(nextPosY);
 				collider.setPosition(position);
 				updateAnimation();
 			}
 		}
-		else 
-			throw new Error("Bad direction parameter : '" + direction +"' Axe.isMovement should be true");
+		//			throw new Error("Bad direction parameter : '" + inputs +"' Axe.isMovement should be true");
 	}
-	
+
 	public void updateAnimation() {
 		if(direction != null) {
 			int[] orientation = direction.directiontoArray();
@@ -86,12 +93,11 @@ public abstract class Personnage extends Entity {
 				else 
 					animation.nextFrame();
 				break;
-			default:
-				break;
 			}
 		}
+		animation.nextFrame();
 	}
-	
+
 	public Collider getCollider() {
 		return collider;
 	}
@@ -99,7 +105,7 @@ public abstract class Personnage extends Entity {
 	public Animation getAnimation() {
 		return animation;
 	}
-	
+
 	public String getNom() {
 		return nom;
 	}
@@ -111,25 +117,25 @@ public abstract class Personnage extends Entity {
 	public Sprite getSprite() {
 		return animation.getSprite();
 	}
-	
+
 	public int getPV() {
 		return this.pv;
 	}
-	
+
 	public boolean isAlive() {
 		if(this.getPV() > 0) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void attaquePersoVisible(Joueur joueur) {
 		double distance = Math.sqrt(Math.pow((this.getPosition().getX()-joueur.getPosition().getX()), 2) + Math.pow((this.getPosition().getY()-joueur.getPosition().getY()), 2));
 		if(this.isAlive() && distance < 4) {
 			this.attaque(joueur);
 		}
 	}
-	
+
 	public abstract void attaque(Personnage p);
 
 	public int getVitesse() {
@@ -139,5 +145,5 @@ public abstract class Personnage extends Entity {
 	public void setVitesse(int vitesse) {
 		this.vitesse = vitesse;
 	}
-	
+
 }

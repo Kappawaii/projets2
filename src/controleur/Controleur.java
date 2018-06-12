@@ -15,6 +15,7 @@ import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.niveau.Niveau;
 import modele.personnage.Personnage;
+import modele.personnage.ennemis.Gobelin;
 import modele.personnage.joueur.Joueur;
 import vue.Affichage;
 import vue.tileset.Tileset;
@@ -27,6 +28,8 @@ public class Controleur {
 	private Pane tuiles;
 	@FXML
 	private Pane entites;
+	@FXML
+	private Pane joueurPane;
 
 	@FXML
 	private Pane dialogueBox;
@@ -50,8 +53,8 @@ public class Controleur {
 		affichage = new Affichage(modele, tuiles, entites, displayScale);
 		modele.setAffichage(affichage);
 		//initialisation du joueur
-		modele.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
-		modele.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
+		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
+		affichage.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
 		initRessources();
 		initAnimation();
 		gameLoop.play();
@@ -72,7 +75,6 @@ public class Controleur {
 	}
 
 	public void initInputs() {
-		System.out.println(rootpane.getScene());
 		keymanager = new KeyManager(rootpane.getScene());
 		keymanager.addKey(Axe.HAUT,"Z");
 		keymanager.addKey(Axe.GAUCHE,"Q");
@@ -87,40 +89,44 @@ public class Controleur {
 	}
 
 	private void initRessources() {
-		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
-		Animation walking2 = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
+		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
+		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
+		
+		modele.getEntitesACloner().add(
+				new Gobelin("plante", 0,
+						new Coordonnee(100,100),1,
+						walking2,
+						modele));
+		
 		modele.setJoueur(
 				new Joueur("joueur", 0, 
 						new Coordonnee(60,100),1,
-						new Tileset("sprites/personnages/joueur/personnage.png",
-								displayScale),
-						walking));
+						walking,
+						modele));
 
 		modele.addNiveau(
 				new Niveau("maps/level0.tmx",
-						modele.getTileset(0),
+						affichage.getTileset(0),
 						null,
 						displayScale,
 						0,
 						modele));
+		
 		modele.addNiveau(
 				new Niveau("maps/level1.tmx",
-						modele.getTileset(0),
+						affichage.getTileset(0),
 						null,
 						displayScale,
 						1,
 						modele));
-		modele.getNiveau(0).getEntites().add(
-				new Joueur("plante", 0,
-						new Coordonnee(50,80),1,
-						new Tileset("sprites/personnages/joueur/personnage.png",
-								displayScale),
-						walking2));
 
 	}
 
 	public void mouseClicked() {
 		//modele.getJoueur().setPosition(new Coordonnee(0,0));
+		//entites.getChildren().add(((Personnage) modele.getEntitesACloner().get(0)).getSprite().getView());
+		System.out.println(joueurPane.getTranslateX());
+		System.out.println(entites.getTranslateX());
 	}
 
 	private void initAnimation() {
@@ -128,12 +134,11 @@ public class Controleur {
 		gameLoop = new Timeline();
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);	
-		entites.getChildren().add(modele.getJoueur().getSprite().getView());
-		Personnage ia = ((Personnage) modele.getCurrentNiveau().getEntites().get(0));
-		entites.getChildren().add(ia.getSprite().getView());
+		joueurPane.getChildren().add(modele.getJoueur().getSprite().getView());
+		//Personnage ia = ((Personnage) modele.getCurrentNiveau().getEntites().get(0));
+		//entites.getChildren().add(ia.getSprite().getView());
 		Label joueurpos = new Label();
-		entites.getChildren().add(joueurpos);
-
+		joueurPane.getChildren().add(joueurpos);
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopJeu){
@@ -142,20 +147,24 @@ public class Controleur {
 					}
 					else {
 						if(!jeuEnPause) {
+							//test mode Frame par Frame activé
 							if(debugMode && !jeuEnPause)
 								jeuEnPause = true;
-							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
-
-							//non-scrolling map
+							
+							
+							modele.getJoueur().seDeplace(keymanager.getMovementInputsList(temps));
+							
 							joueurpos.setText(modele.getJoueur().getPosition().toString());
-							Axe a = Axe.EMPTY;
-							a.add(Axe.DROITE);
-							ia.seDeplace(a, modele);
-							affichage.mettreAJourPositionPersonnage(ia,ia.getPosition());
+							//affichage.mettreAJourPositionPersonnage(ia,ia.getPosition());
+							((Gobelin) modele.getEntitesACloner().get(0)).jouer();
+							//scrolling map
 							if(affichage.isScrollingMapEnabled()) {
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-								affichage.centerMaptoPosition(modele.getJoueur().getPosition());
+								affichage.mettreAJourPositionPersonnage((Personnage) modele.getEntitesACloner().get(0), modele.getEntitesACloner().get(0).getPosition());
+								affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
+								affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
 							}
+							//non-scrolling map
 							else {
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
 							}

@@ -10,9 +10,11 @@ import java.util.ArrayList;
 
 import modele.Modele;
 import modele.Event.Event;
+import modele.Event.LoadEntitiesEvent;
 import modele.Event.LoadLevelEvent;
 import modele.Event.SetScrollingMapEvent;
 import modele.cellule.Cellule;
+import modele.coordonnee.Coordonnee;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {
@@ -127,8 +129,18 @@ public class BuilderPlateau {
 					offsetX = 0;			//Armoire3;
 					offsetY = 0;
 					isTrigger = false;
-					events.add(new LoadLevelEvent(modele, id+1));
+					events.add(new LoadLevelEvent(modele, id+1,new Coordonnee(112,160)));
 					events.add(new SetScrollingMapEvent(modele));
+				}
+				
+				//Déclencheur entités Niveau 1
+				if(notreMap[x][y] == 63) {
+					tailleX = 16;
+					tailleY = 16;
+					offsetX = 0;
+					offsetY = 0;
+					isTrigger = true;
+					events.add(new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1)));
 				}
 				
 				plateau.get()[x][y] = 

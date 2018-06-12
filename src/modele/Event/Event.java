@@ -10,5 +10,8 @@ public abstract class Event {
 		this.modele = modele;
 	}
 	
+	/**
+	 * exécute l'évenement
+	 */
 	public abstract void execute();
 }

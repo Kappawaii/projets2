@@ -46,7 +46,7 @@ class Key {
 	/**
 	 * Retourne l'état (pressé ou non) de la Key
 	 */
-	protected boolean get() {
+	protected boolean isPressed() {
 		return pressed;
 	}
 

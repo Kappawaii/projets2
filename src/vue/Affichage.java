@@ -8,8 +8,11 @@ import modele.Modele;
 import modele.cellule.Cellule;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
+import vue.tileset.Tileset;
 
 public class Affichage {
+	
+	ArrayList<Tileset> tilesets;
 	Pane tuiles;
 	Pane entites;
 	Cellule[][] cellules;
@@ -17,16 +20,26 @@ public class Affichage {
 	Modele modele;
 	ArrayList<Node> nodes;
 	boolean scrollingMap = false;
-	Coordonnee offsetScrollingmap = new Coordonnee(896,96);
+	Coordonnee offsetScrollingmap = new Coordonnee(896,256);
 
 	public Affichage(Modele modele, Pane tuiles, Pane entites,int displayScale) {
+		tilesets = new ArrayList<Tileset>();
 		this.tuiles = tuiles;
 		this.entites = entites;
 		this.displayScale = displayScale;
 		this.modele = modele;
 	}
 
+	
 
+	public void addTileset(Tileset tileset) {
+		tilesets.add(tileset);
+	}
+
+	public Tileset getTileset(int index) {
+		return tilesets.get(index);
+	}
+	
 	public void nettoyerPane(Pane pane) {
 		pane.getChildren().clear();
 	}
@@ -37,9 +50,17 @@ public class Affichage {
 			entites.getChildren().remove(i);
 		}
 	}
-
+	
+	public void ajouterEntite(Personnage p) {
+		System.out.println(entites.getChildren().size());
+		entites.getChildren().add(p.getSprite().getView());
+	}
+	
 	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
 		nettoyerPane(tuiles);
+		System.out.println(entites.getChildren().size());
+		nettoyerPane(entites);
+		System.out.println(entites.getChildren().size());
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getX()*displayScale);
@@ -73,9 +94,9 @@ public class Affichage {
 	}
 
 	//scrolling map
-	public void centerMaptoPosition(Coordonnee coordonnee) {
-		tuiles.setTranslateX((tuiles.getLayoutBounds().getMaxX()/2-coordonnee.getX()*displayScale-offsetScrollingmap.getX()));
-		tuiles.setTranslateY((tuiles.getLayoutBounds().getMaxY()/2-coordonnee.getY()*displayScale-offsetScrollingmap.getY()));
+	public void centerPanetoPosition(Pane pane,Coordonnee coordonnee) {
+		pane.setTranslateX((tuiles.getLayoutBounds().getMaxX()/2-coordonnee.getX()*displayScale-offsetScrollingmap.getX()));
+		pane.setTranslateY((tuiles.getLayoutBounds().getMaxY()/2-coordonnee.getY()*displayScale-offsetScrollingmap.getY()));
 	}	
 
 	public boolean isScrollingMapEnabled() {

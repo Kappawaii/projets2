@@ -9,6 +9,7 @@
 	<children>
 		<Pane fx:id="tuiles"/>
 		<Pane fx:id="entites"/>
+		<Pane fx:id="joueurPane"/>
 		<Pane fx:id="dialogueBox"/>
 	</children>
 </BorderPane>
