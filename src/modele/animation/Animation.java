@@ -29,6 +29,7 @@ public class Animation {
 		this.framesBetweenSprites = framesBetweenSprites;
 		numberOfFrames = tileset.getCasesParLigne();
 		spr = new AnimatedSprite(tileset,displayScale, tileset.getPxParImage(), (int)tileset.getHauteurImg(), ligne);
+		next();
 	}
 
 	/**

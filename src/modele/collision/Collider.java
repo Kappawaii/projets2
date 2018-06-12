@@ -16,7 +16,7 @@ public class Collider {
 	public boolean isTrigger() {
 		return isTrigger;
 	}
-
+	
 	public Coordonnee getO() {
 		return o;
 	}
@@ -32,8 +32,16 @@ public class Collider {
 	public Coordonnee getXY() {
 		return xy;
 	}
-
-	public Collider(Coordonnee coordonnee,boolean isTrigger, int tailleX, int tailleY) {
+	
+	/**
+	 * collider rectangulaire
+	 * @param coordonnee
+	 * @param isTrigger
+	 * @param tailleX
+	 * @param tailleY
+	 * @param cellule 
+	 */
+	public Collider(Coordonnee coordonnee, boolean isTrigger, int tailleX, int tailleY) {
 		this.tailleX = tailleX;
 		this.tailleY = tailleY;
 		o = new Coordonnee();
@@ -44,28 +52,22 @@ public class Collider {
 		this.isTrigger = isTrigger;
 	}
 	
+
+	/**
+	 * collider standard carré
+	 * @param coordonnee
+	 * @param taille
+	 * @param isTrigger
+	 */
 	public Collider(Coordonnee coordonnee, int taille, boolean isTrigger) {
-		this.tailleX = taille;
-		this.tailleY = taille;
-		o = new Coordonnee();
-		x = new Coordonnee();
-		y = new Coordonnee();
-		xy = new Coordonnee();
-		setPosition(coordonnee);
-		this.isTrigger = isTrigger;
+		this(coordonnee, isTrigger, taille, taille);
 	}
 	
-	public Collider(Coordonnee coordonnee, int tailleX, int tailleY, boolean isTrigger) {
-		this.tailleX = tailleX;
-		this.tailleY = tailleY;
-		o = new Coordonnee();
-		x = new Coordonnee();
-		y = new Coordonnee();
-		xy = new Coordonnee();
-		setPosition(coordonnee);
-		this.isTrigger = isTrigger;
-	}
 
+	/**
+	 * Définit la position du Collider
+	 * @param coordonnee
+	 */
 	public void setPosition(Coordonnee coordonnee) {
 		o.setX(coordonnee.getX());
 		o.setY(coordonnee.getY());

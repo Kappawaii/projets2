@@ -17,7 +17,7 @@ public abstract class Personnage extends Entity {
 		super.nom = nom;
 		super.position = position;
 		animation = a;
-		collider = new Collider(position, true, taille, taille);
+		collider = new Collider(position, false, taille, taille);
 	}
 
 	public void updateAnimation() {
@@ -69,10 +69,6 @@ public abstract class Personnage extends Entity {
 
 	public Coordonnee getPosition() {
 		return this.position;
-	}
-
-	public void setPosition(int x, int y) {
-		this.position.setXandY(x, y);
 	}
 
 	public Sprite getSprite() {

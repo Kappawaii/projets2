@@ -1,7 +1,6 @@
 package modele.plateau;
 
 import modele.cellule.Cellule;
-import vue.tileset.Tileset;
 
 public class Plateau {
 	
@@ -12,6 +11,12 @@ public class Plateau {
 	}
 	
 	public Cellule getCellule(int x, int y) {
+		//cas overflow
+		if(x > cellules.length || y > cellules[x].length)
+			return null;
+		//cas underflow
+		if(x < 0 || y < 0)
+			return null;
 		return cellules[x][y];
 	}
 	
@@ -19,8 +24,14 @@ public class Plateau {
 		return cellules;
 	}
 	
-	public void remplir(BuilderPlateau builder, Plateau plateau, Tileset tileset, int scale) {
-		builder.remplirPlateau(plateau, tileset);
+	public int[] getCellulePositionInPlateau(Cellule cellule) {
+		for (int i = 0; i < cellules.length; i++) {
+			for (int j = 0; j < cellules.length; j++) {
+				if (cellule.equals(cellule))
+					return new int[] {i,j};
+			}
+		}
+		return null;
 	}
 	
 	public void initCellules(int x, int y) {

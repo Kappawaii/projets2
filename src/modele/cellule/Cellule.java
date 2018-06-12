@@ -1,8 +1,11 @@
 package modele.cellule;
 
+import java.util.ArrayList;
+
 import modele.Entity.Entity;
 import modele.Event.Event;
 import modele.collision.Collider;
+import modele.collision.EventCollider;
 import modele.coordonnee.Coordonnee;
 import vue.sprite.Sprite;
 import vue.tileset.Tileset;
@@ -10,18 +13,26 @@ import vue.tileset.Tileset;
 public class Cellule extends Entity{
 
 	Sprite spr;
-	Collider collider;
-	Event event;
-	
-	public Cellule(Tileset tileset,int id, int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY, Event event) {
+	EventCollider collider;
+	ArrayList<Event> events;
+
+	public Cellule(Tileset tileset,int id, int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY, ArrayList<Event> eventsToAdd) {
 		this.spr = new Sprite(tileset,scale,id);
 		position = new Coordonnee(x, y);
-		this.collider = new Collider(new Coordonnee(x+offsetX,y+offsetY), isTrigger, tailleX, tailleY);
-	}	
+		this.collider = new EventCollider(new Coordonnee(x+offsetX,y+offsetY), isTrigger, tailleX, tailleY, this);
+		this.events = new ArrayList<Event>();
+		if (eventsToAdd != null) {
+			for (int i = 0; i < eventsToAdd.size(); i++) {
+				events.add(eventsToAdd.get(i));
+			}
+		}
+
+	}
+
 	public Coordonnee getPos() {
 		return position;
 	}
-	
+
 	public Coordonnee setPos() {
 		return position;
 	}
@@ -33,12 +44,10 @@ public class Cellule extends Entity{
 	public Sprite getSprite() {
 		return spr;
 	}
-	
-	public Event getEvent() {
-		return event;
-	}
 
-	public void setEvent(Event event) {
-		this.event = event;
+	public void triggerEvent() {
+		for (int i = 0; i < events.size(); i++) {
+			events.get(i).execute();
+		}
 	}
 }

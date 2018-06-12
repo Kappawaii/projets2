@@ -6,8 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import modele.Modele;
 import modele.Event.Event;
+import modele.Event.LoadLevelEvent;
+import modele.Event.SetScrollingMapEvent;
 import modele.cellule.Cellule;
 import vue.tileset.Tileset;
 
@@ -17,12 +21,12 @@ public class BuilderPlateau {
 	private int width;
 	private int height;
 
-	public void remplirPlateau(Plateau plateau, Tileset tileset) {
+	public void remplirPlateau(Plateau plateau, Tileset tileset, Modele modele, int id) {
 		int tailleX;
 		int tailleY;
 		int offsetX;
 		int offsetY;
-		Event e;
+		ArrayList<Event> events = new ArrayList<Event>();
 		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
@@ -32,7 +36,8 @@ public class BuilderPlateau {
 				offsetX = 0;
 				offsetY = 0;
 				isTrigger = true;
-				e = null;
+				events.clear();
+				
 
 				if(notreMap[x][y] == 348) {
 					tailleX = 16;
@@ -108,7 +113,7 @@ public class BuilderPlateau {
 
 				//Mur
 				if(notreMap[x][y] == 1186) {
-					tailleX = 4;
+					tailleX = 8;
 					tailleY = 4;
 					offsetX = 3;
 					offsetY = 2;
@@ -118,15 +123,23 @@ public class BuilderPlateau {
 				//Porte
 				if(notreMap[x][y] == 90) {
 					tailleX = 4;
-					tailleY = 4;
-					offsetX = 			//Armoire3;
-							offsetY = 2;
+					tailleY = 1;
+					offsetX = 0;			//Armoire3;
+					offsetY = 0;
 					isTrigger = false;
+					events.add(new LoadLevelEvent(modele, id+1));
+					events.add(new SetScrollingMapEvent(modele));
 				}
 				
-				plateau.get()[x][y] = new Cellule(tileset, notreMap[x][y]-1, x*16,y*16,isTrigger, 4, offsetX, offsetY, tailleX, tailleY, null);
-				System.out.println(plateau.get()[x][y].getCollider().getTailleX() + ";" + plateau.get()[x][y].getCollider().getTailleX());
-
+				plateau.get()[x][y] = 
+						new Cellule(tileset,
+								notreMap[x][y]-1,
+								x*16,	 y*16,
+								isTrigger,
+								4,
+								offsetX, offsetY, 
+								tailleX, tailleY, 
+								events);
 			}
 		}
 	}
@@ -204,9 +217,11 @@ public class BuilderPlateau {
 				}
 			}
 		}
-		int[][] returntableau = new int[plateau[0].length][plateau.length];
+		int[][] returntableau = new int[this.width][this.height];
 		for (int i = 0; i < returntableau.length; i++) {
 			for (int j = 0; j < returntableau[i].length; j++) {
+				//System.out.println(returntableau[i].length);
+				//System.out.println(plateau[i].length);
 				returntableau[i][j] = plateau[j][i];
 			}
 		}

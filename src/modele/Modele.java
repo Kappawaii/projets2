@@ -15,24 +15,16 @@ public class Modele {
 	int idNiveau;
 	Joueur joueur;
 	Affichage affichage;
-	
+    
 	public Modele() {
 		tilesets = new ArrayList<Tileset>();
 		niveaux = new ArrayList<Niveau>();
 	}
 	
-	public void setAffichage(Affichage affichage) {
-		this.affichage = affichage;
-	}
-	
 	public void changerMap(int idNewNiveau, boolean debugMode) {
 		idNiveau = idNewNiveau;
-		nettoyerEntites();
+		//affichage.nettoyerEntites();
 		affichage.ajouterCarte(niveaux.get(idNiveau).getPlateau().get(), debugMode);
-	}
-	
-	public void nettoyerEntites() {
-		affichage.nettoyerEntites();
 	}
 	
 	public ArrayList<Collider> getPlateauCollider(int idNiveau){
@@ -79,5 +71,15 @@ public class Modele {
 	public int getIdNiveau() {
 		return idNiveau;
 	}
+
+
+	public Affichage getAffichage() {
+		return affichage;
+	}
+
+	public void setAffichage(Affichage affichage) {
+		this.affichage = affichage;
+	}
+
 	
 }

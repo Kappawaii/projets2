@@ -4,8 +4,8 @@ import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -21,34 +21,31 @@ import vue.tileset.Tileset;
 public class Controleur {
 
 	@FXML
-	private Pane rootpane = new Pane();
+	private Pane rootpane;
 	@FXML
-	private Pane tuiles = new Pane();
+	private Pane tuiles;
 	@FXML
-	private Pane entites = new Pane();
+	private Pane entites;
 
 	@FXML
-	private Pane dialogueBox = new Pane();
+	private Pane dialogueBox;
 	@FXML
-    private Label saisieDialogue = new Label();
-	int testAnimationManager = 0;
+	private Label saisieDialogue;
+
 	private Timeline gameLoop;
 	private int temps;
-	private Modele modele = new Modele();
+	private Modele modele;
 	private Affichage affichage;
 	boolean stopJeu = false;
 	static int displayScale = 4;
 	private KeyManager keymanager;
-	int marqueur;
-	int remind;
-	int remindend;
 	boolean jeuEnPause = false;
 	boolean debugMode = false;
-	boolean scrollingMap = false;
-	int idNiveautest;
-	
+
+
 	@FXML
 	public void initialize() {
+		modele = new Modele();
 		affichage = new Affichage(modele, tuiles, entites, displayScale);
 		modele.setAffichage(affichage);
 		//initialisation du joueur
@@ -57,28 +54,24 @@ public class Controleur {
 		initRessources();
 		initAnimation();
 		gameLoop.play();
-		String text = "TOC TOC TOC \nqui est là ??";
-        this.initDialogue(text);
 	}
-	
-	public void initDialogue(String text) {
-        dialogueBox.getChildren().add(saisieDialogue);
-        saisieDialogue.setLayoutX(290);
-        saisieDialogue.setLayoutY(600);
-        //-fx-font-weight: bold; 
-//        saisieDialogue.setStyle("-fx-font-size: 28pt; -fx-font-family: Open Sans;");
-        saisieDialogue.setTextFill(Color.web("#FFFFFF"));
-//      saisieDialogue.setFont(Font.font("Belgrano", FontWeight.BOLD, 28));
-        saisieDialogue.setFont(new Font("Open Sans", 28));
-        String qqchose = text;
-        saisieDialogue.setText(qqchose);
-	}
-	
+
 	public int getScale() {
 		return displayScale;
 	}
 
+	public void initDialogue(String text) {
+		dialogueBox.getChildren().add(saisieDialogue);
+		saisieDialogue.setLayoutX(290);
+		saisieDialogue.setLayoutY(600);
+		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
+		saisieDialogue.setFont(new Font("Open Sans", 28));
+		String qqchose = text;
+		saisieDialogue.setText(qqchose);
+	}
+
 	public void initInputs() {
+		System.out.println(rootpane.getScene());
 		keymanager = new KeyManager(rootpane.getScene());
 		keymanager.addKey(Axe.HAUT,"Z");
 		keymanager.addKey(Axe.GAUCHE,"Q");
@@ -95,45 +88,40 @@ public class Controleur {
 	private void initRessources() {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
 		modele.setJoueur(new Joueur("test", 0, 
-				new Coordonnee(80,100),1,
-				new Tileset("sprites/personnages/joueur/personnage.png", displayScale), walking));
-//		modele.getJoueur().getAnimations().add(walking_right);
-//		modele.getJoueur().getAnimations().add(walking_down);
-//		modele.getJoueur().getAnimations().add(walking_left);
-//		modele.getJoueur().getAnimations().add(walking_up);
-		modele.addNiveau(new Niveau("maps/level0.tmx", modele.getTileset(0), null, displayScale));
-		modele.addNiveau(new Niveau("maps/sans titre.tmx", modele.getTileset(0), null, displayScale));
+				new Coordonnee(60,100),1,
+				new Tileset("sprites/personnages/joueur/personnage.png", displayScale),
+				walking));
+
+		modele.addNiveau(
+				new Niveau("maps/level0.tmx",
+						modele.getTileset(0),
+						null,
+						displayScale,
+						0,
+						modele));
+		modele.addNiveau(
+				new Niveau("maps/level1.tmx",
+						modele.getTileset(0),
+						null,
+						displayScale,
+						1,
+						modele));
+
 	}
-	
+
 	public void mouseClicked() {
-//		System.out.println(keymanager);
-//		modele.getJoueur().seDeplace(Axe.GAUCHE);
-//
-//		modele.getJoueur().getAnimationManager().setCurrentAnimation(testAnimationManager++%modele.getJoueur().getAnimations().size());
-//		tuiles.getChildren().get(remind).setLayoutX(tuiles.getChildren().get(remind).getLayoutX()+1);
-//		System.out.println(tuiles.getLayoutX());
-		if(debugMode)
-			jeuEnPause = false;
-		
-		idNiveautest++;
-		idNiveautest = idNiveautest%2;
-		modele.changerMap(idNiveautest, debugMode);
-		//nettoyerEntites();
+		//modele.getJoueur().setPosition(new Coordonnee(0,0));
 	}
-	
+
 	private void initAnimation() {
 		modele.changerMap(0,debugMode);
 		gameLoop = new Timeline();
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);	
 		entites.getChildren().add(modele.getJoueur().getSprite().getView());
-		for (int i = 0; i < entites.getChildren().size(); i++) {
-			entites.getChildren().get(i).equals(modele.getJoueur().getSprite().getView());
-			marqueur = i;
-		}
-		
-		entites.getChildren().get(entites.getChildren().size()-1).toFront();
-		entites.getChildren().set(marqueur, modele.getJoueur().getSprite().getView());
+		Label joueurpos = new Label();
+		entites.getChildren().add(joueurpos);
+
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopJeu){
@@ -141,39 +129,27 @@ public class Controleur {
 						gameLoop.stop();
 					}
 					else {
-						if(temps%10==0) {
-							//Animations
-							//modele.getJoueur().getSprite().setView(modele.getJoueur().getAnimationManager().nextFrame().getView());
-							
-							
-						}if(!jeuEnPause) {
+						if(!jeuEnPause) {
 							if(debugMode && !jeuEnPause)
 								jeuEnPause = true;
 							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
+							
 							//non-scrolling map
-//							System.out.print("Joueur :");
-//							modele.getJoueur().getCollider().sysout();
-							if(scrollingMap) {
+							joueurpos.setText(modele.getJoueur().getPosition().toString());
+							
+							if(affichage.isScrollingMapEnabled()) {
+								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
 								affichage.centerMaptoPosition(modele.getJoueur().getPosition());
-								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(100,100));
 							}
 							else {
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
-								affichage.mettreAJourCarte(modele.getNiveau().getPlateau().get());							
 							}
-							
+
 						}
-						
+
 					}
 					temps++;
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
-
-	
-	
-	
-	
-
 }
-
