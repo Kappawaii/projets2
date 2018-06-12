@@ -14,6 +14,7 @@ import modele.animation.Animation;
 import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.niveau.Niveau;
+import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import vue.Affichage;
 import vue.tileset.Tileset;
@@ -87,10 +88,13 @@ public class Controleur {
 
 	private void initRessources() {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
-		modele.setJoueur(new Joueur("test", 0, 
-				new Coordonnee(60,100),1,
-				new Tileset("sprites/personnages/joueur/personnage.png", displayScale),
-				walking));
+		Animation walking2 = new Animation(6/*framesBetweenSprites*/, modele.getTileset(1),displayScale, 0);
+		modele.setJoueur(
+				new Joueur("joueur", 0, 
+						new Coordonnee(60,100),1,
+						new Tileset("sprites/personnages/joueur/personnage.png",
+								displayScale),
+						walking));
 
 		modele.addNiveau(
 				new Niveau("maps/level0.tmx",
@@ -106,6 +110,12 @@ public class Controleur {
 						displayScale,
 						1,
 						modele));
+		modele.getNiveau(0).getEntites().add(
+				new Joueur("plante", 0,
+						new Coordonnee(50,80),1,
+						new Tileset("sprites/personnages/joueur/personnage.png",
+								displayScale),
+						walking2));
 
 	}
 
@@ -119,6 +129,8 @@ public class Controleur {
 		temps=0;
 		gameLoop.setCycleCount(Timeline.INDEFINITE);	
 		entites.getChildren().add(modele.getJoueur().getSprite().getView());
+		Personnage ia = ((Personnage) modele.getCurrentNiveau().getEntites().get(0));
+		entites.getChildren().add(ia.getSprite().getView());
 		Label joueurpos = new Label();
 		entites.getChildren().add(joueurpos);
 
@@ -133,10 +145,13 @@ public class Controleur {
 							if(debugMode && !jeuEnPause)
 								jeuEnPause = true;
 							modele.getJoueur().seDeplace(keymanager.getMovementInputs(temps),modele);
-							
+
 							//non-scrolling map
 							joueurpos.setText(modele.getJoueur().getPosition().toString());
-							
+							Axe a = Axe.EMPTY;
+							a.add(Axe.DROITE);
+							ia.seDeplace(a, modele);
+							affichage.mettreAJourPositionPersonnage(ia,ia.getPosition());
 							if(affichage.isScrollingMapEnabled()) {
 								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
 								affichage.centerMaptoPosition(modele.getJoueur().getPosition());

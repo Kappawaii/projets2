@@ -64,9 +64,14 @@ public class Modele {
 		niveaux.add(niveau);
 	}
 	
-	public Niveau getNiveau() {
+	public Niveau getCurrentNiveau() {
 		return niveaux.get(idNiveau);
+	}
+	
+	public Niveau getNiveau(int id) {
+		return niveaux.get(id);
 	}	
+	
 	
 	public int getIdNiveau() {
 		return idNiveau;
