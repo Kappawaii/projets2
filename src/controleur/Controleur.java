@@ -1,7 +1,5 @@
 package controleur;
 
-import java.util.ArrayList;
-
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,8 +11,6 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
-import modele.cellule.Cellule;
-import modele.chemin.PathFinding;
 import modele.cinematique.Cinematique;
 import modele.cinematique.PassiveClip;
 import modele.cinematique.PauseClip;
@@ -24,7 +20,6 @@ import modele.niveau.Niveau;
 import modele.personnage.Personnage;
 import modele.personnage.ennemis.Gobelin;
 import modele.personnage.joueur.Joueur;
-import modele.plateau.Plateau;
 import vue.Affichage;
 import vue.tileset.Tileset;
 
@@ -72,13 +67,13 @@ public class Controleur {
 		initTextAffichage();
 		initAnimation();
 		gameLoop.play();
-      Plateau currentPlateau = modele.getNiveau(0).getPlateau();
-      PathFinding path = new PathFinding(currentPlateau,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
-      ArrayList<Cellule> ccc = path.chemin();
-      for (int i = 0; i < ccc.size(); i++) {
-			Cellule cell = ccc.get(i);
-      			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
-     		}
+//      Plateau currentPlateau = modele.getNiveau(0).getPlateau();
+//      PathFinding path = new PathFinding(currentPlateau,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
+//      ArrayList<Cellule> ccc = path.chemin();
+//      for (int i = 0; i < ccc.size(); i++) {
+//			Cellule cell = ccc.get(i);
+//      			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
+//     		}
 	}
 
 	public int getScale() {
@@ -111,13 +106,17 @@ public class Controleur {
 		cinematiqueDebut.addClip(new PassiveClip(Input.BAS,16));
 		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, ""));
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "il y a du bruit dans l'armoire"));
+		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, "Cliquez pour continuer..."));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,28));
 		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,41));
 		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,30));
 		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,1));
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Never gonna give you up omegalul"));
+		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, "Cliquez pour continuer..."));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, ""));
+		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, ""));
 
 		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		affichage.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
@@ -157,6 +156,7 @@ public class Controleur {
 		dialogueBox.getChildren().add(saisieDialogue);	
 		saisieDialogue.setLayoutX(290);
 		saisieDialogue.setLayoutY(600);
+		//saisieDialogue.setTextAlignment(TextAlignment.CENTER);
 		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
 		saisieDialogue.setFont(new Font("Open Sans", 22));
 		saisieDialogue.setText("");
