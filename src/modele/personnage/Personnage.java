@@ -10,7 +10,6 @@ import modele.arme.Arme;
 import modele.collision.Collider;
 import modele.collision.EventCollider;
 import modele.coordonnee.Coordonnee;
-import modele.personnage.joueur.Joueur;
 import vue.sprite.Sprite;
 
 public abstract class Personnage extends Entity {
@@ -25,45 +24,32 @@ public abstract class Personnage extends Entity {
 	private boolean isControllable;
 	private Arme arme;
 
-	public Personnage(String nom, int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
+	public Personnage(int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
+		super(position);
 		this.modele = modele;
-		super.nom = nom;
-		super.position = position;
 		animation = a;
-		System.out.println(taille);
 		collider = new Collider(position, false, taille, taille);
 		this.pv=pv;
 		this.vitesse=vitesse;
 		isActive = false;
 		isControllable = false;
+		setActive(isActive);
+		arme = new Arme(modele, 10, this);
 	}
 
-	protected int[] getMovements(ArrayList<Input> inputs) {
-		int xInput = 0;
-		int yInput = 0;
-		//somme des entrées de mouvement
-		for (int i = 0; i < inputs.size(); i++) {
-			if(inputs.get(i).isMovement()) {
-				xInput += inputs.get(i).x();
-				yInput += inputs.get(i).y();
-			}
-		}
-		return new int[] {xInput*vitesse,yInput*vitesse};
-	}
-
-
-
+	//TODO Polymorphism jouer();	
+	//@Override
 	public void jouer(ArrayList<Input> inputs) {
-
 		if(isActive && isControllable && inputs != null) {
-			int[] movInputs = getMovements(inputs);
-
+			int[] movInputs = getMovements(inputs, vitesse);
 			//on passe le déplacement si il n'y a pas de mouvement
 			if (movInputs[0] != 0 || movInputs[1] != 0) {
 				//calcul de la prochaine position
 				int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
 				moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
 			}
+			if(arme != null)
+				arme.executer(inputs);
 		}
 	}
 
@@ -73,7 +59,7 @@ public abstract class Personnage extends Entity {
 	 */
 	public void move(ArrayList<Input> inputs) {
 		if(isActive && inputs != null) {
-			int[] movInputs = getMovements(inputs);
+			int[] movInputs = getMovements(inputs, vitesse);
 			//on passe le déplacement si il n'y a pas de mouvement
 			if (movInputs[0] != 0 || movInputs[1] != 0) {
 				//calcul de la prochaine position
@@ -92,14 +78,19 @@ public abstract class Personnage extends Entity {
 	 */
 	protected void moveAndAnimate(int xInput, int yInput, int nextPosX, int nextPosY) {
 		//on crée un collider fictif
-		Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.isTrigger(), collider.getTailleX(), collider.getTailleY());
+		Collider nextPosCollider = new Collider(
+				new Coordonnee(nextPosX,nextPosY),
+				collider.isTrigger(),
+				collider.getTailleX(), collider.getTailleY()
+				);
+
 		//on détecte les collisions sur ce collider fictif
 		ArrayList<Collider> collisions = nextPosCollider.detecterCollisions(modele.getAllColliders(modele.getIdNiveau()));
 
 		boolean pasDeCollisionMaterielle = true;
 		//tri des colliders récupérés
 		for (int i = 0; (i < collisions.size()); i++) {
-			
+
 			//pas d'autocollision
 			if(!collider.equals(collisions.get(i))) {
 				//si le collider n'est pas un trigger, on enregistre une collision matérielle
@@ -163,10 +154,6 @@ public abstract class Personnage extends Entity {
 		return animation;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
 	public Coordonnee getPosition() {
 		return this.position;
 	}
@@ -186,12 +173,13 @@ public abstract class Personnage extends Entity {
 		return false;
 	}
 
-	public void attaquePersoVisible(Joueur joueur) {
-		double distance = Math.sqrt(Math.pow((this.getPosition().getX()-joueur.getPosition().getX()), 2) + Math.pow((this.getPosition().getY()-joueur.getPosition().getY()), 2));
-		if(this.isAlive() && distance < 4) {
-			this.attaque(joueur);
-		}
-	}
+	//TODO Calcul distance ici
+	//	public void attaquePersoVisible(Joueur joueur) {
+	//		double distance = Math.sqrt(Math.pow((this.getPosition().getX()-joueur.getPosition().getX()), 2) + Math.pow((this.getPosition().getY()-joueur.getPosition().getY()), 2));
+	//		if(this.isAlive() && distance < 4) {
+	//			this.attaque(joueur);
+	//		}
+	//	}
 
 	public abstract void attaque(Personnage p);
 
@@ -204,6 +192,7 @@ public abstract class Personnage extends Entity {
 	}
 
 	public void setActive(boolean b) {
+		animation.setVisible(b);
 		isActive = b;
 	}
 
@@ -217,6 +206,11 @@ public abstract class Personnage extends Entity {
 
 	public void setControllable(boolean isControllable) {
 		this.isControllable = isControllable;
+	}
+
+	public void receiveDamage(int dmg) {
+		pv -= dmg;
+		//TODO gestion hp avancée
 	}
 
 }

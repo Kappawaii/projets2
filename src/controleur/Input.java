@@ -4,33 +4,35 @@ import java.util.Random;
 
 public enum Input{
 
-	HAUT(0,-1,true,true),
-	BAS(0,1,true,true),
-	GAUCHE(-1,0,true,true),
-	DROITE(1,0,true,true),
-	ENTREE(0,0,false,false),
-	UTILISER(0,0,false,false),
-	AHAUT(0,-1,false,false),
-	ABAS(0,1,false,false),
-	AGAUCHE(1,0,false,false),
-	ADROITE(-1,0,false,false),
-	EMPTY(0,0,true,true);
+	HAUT(0,-1,true,true,false),
+	BAS(0,1,true,true,false),
+	GAUCHE(-1,0,true,true,false),
+	DROITE(1,0,true,true,false),
+	ENTREE(0,0,false,false,false),
+	UTILISER(0,0,false,false,false),
+	AHAUT(0,-1,false,false,true),
+	ABAS(0,1,false,false,true),
+	AGAUCHE(-1,0,false,false,true),
+	ADROITE(1,0,false,false,true),
+	EMPTY(0,0,true,true,false);
 
 	private int x; 
 	private int y;
-	private final boolean addable;
-	private final boolean movement;
+	private final boolean isAddable;
+	private final boolean isMovement;
+	private final boolean isAttack;
 	public final static Random rand = new Random();
 	
-	private Input(int x,int y, boolean movement, boolean addable) {
+	private Input(int x,int y, boolean movement, boolean addable, boolean isAttack) {
 		if(x > 1 || x < -1)
 			throw new Error("x value out of bounds");
 		if(y > 1 || y < -1)
 			throw new Error("y value out of bounds");
 		this.x = x;
 		this.y = y;
-		this.movement = movement;
-		this.addable = movement;
+		this.isMovement = movement;
+		this.isAddable = movement;
+		this.isAttack = isAttack;
 	}
 
 	public int x() {
@@ -46,14 +48,18 @@ public enum Input{
 	 * @param other
 	 */
 	public void add (Input other) {
-		if (this.addable && other.addable) {
+		if (this.isAddable && other.isAddable) {
 			this.x = this.x+other.x;
 			this.y = this.y+other.y;
 		}
 	}
 
 	public boolean isMovement() {
-		return movement;
+		return isMovement;
+	}
+
+	public boolean isAttack() {
+		return isAttack;
 	}
 
 	public String toString() {

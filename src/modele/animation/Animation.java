@@ -75,4 +75,9 @@ public class Animation {
 	public int getCurrentLigne() {
 		return ligneIndex;
 	}
+
+	public void setVisible(boolean b) {
+		spr.setVisible(b);
+		
+	}
 }

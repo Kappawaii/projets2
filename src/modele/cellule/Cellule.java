@@ -17,8 +17,8 @@ public class Cellule extends Entity{
 	ArrayList<Event> events;
 
 	public Cellule(Tileset tileset,int id, int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY, ArrayList<Event> eventsToAdd) {
+		super(new Coordonnee(x, y));		
 		this.spr = new Sprite(tileset,scale,id);
-		position = new Coordonnee(x, y);
 		this.collider = new EventCollider(new Coordonnee(x+offsetX,y+offsetY), isTrigger, tailleX, tailleY, this);
 		this.events = new ArrayList<Event>();
 		if (eventsToAdd != null) {

@@ -22,4 +22,6 @@ public class AnimatedSprite extends Sprite {
 						super.getView().getViewport().getWidth(),
 						yLength));
 	}
+
+
 }

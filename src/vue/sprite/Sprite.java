@@ -61,4 +61,7 @@ public class Sprite {
 		view.setViewport(rect);
 	}
 	
+	public void setVisible(boolean b) {
+		getView().setVisible(b);
+	}
 }

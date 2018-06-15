@@ -24,7 +24,7 @@ public class Tileset {
 		longueurImg = tempDimensions[0];
 		hauteurImg = tempDimensions[1];
 		casesParLigne =(int) tempDimensions[0]/17 + 1;	
-		//TODO risque d'erreur sur de très grands tilesets (+ de 1000 de large)
+		//TODO c'est pas grave risque d'erreur sur de très grands tilesets (+ de 1000 de large)
 		pxParImage = (int) Math.floor((longueurImg/casesParLigne)+1);
 	}
 	

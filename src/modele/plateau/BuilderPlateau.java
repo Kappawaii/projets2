@@ -29,6 +29,7 @@ public class BuilderPlateau {
 		int offsetX;
 		int offsetY;
 		ArrayList<Event> events = new ArrayList<Event>();
+		ArrayList<Coordonnee> pos = new ArrayList<Coordonnee>();
 		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
@@ -102,7 +103,6 @@ public class BuilderPlateau {
 					isTrigger = false;
 				}
 
-
 				//Armoire
 				if(notreMap[x][y] == 1188) {
 					tailleX = 8;
@@ -112,7 +112,6 @@ public class BuilderPlateau {
 					isTrigger = false;
 				}
 
-
 				//Mur
 				if(notreMap[x][y] == 1186) {
 					tailleX = 8;
@@ -121,7 +120,7 @@ public class BuilderPlateau {
 					offsetY = 2;
 					isTrigger = false;
 				}
-
+				
 				//Porte
 				if(notreMap[x][y] == 90) {
 					tailleX = 4;
@@ -140,7 +139,8 @@ public class BuilderPlateau {
 					offsetX = 0;
 					offsetY = 0;
 					isTrigger = true;
-					events.add(new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1)));
+					pos.add(new Coordonnee(100,100));
+					events.add(new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1),pos));
 				}
 				
 				plateau.get()[x][y] = 
@@ -181,7 +181,6 @@ public class BuilderPlateau {
 		try {
 			ligne=br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ligne=ligne.substring(ligne.indexOf("width"), ligne.indexOf(" tilewidth"));

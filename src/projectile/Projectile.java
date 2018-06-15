@@ -11,10 +11,10 @@ public class Projectile extends Entity {
 	Input direction;
 	int velocity;
 
-	public Projectile(Coordonnee c, Input direction, int speed, Animation animation) {
+	public Projectile(Coordonnee position, Input direction, int speed, Animation animation) {
+		super(position);
 		if(!direction.isMovement())
 			throw new Error("l'Input n'est pas un Input de mouvement");
-		position = c;
 		velocity = speed;
 		anim = animation;
 	}

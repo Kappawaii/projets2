@@ -56,6 +56,35 @@ public class Modele {
 		return colliders;
 	}
 	
+	public ArrayList<Collider> getCelluleColliders(int idNiveau){
+		ArrayList<Collider> colliders = new ArrayList<Collider>();
+		if (niveaux.get(idNiveau).getPlateau() == null) {
+			throw new NullPointerException("Plateau non trouvé (idPlateau :" + idNiveau +  " )");
+		}
+		else {			
+			for (int x = 0; x < niveaux.get(idNiveau).getPlateau().get().length; x++) {
+				for (int y = 0; y < niveaux.get(idNiveau).getPlateau().get()[x].length; y++) {
+					colliders.add(niveaux.get(idNiveau).getPlateau().getCellule(x, y).getCollider());					
+				}
+			}
+		}
+		return colliders;
+	}
+	
+	public ArrayList<Collider> getEntityColliders(int idNiveau){
+		ArrayList<Collider> colliders = new ArrayList<Collider>();
+		if (niveaux.get(idNiveau).getPlateau() == null) {
+			throw new NullPointerException("Plateau non trouvé (idPlateau :" + idNiveau +  " )");
+		}
+		for (int i = 0; i < entites.size(); i++) {
+			if(entites.get(i) instanceof Personnage) {
+				colliders.add(((Personnage) entites.get(i)).getCollider());
+			}
+		}
+		colliders.add(joueur.getCollider());
+		return colliders;
+	}
+	
 	public ArrayList<Personnage> getPersonnagesACharger(int niveau) {
 		ArrayList<Personnage> personnagesACharger = new ArrayList<Personnage>();
 		switch (niveau) {

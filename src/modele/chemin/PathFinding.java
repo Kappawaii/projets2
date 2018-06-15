@@ -198,8 +198,9 @@ public class PathFinding {
 			   node.getCord().getPos().getY() == dejaVisiter.get(i).getCord().getPos().getY()) {
 				return true;
 			}
-			
 		}
+
+
 		return false;
 	}
 	

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import modele.Entity.Entity;
 import modele.coordonnee.Coordonnee;
+import modele.personnage.Personnage;
 
 public class Collider {
 	
@@ -13,7 +14,7 @@ public class Collider {
 	int tailleX;
 	int tailleY;
 	boolean isTrigger;
-	Entity parent;
+	Personnage parent;
 	
 	/**
 	 * collider rectangulaire
@@ -103,12 +104,9 @@ public class Collider {
 		return true;
 	}
 	
-	public void sysout() {
-		System.out.print(getO());
-		System.out.print(getX());
-		System.out.print(getY());
-		System.out.print(getXY());
-		System.out.println(isTrigger);
+	@Override
+	public String toString() {
+		return Integer.toHexString(hashCode())+" "+getO()+getX()+getY()+getXY()+isTrigger;
 	}
 
 	public void setTrigger(boolean b) {
@@ -134,6 +132,24 @@ public class Collider {
 
 	public Coordonnee getXY() {
 		return xy;
+	}
+
+	public void receiveDamage(int dmg) {
+		if(parent != null) {
+			parent.receiveDamage(dmg);
+			System.out.println("reçu : parent= " + parent.getPosition());
+		}
+//		else
+//			System.err.println("sans parent !");
+	}
+	
+	public Entity getParent() {
+		return parent;
+	}
+
+
+	public void setParent(Personnage parent) {
+		this.parent = parent;
 	}
 	
 }
