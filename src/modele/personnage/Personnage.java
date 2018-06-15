@@ -18,7 +18,7 @@ public abstract class Personnage extends Entity {
 	private Animation animation;
 	protected Collider collider;
 	protected Input direction;
-	private int pv;
+	private int pv; // 1 coeur = 4 pv
 	protected int vitesse;
 	protected Modele modele;
 	protected boolean isActive;

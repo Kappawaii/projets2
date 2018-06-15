@@ -72,13 +72,14 @@ public class Controleur {
 		initTextAffichage();
 		initAnimation();
 		gameLoop.play();
-      Plateau currentPlateau = modele.getNiveau(0).getPlateau();
-      PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
-      ArrayList<Cellule> ccc = path.chemin();
-      for (int i = 0; i < ccc.size(); i++) {
-			Cellule cell = ccc.get(i);
-      			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
-     		}
+		//tests pathfinding
+//        Plateau currentPlateau = modele.getNiveau(0).getPlateau();
+//        PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
+//        ArrayList<Cellule> ccc = path.chemin();
+//        for (int i = 0; i < ccc.size(); i++) {
+//		 	Cellule cell = ccc.get(i);
+//   			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
+//     	}
 	}
 
 	public int getScale() {
@@ -129,13 +130,13 @@ public class Controleur {
 		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 
 		modele.getEntitesACloner().add(
-				new Gobelin("plante", 0,
+				new Gobelin("plante", 4,
 						new Coordonnee(100,100),16,
 						walking2,
 						modele));
 
 		modele.setJoueur(
-				new Joueur("joueur", 0, 
+				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,
 						walking,
 						modele));
@@ -222,7 +223,7 @@ public class Controleur {
 							
 							joueurpos.setText(modele.getJoueur().getPosition().toString() + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
 
-							((Gobelin) modele.getEntitesACloner().get(0)).jouer();
+							((Gobelin) modele.getEntitesACloner().get(0)).jouer(modele.getJoueur());
 							
 							//rafraichissement de l'affichage
 
