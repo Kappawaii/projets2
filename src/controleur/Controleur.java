@@ -117,6 +117,7 @@ public class Controleur {
 		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,30));
 		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,1));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Never gonna give you up"));
 
 		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		affichage.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
