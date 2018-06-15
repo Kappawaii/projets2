@@ -18,7 +18,7 @@ public class Gobelin extends Personnage {
 		ArrayList<Input> actions = new ArrayList<Input>();
 		//actions.add(Axe.DROITE);
 		actions.add(Input.randomMovement());
-		seDeplace(actions);
+		jouer(actions);
 	}
 	public void attaque(Personnage p) {
 		System.out.println("Mon maître est SA-ROUU-MAAAAANE");

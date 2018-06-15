@@ -6,11 +6,13 @@ import controleur.Input;
 import modele.Modele;
 
 public class Cinematique  {
+	
 	private ArrayList<Clip> clips;
 	private int cineTime;
 	private boolean finished;
 	protected boolean inPause;
 	private Modele modele;
+	
 	public Cinematique(Modele modele) {
 		finished = false;
 		cineTime = 0;
@@ -27,7 +29,7 @@ public class Cinematique  {
 		if(modele.getJoueur().getActive() != true)
 			System.err.println("Cinematique avec joueur non actif !");
 		if(!inPause && (cineTime < clips.size()) && !finished) {
-			modele.getJoueur().seDeplace(iterateur());
+			modele.getJoueur().move(iterateur());
 			//non-scrolling map						
 			modele.getAffichage().mettreAJourPositionPersonnage(
 					modele.getJoueur(),
@@ -45,6 +47,7 @@ public class Cinematique  {
 			cineTime++;
 			if(cineTime >= clips.size()) {
 				finished = true;
+				modele.getJoueur().setControllable(true);
 				return null;
 			}
 		}

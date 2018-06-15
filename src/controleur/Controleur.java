@@ -14,6 +14,7 @@ import modele.animation.Animation;
 import modele.cinematique.Cinematique;
 import modele.cinematique.PassiveClip;
 import modele.cinematique.PauseClip;
+import modele.cinematique.TextClip;
 import modele.coordonnee.Coordonnee;
 import modele.niveau.Niveau;
 import modele.personnage.Personnage;
@@ -36,6 +37,9 @@ public class Controleur {
 	private Pane dialogueBox;
 	@FXML
 	private Label saisieDialogue = new Label();
+	@FXML
+	private Label cliquezPourContinuer = new Label();
+	
 
 	//Label debug position joueur
 	private Label joueurpos = new Label();
@@ -60,12 +64,10 @@ public class Controleur {
 		//initialisation de toutes les ressources
 		initRessources();
 		//initialisation gameLoop
-		initAffichage();
+		initTextAffichage();
 		initAnimation();
 		gameLoop.play();
 	}
-
-
 
 	public int getScale() {
 		return displayScale;
@@ -85,14 +87,23 @@ public class Controleur {
 		keymanager.addKey(Input.ABAS, "DOWN");
 	}
 
-
 	private void initRessources() {
+		
 		cinematiqueDebut = new Cinematique(modele);
+		/**
+		 * cinématique début du jeu
+		 */
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "poc poc poc"));
+		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, "Cliquez pour continuer..."));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 		cinematiqueDebut.addClip(new PassiveClip(Input.BAS,16));
+		cinematiqueDebut.addClip(new TextClip(cliquezPourContinuer, ""));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "il y a du bruit dans l'armoire"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,28));
 		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,41));
 		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,30));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,1));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
 		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
@@ -127,18 +138,22 @@ public class Controleur {
 						displayScale,
 						1,
 						modele));
-
-
 	}
-
-	private void initAffichage() {
+	
+	private void initTextAffichage() {
 		dialogueBox.getChildren().add(saisieDialogue);	
 		saisieDialogue.setLayoutX(290);
 		saisieDialogue.setLayoutY(600);
 		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
-		saisieDialogue.setFont(new Font("Open Sans", 28));
-		String qqchose = "";
-		saisieDialogue.setText(qqchose);
+		saisieDialogue.setFont(new Font("Open Sans", 22));
+		saisieDialogue.setText("");
+		
+		dialogueBox.getChildren().add(cliquezPourContinuer);	
+		cliquezPourContinuer.setLayoutX(450);
+		cliquezPourContinuer.setLayoutY(650);
+		cliquezPourContinuer.setTextFill(Color.web("#FFFFFF"));
+		cliquezPourContinuer.setFont(new Font("Open Sans", 12));
+		cliquezPourContinuer.setText("");
 	}
 
 	public void mouseClicked() {
@@ -163,7 +178,10 @@ public class Controleur {
 		affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
 		modele.getCurrentNiveau().getEntites().add(modele.getPersonnagesACharger(1).get(0));
 		modele.getAffichage().ajouterEntite(modele.getPersonnagesACharger(1).get(0));
+		
 		modele.getJoueur().setActive(true);
+		modele.getJoueur().setControllable(false);
+		
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
 					if(stopJeu){
@@ -177,8 +195,8 @@ public class Controleur {
 								jeuEnPause = true;
 
 //								System.out.println("loop");
-							
-							modele.getJoueur().seDeplace(keymanager.getMovementInputsList());
+//							System.out.println(modele.getJoueur().isControllable());
+							modele.getJoueur().jouer(keymanager.getMovementInputsList());
 							if(!cinematiqueDebut.isfinished())
 								cinematiqueDebut.play();
 //							debug position joueur
@@ -205,12 +223,11 @@ public class Controleur {
 					}
 					//					temps++;
 				}));
+		
 		gameLoop.getKeyFrames().add(play);
 	}
 
 	//		private KeyFrame getCurrentKeyFrame() {
 	//			return cinematique;
 	//		}
-
-
 }

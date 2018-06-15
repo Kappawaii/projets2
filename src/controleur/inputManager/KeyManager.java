@@ -73,7 +73,7 @@ public class KeyManager {
 		ArrayList<Input> inputs = new ArrayList<Input>();
 		for (Key key : keystates) {
 			if (key.isPressed()) {
-				inputs.add(key.nom);
+				inputs.add(key.input);
 			}
 		}
 		return inputs;

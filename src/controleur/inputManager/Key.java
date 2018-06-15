@@ -6,15 +6,15 @@ class Key {
 	
 	private boolean pressed;
 	String bind;
-	Input nom;
+	Input input;
 	
 	/**
 	 * Crée une nouvelle Key
-	 * @param nom le nom de la Key
+	 * @param input le nom de la Key
 	 * @param bind la touche du clavier à lier à cette Key
 	 */
-	public Key(Input nom, String bind) {
-		this.nom = nom;
+	public Key(Input input, String bind) {
+		this.input = input;
 		this.bind = bind;
 		pressed = false;
 	}
@@ -33,8 +33,8 @@ class Key {
 			return false;
 		}
 		final Key other = (Key) obj;
-		if (other.nom != null && nom != null) {
-			if (nom.equals(other.nom))
+		if (other.input != null && input != null) {
+			if (input.equals(other.input))
 				return true;
 		}
 		if (other.bind != null && bind != null)
@@ -63,6 +63,6 @@ class Key {
 	 */
 	@Override
 	public String toString() {
-		return (nom + " '" + bind + "' " + pressed);
+		return (input + " '" + bind + "' " + pressed);
 	}
 }
