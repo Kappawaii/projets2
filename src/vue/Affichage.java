@@ -58,9 +58,7 @@ public class Affichage {
 	
 	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
 		nettoyerPane(tuiles);
-		System.out.println(entites.getChildren().size());
 		nettoyerPane(entites);
-		System.out.println(entites.getChildren().size());
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
 				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getX()*displayScale);

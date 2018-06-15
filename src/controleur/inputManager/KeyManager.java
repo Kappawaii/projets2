@@ -2,13 +2,13 @@ package controleur.inputManager;
 
 import java.util.ArrayList;
 
+import controleur.Input;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import modele.coordonnee.Axe;
 
 public class KeyManager {
 
-	private static final Axe axenull = null;
+	private static final Input axenull = null;
 	private ArrayList<Key> keystates = new ArrayList<Key>();
 	
 	public KeyManager(Scene scene) {
@@ -30,7 +30,7 @@ public class KeyManager {
 	}
 
 
-	private void setKeyState(Axe nom, String bind, boolean state) {
+	private void setKeyState(Input nom, String bind, boolean state) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
 			keystates.get(keystates.indexOf(new Key(nom,bind))).set(state);
@@ -48,7 +48,7 @@ public class KeyManager {
 	 * @param bind
 	 * @throws Key already used error si la Key est déjà utilisée
 	 */
-	public void addKey(Axe nom, String bind) {
+	public void addKey(Input nom, String bind) {
 		bind = refactorNom(bind);
 		if (!isKeyUsed(nom, bind)) {
 			keystates.add(new Key(nom,bind));
@@ -61,7 +61,7 @@ public class KeyManager {
 	 * @param nom
 	 * @param bind
 	 */
-	public boolean isKeyUsed(Axe nom, String bind) {
+	public boolean isKeyUsed(Input nom, String bind) {
 		bind = refactorNom(bind);	
 		Key temp = new Key(nom,bind);
 		if (keystates.contains(temp))
@@ -69,8 +69,8 @@ public class KeyManager {
 		return false;
 	}
 
-	public ArrayList<Axe> getMovementInputsList(int a) {
-		ArrayList<Axe> inputs = new ArrayList<Axe>();
+	public ArrayList<Input> getMovementInputsList() {
+		ArrayList<Input> inputs = new ArrayList<Input>();
 		for (Key key : keystates) {
 			if (key.isPressed()) {
 				inputs.add(key.nom);
@@ -107,7 +107,7 @@ public class KeyManager {
 	 * @param key
 	 * @throws Key not found error si la Key n'existe pas
 	 */
-	public boolean getKeyState(Axe nom) {
+	public boolean getKeyState(Input nom) {
 		if (isKeyUsed(nom,""))
 			return keystates.get(keystates.indexOf(new Key(nom,""))).isPressed();
 		else 

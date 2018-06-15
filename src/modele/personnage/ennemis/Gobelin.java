@@ -2,9 +2,9 @@ package modele.personnage.ennemis;
 
 import java.util.ArrayList;
 
+import controleur.Input;
 import modele.Modele;
 import modele.animation.Animation;
-import modele.coordonnee.Axe;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
 
@@ -15,9 +15,9 @@ public class Gobelin extends Personnage {
 	}
 	
 	public void jouer() {
-		ArrayList<Axe> actions = new ArrayList<Axe>();
+		ArrayList<Input> actions = new ArrayList<Input>();
 		//actions.add(Axe.DROITE);
-		actions.add(Axe.getRandomMovement());
+		actions.add(Input.randomMovement());
 		seDeplace(actions);
 	}
 	public void attaque(Personnage p) {

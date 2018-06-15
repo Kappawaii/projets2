@@ -1,19 +1,19 @@
 package controleur.inputManager;
 
-import modele.coordonnee.Axe;
+import controleur.Input;
 
 class Key {
 	
 	private boolean pressed;
 	String bind;
-	Axe nom;
+	Input nom;
 	
 	/**
 	 * Crée une nouvelle Key
 	 * @param nom le nom de la Key
 	 * @param bind la touche du clavier à lier à cette Key
 	 */
-	public Key(Axe nom, String bind) {
+	public Key(Input nom, String bind) {
 		this.nom = nom;
 		this.bind = bind;
 		pressed = false;

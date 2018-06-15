@@ -1,8 +1,8 @@
-package modele.coordonnee;
+package controleur;
 
 import java.util.Random;
 
-public enum Axe{
+public enum Input{
 
 	HAUT(0,-1,true,true),
 	BAS(0,1,true,true),
@@ -22,7 +22,7 @@ public enum Axe{
 	private final boolean movement;
 	public final static Random rand = new Random();
 	
-	private Axe(int x,int y, boolean movement, boolean addable) {
+	private Input(int x,int y, boolean movement, boolean addable) {
 		if(x > 1 || x < -1)
 			throw new Error("x value out of bounds");
 		if(y > 1 || y < -1)
@@ -45,7 +45,7 @@ public enum Axe{
 	 * N'additionne que les vecteurs de mouvement et n'aura aucun effet si movement est false
 	 * @param other
 	 */
-	public void add (Axe other) {
+	public void add (Input other) {
 		if (this.addable && other.addable) {
 			this.x = this.x+other.x;
 			this.y = this.y+other.y;
@@ -74,34 +74,34 @@ public enum Axe{
 		return new int[] {x,y};
 	}
 	
-	public static Axe arrayToDirection(int[] tab) {
+	public static Input arrayToDirection(int[] tab) {
 		if(tab[0] == 0) {
 			if(tab[1] == -1)
-				return Axe.HAUT;
+				return Input.HAUT;
 			if(tab[1] == 1)
-				return Axe.BAS;
+				return Input.BAS;
 		}
 		if(tab[1] == 0) {
 			if(tab[0] == 1)
-				return Axe.DROITE;
+				return Input.DROITE;
 			if(tab[0] == -1)
-				return Axe.GAUCHE;			
+				return Input.GAUCHE;			
 		}
 		return null;
 	}
 	
-	public static Axe getRandomMovement() {
+	public static Input randomMovement() {
 		int val = 0;
 		val = rand.nextInt(4);
 		switch (val) {
 		case 0:
-			return Axe.GAUCHE;
+			return Input.GAUCHE;
 		case 1:
-			return Axe.HAUT;
+			return Input.HAUT;
 		case 2:
-			return Axe.DROITE;
+			return Input.DROITE;
 		case 3:
-			return Axe.BAS;
+			return Input.BAS;
 		}
 		throw new Error("Something very weird happened here");
 	}

@@ -8,6 +8,7 @@ import modele.niveau.Niveau;
 import modele.personnage.Personnage;
 import modele.personnage.joueur.Joueur;
 import vue.Affichage;
+import vue.NarrationInterface;
 
 public class Modele {
 
@@ -16,10 +17,16 @@ public class Modele {
 	int idNiveau;
 	Joueur joueur;
 	Affichage affichage;
+	NarrationInterface textOutput;
     
 	public Modele() {
 		niveaux = new ArrayList<Niveau>();
 		entites = new ArrayList<Entity>();
+		textOutput = new NarrationInterface();
+	}
+	
+	public void setNarrationText(String text) {
+		textOutput.setText(text);
 	}
 	
 	public void changerMap(int idNewNiveau, boolean debugMode) {
@@ -47,7 +54,9 @@ public class Modele {
 		}
 		return colliders;
 	}	
+	
 
+	
 	public ArrayList<Personnage> getPersonnagesACharger(int niveau) {
 		ArrayList<Personnage> personnagesACharger = new ArrayList<Personnage>();
 		switch (niveau) {

@@ -14,14 +14,14 @@ public class Animation {
 	private int numberOfFrames;
 
 	public Animation(int framesBetweenSprites, Tileset tileset, int displayScale, int ligne) {
-		if (framesBetweenSprites == 0) {
-
+		if (framesBetweenSprites <= 0) {
+			throw new IllegalArgumentException("Valeur de framesBetweenSprites <= 0");
 		}
 		else if (tileset == null) {
 			throw new NullPointerException("Valeur de tileset : null");
 		}
-		else if (displayScale == 0) {
-			throw new IllegalArgumentException("Valeur de displayScale : 0");
+		else if (displayScale <= 0) {
+			throw new IllegalArgumentException("Valeur de displayScale <= 0");
 		}
 		this.animIndex = 0;
 		this.counter = 0;
@@ -39,8 +39,16 @@ public class Animation {
 	protected int getAnimIndex() {
 		return animIndex;
 	}
-
-	public void setCurrentAnimation(int i) throws ArrayIndexOutOfBoundsException {
+	
+	public void animate(int i) {
+		if(getCurrentLigne() != i)
+			setCurrentAnimation(i);
+		else 
+			nextFrame();
+	}
+	
+	private void setCurrentAnimation(int i) throws ArrayIndexOutOfBoundsException {
+		
 		counter = 0;
 		animIndex = 0;
 		ligneIndex = i;

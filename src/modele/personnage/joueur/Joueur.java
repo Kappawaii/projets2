@@ -30,4 +30,8 @@ public class Joueur extends Personnage{
 	public void attaque(Personnage p) {
 		System.out.println("Je t'attaque "+p.getNom());
 	}
+
+
+
+
 }
