@@ -1,6 +1,7 @@
 package modele.collision;
 import java.util.ArrayList;
 
+import modele.Entity.Entity;
 import modele.coordonnee.Coordonnee;
 
 public class Collider {
@@ -12,26 +13,7 @@ public class Collider {
 	int tailleX;
 	int tailleY;
 	boolean isTrigger;
-	
-	public boolean isTrigger() {
-		return isTrigger;
-	}
-	
-	public Coordonnee getO() {
-		return o;
-	}
-
-	public Coordonnee getX() {
-		return x;
-	}
-
-	public Coordonnee getY() {
-		return y;
-	}
-
-	public Coordonnee getXY() {
-		return xy;
-	}
+	Entity parent;
 	
 	/**
 	 * collider rectangulaire
@@ -133,4 +115,25 @@ public class Collider {
 		isTrigger = b;
 		
 	}
+	
+	public boolean isTrigger() {
+		return isTrigger;
+	}
+	
+	public Coordonnee getO() {
+		return o;
+	}
+
+	public Coordonnee getX() {
+		return x;
+	}
+
+	public Coordonnee getY() {
+		return y;
+	}
+
+	public Coordonnee getXY() {
+		return xy;
+	}
+	
 }

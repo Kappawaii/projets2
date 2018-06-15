@@ -20,4 +20,10 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
+	protected int[] getNextPos(int xInput, int yInput) {
+		int nextPosX = position.getX() + xInput;
+		int nextPosY = position.getY() + yInput;
+		return new int[] {nextPosX,nextPosY};
+	}
+	
 }

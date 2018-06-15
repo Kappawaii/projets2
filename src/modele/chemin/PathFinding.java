@@ -2,6 +2,7 @@ package modele.chemin;
 
 import java.util.ArrayList;
 
+import modele.Modele;
 import modele.cellule.Cellule;
 import modele.plateau.Plateau;
 
@@ -23,10 +24,10 @@ public class PathFinding {
 	int currentY;
 	Node current;
 	
-	public PathFinding(Plateau map, Cellule depart, Cellule arrive) {
+	public PathFinding(Modele modele, Cellule depart, Cellule arrive) {
 		
 		if (depart.getCollider().isTrigger() && arrive.getCollider().isTrigger()) {
-			this.map = map;
+			this.map = modele.getCurrentNiveau().getPlateau();
 			this.coordDepart = map.getCellulePositionInPlateau(depart);
 			this.depart = new Node(null, map.getCellule(coordDepart[0], coordDepart[1]));
 			this.coordArrive = map.getCellulePositionInPlateau(arrive);

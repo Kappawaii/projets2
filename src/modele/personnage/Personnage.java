@@ -6,6 +6,7 @@ import controleur.Input;
 import modele.Modele;
 import modele.Entity.Entity;
 import modele.animation.Animation;
+import modele.arme.Arme;
 import modele.collision.Collider;
 import modele.collision.EventCollider;
 import modele.coordonnee.Coordonnee;
@@ -20,14 +21,16 @@ public abstract class Personnage extends Entity {
 	private int pv;
 	protected int vitesse;
 	protected Modele modele;
-	private boolean isActive;
+	protected boolean isActive;
 	private boolean isControllable;
+	private Arme arme;
 
 	public Personnage(String nom, int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
 		this.modele = modele;
 		super.nom = nom;
 		super.position = position;
 		animation = a;
+		System.out.println(taille);
 		collider = new Collider(position, false, taille, taille);
 		this.pv=pv;
 		this.vitesse=vitesse;
@@ -35,30 +38,26 @@ public abstract class Personnage extends Entity {
 		isControllable = false;
 	}
 
-	public int[] getMovements(ArrayList<Input> inputs) {
+	protected int[] getMovements(ArrayList<Input> inputs) {
 		int xInput = 0;
 		int yInput = 0;
 		//somme des entrées de mouvement
 		for (int i = 0; i < inputs.size(); i++) {
 			if(inputs.get(i).isMovement()) {
-				xInput += inputs.get(i).x()*vitesse;
-				yInput += inputs.get(i).y()*vitesse;
+				xInput += inputs.get(i).x();
+				yInput += inputs.get(i).y();
 			}
 		}
-		return new int[] {xInput,yInput};
+		return new int[] {xInput*vitesse,yInput*vitesse};
 	}
-	
-	public int[] getNextPos(int xInput, int yInput) {
-		int nextPosX = position.getX() + xInput;
-		int nextPosY = position.getY() + yInput;
-		return new int[] {nextPosX,nextPosY};
-	}
+
+
 
 	public void jouer(ArrayList<Input> inputs) {
 
 		if(isActive && isControllable && inputs != null) {
 			int[] movInputs = getMovements(inputs);
-			
+
 			//on passe le déplacement si il n'y a pas de mouvement
 			if (movInputs[0] != 0 || movInputs[1] != 0) {
 				//calcul de la prochaine position
@@ -67,7 +66,7 @@ public abstract class Personnage extends Entity {
 			}
 		}
 	}
-	
+
 	/**
 	 * pour les cinématiques, ne prend pas en compte isControllable
 	 * @param inputs
@@ -91,7 +90,7 @@ public abstract class Personnage extends Entity {
 	 * @param nextPosX
 	 * @param nextPosY
 	 */
-	private void moveAndAnimate(int xInput, int yInput, int nextPosX, int nextPosY) {
+	protected void moveAndAnimate(int xInput, int yInput, int nextPosX, int nextPosY) {
 		//on crée un collider fictif
 		Collider nextPosCollider = new Collider(new Coordonnee(nextPosX,nextPosY), collider.isTrigger(), collider.getTailleX(), collider.getTailleY());
 		//on détecte les collisions sur ce collider fictif
@@ -100,12 +99,17 @@ public abstract class Personnage extends Entity {
 		boolean pasDeCollisionMaterielle = true;
 		//tri des colliders récupérés
 		for (int i = 0; (i < collisions.size()); i++) {
-			//si le collider n'est pas un trigger, on enregistre une collision matérielle
-			if(!collisions.get(i).isTrigger())
-				pasDeCollisionMaterielle = false;		
-			//si le collider est un collider évenementiel, on active sa méthode triggerEvent()
-			if(collisions.get(i) instanceof EventCollider)
-				((EventCollider) collisions.get(i)).triggerEvent();
+			
+			//pas d'autocollision
+			if(!collider.equals(collisions.get(i))) {
+				//si le collider n'est pas un trigger, on enregistre une collision matérielle
+				if(!collisions.get(i).isTrigger()) {
+					pasDeCollisionMaterielle = false;
+				}
+				//si le collider est un collider évenementiel, on active sa méthode triggerEvent()
+				if(collisions.get(i) instanceof EventCollider)
+					((EventCollider) collisions.get(i)).triggerEvent();
+			}
 
 		}
 

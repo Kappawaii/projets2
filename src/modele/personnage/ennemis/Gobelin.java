@@ -15,10 +15,20 @@ public class Gobelin extends Personnage {
 	}
 	
 	public void jouer() {
-		ArrayList<Input> actions = new ArrayList<Input>();
+		ArrayList<Input> inputs = new ArrayList<Input>();
 		//actions.add(Axe.DROITE);
-		actions.add(Input.randomMovement());
-		jouer(actions);
+		inputs.add(Input.randomMovement());
+		
+		if(isActive && inputs != null) {
+			int[] movInputs = getMovements(inputs);
+			
+			//on passe le déplacement si il n'y a pas de mouvement
+			if (movInputs[0] != 0 || movInputs[1] != 0) {
+				//calcul de la prochaine position
+				int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
+				moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
+			}
+		}
 	}
 	public void attaque(Personnage p) {
 		System.out.println("Mon maître est SA-ROUU-MAAAAANE");

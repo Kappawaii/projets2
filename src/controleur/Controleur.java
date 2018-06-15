@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.ArrayList;
+
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,6 +13,8 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import modele.Modele;
 import modele.animation.Animation;
+import modele.cellule.Cellule;
+import modele.chemin.PathFinding;
 import modele.cinematique.Cinematique;
 import modele.cinematique.PassiveClip;
 import modele.cinematique.PauseClip;
@@ -20,6 +24,7 @@ import modele.niveau.Niveau;
 import modele.personnage.Personnage;
 import modele.personnage.ennemis.Gobelin;
 import modele.personnage.joueur.Joueur;
+import modele.plateau.Plateau;
 import vue.Affichage;
 import vue.tileset.Tileset;
 
@@ -67,13 +72,13 @@ public class Controleur {
 		initTextAffichage();
 		initAnimation();
 		gameLoop.play();
-//      Plateau currentPlateau = modele.getNiveau(0).getPlateau();
-//      PathFinding path = new PathFinding(currentPlateau,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
-//      ArrayList<Cellule> ccc = path.chemin();
-//      for (int i = 0; i < ccc.size(); i++) {
-//			Cellule cell = ccc.get(i);
-//      			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
-//     		}
+      Plateau currentPlateau = modele.getNiveau(0).getPlateau();
+      PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
+      ArrayList<Cellule> ccc = path.chemin();
+      for (int i = 0; i < ccc.size(); i++) {
+			Cellule cell = ccc.get(i);
+      			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
+     		}
 	}
 
 	public int getScale() {
@@ -125,7 +130,7 @@ public class Controleur {
 
 		modele.getEntitesACloner().add(
 				new Gobelin("plante", 0,
-						new Coordonnee(100,100),1,
+						new Coordonnee(100,100),16,
 						walking2,
 						modele));
 
@@ -193,7 +198,8 @@ public class Controleur {
 		modele.getAffichage().ajouterEntite(modele.getPersonnagesACharger(1).get(0));
 		
 		modele.getJoueur().setActive(true);
-		modele.getJoueur().setControllable(false);
+//		modele.getJoueur().setControllable(false);
+		modele.getJoueur().setControllable(true);
 		
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
@@ -210,14 +216,14 @@ public class Controleur {
 //								System.out.println("loop");
 //							System.out.println(modele.getJoueur().isControllable());
 							modele.getJoueur().jouer(keymanager.getMovementInputsList());
-							if(!cinematiqueDebut.isfinished())
-								cinematiqueDebut.play();
+//							if(!cinematiqueDebut.isfinished())
+//								cinematiqueDebut.play();
 //							debug position joueur
 							
 							joueurpos.setText(modele.getJoueur().getPosition().toString() + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
 
 							((Gobelin) modele.getEntitesACloner().get(0)).jouer();
-
+							
 							//rafraichissement de l'affichage
 
 							//avec scrolling map

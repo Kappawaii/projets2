@@ -4,9 +4,9 @@ package modele.personnage.joueur;
 import java.util.ArrayList;
 
 import modele.Modele;
+import modele.Objet;
 import modele.animation.Animation;
 import modele.coordonnee.Coordonnee;
-import modele.objet.Objet;
 import modele.personnage.Personnage;
 
 public class Joueur extends Personnage{

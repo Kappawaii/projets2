@@ -19,9 +19,9 @@ public class LoadEntitiesEvent extends Event {
 		if(!executed) {
 			System.out.println("executed");
 			for (Personnage p : personnage) {
-				p.setActive(true);
 				modele.getCurrentNiveau().getEntites().add(p);
 				modele.getAffichage().ajouterEntite(p);
+				p.setActive(true);
 			}
 
 			executed = true;

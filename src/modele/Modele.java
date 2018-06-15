@@ -52,10 +52,9 @@ public class Modele {
 				colliders.add(((Personnage) entites.get(i)).getCollider());
 			}
 		}
+		colliders.add(joueur.getCollider());
 		return colliders;
-	}	
-	
-
+	}
 	
 	public ArrayList<Personnage> getPersonnagesACharger(int niveau) {
 		ArrayList<Personnage> personnagesACharger = new ArrayList<Personnage>();
