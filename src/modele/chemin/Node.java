@@ -7,13 +7,13 @@ public class Node {
 
     Node avant;
     Cellule cord;
-    boolean dejaVisité;
+    boolean dejaVisite;
     
     
     public Node(Node avant, Cellule cord) {
         this.avant=avant;
         this.cord=cord;
-        this.dejaVisité = false;
+        this.dejaVisite = false;
     }
     
     
@@ -27,11 +27,11 @@ public class Node {
     }
     
     public void setVisite() {
-    	this.dejaVisité = true;
+    	this.dejaVisite = true;
     }
     
-    public boolean getDejaVisité() {
-    	return this.dejaVisité;
+    public boolean getDejaVisite() {
+    	return this.dejaVisite;
     }
     
     public boolean equals(Node other) {
