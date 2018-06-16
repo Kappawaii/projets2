@@ -31,7 +31,6 @@ public class Joueur extends Personnage{
 			if(arme != null) {
 				Input armeDirection = arme.attaquer(inputs);
 				if( armeDirection != null && direction != null) {
-					System.err.println(direction);
 					//décalage animation déplacement
 					switch (direction) {
 					case DROITE:
@@ -83,8 +82,9 @@ public class Joueur extends Personnage{
 						break;
 					}
 				}
-				else {
+				else if(didAttack) {
 				didAttack = false;
+				animationAttackToMovement();
 				animOffset = 0;
 				}
 			}

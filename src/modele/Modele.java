@@ -76,6 +76,8 @@ public class Modele {
 		switch (niveau) {
 		case 1:
 			 personnagesACharger.add(entites.get(0));
+			 personnagesACharger.add(entites.get(1));
+
 			break;
 		}
 		return personnagesACharger;

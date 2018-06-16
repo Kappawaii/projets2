@@ -54,6 +54,10 @@ public class Gobelin extends Personnage {
 				}
 
 				int[] movInputs = getMovements(inputs, vitesse);
+				for (int i = 0; i < movInputs.length; i++) {
+					movInputs[i] = Math.max(-1, movInputs[i]);
+					movInputs[i] = Math.min(1, movInputs[i]);
+				}
 
 				//on passe le déplacement si il n'y a pas de mouvement
 				if (movInputs[0] != 0 || movInputs[1] != 0) {

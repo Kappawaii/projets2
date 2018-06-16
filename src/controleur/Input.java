@@ -22,7 +22,7 @@ public enum Input{
 	private final boolean isMovement;
 	private final boolean isAttack;
 	public final static Random rand = new Random();
-	
+
 	private Input(int x,int y, boolean movement, boolean addable, boolean isAttack) {
 		if(x > 1 || x < -1)
 			throw new Error("x value out of bounds");
@@ -79,7 +79,7 @@ public enum Input{
 	public int[] directiontoArray() {
 		return new int[] {x,y};
 	}
-	
+
 	public static Input arrayToDirection(int[] tab) {
 		if(tab[0] == 0) {
 			if(tab[1] == -1)
@@ -95,7 +95,7 @@ public enum Input{
 		}
 		return null;
 	}
-	
+
 	public static Input randomMovement() {
 		int val = 0;
 		val = rand.nextInt(4);
@@ -111,6 +111,23 @@ public enum Input{
 		}
 		throw new Error("Something very weird happened here");
 	}
+
+	public static int directionToInt(Input in) {
+		if(in != null) {
+			switch (in) {
+			case DROITE:
+				return 0;
+			case BAS:
+				return 1;
+			case GAUCHE:
+				return 2;
+			case HAUT:
+				return 3;
+			default:
+				throw new Error("pas normal");
+
+			}
+		}
+		return 0;
+	}
 }
-
-

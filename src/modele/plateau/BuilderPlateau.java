@@ -140,6 +140,7 @@ public class BuilderPlateau {
 					offsetY = 0;
 					isTrigger = true;
 					pos.add(new Coordonnee(300,150));
+					pos.add(new Coordonnee(150,150));
 					events.add(new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1),pos));
 				}
 				

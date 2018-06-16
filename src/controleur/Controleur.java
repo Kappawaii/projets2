@@ -1,6 +1,7 @@
 package controleur;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
@@ -21,6 +22,7 @@ import modele.coordonnee.Coordonnee;
 import modele.niveau.Niveau;
 import modele.personnage.Personnage;
 import modele.personnage.ennemis.Gobelin;
+import modele.personnage.ennemis.Plante;
 import modele.personnage.joueur.Joueur;
 import vue.Affichage;
 import vue.tileset.Tileset;
@@ -100,7 +102,7 @@ public class Controleur {
 					}
 					else {
 						keymanager.updateInputs();
-						
+
 						//test mode debug F/F activé
 						if(debugMode)
 							jeuEnPause = true;
@@ -113,19 +115,28 @@ public class Controleur {
 						//debug position joueur							
 						joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
 
-						modele.getPersonnages().get(0).unTour();
+						for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
+							Personnage personnage = iterator.next();
+							personnage.unTour();
 
+						}
+						System.out.println(modele.getPersonnages().get(1).getPosition());
 						//rafraichissement de l'affichage
 
 						//avec scrolling map
 						if(affichage.isScrollingMapEnabled()) {
+							
 							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-							affichage.mettreAJourPositionPersonnage((Personnage) modele.getPersonnages().get(0), modele.getPersonnages().get(0).getPosition());
+							affichage.mettreAJourPositionPersonnage(modele.getPersonnages().get(0), modele.getPersonnages().get(0).getPosition());
 							affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
 							affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
 						}
 						//sans scrolling map
 						else {
+							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
+								Personnage personnage = iterator.next();
+								affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
+							}
 							affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
 						}
 
@@ -142,7 +153,7 @@ public class Controleur {
 		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
 		saisieDialogue.setFont(new Font("Open Sans", 22));
 		saisieDialogue.setText("");
-		
+
 		dialogueBox.getChildren().add(cliquezPourContinuer);	
 		cliquezPourContinuer.setLayoutX(450);
 		cliquezPourContinuer.setLayoutY(650);
@@ -195,12 +206,16 @@ public class Controleur {
 
 		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
+		Animation walking3 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 
 		modele.getPersonnages().add(
-				new Gobelin("plante", 10,
+				new Gobelin("gobelin", 10,
 						new Coordonnee(0,0),16,
 						walking2,
 						modele));
+		modele.getPersonnages().add(
+				new Plante("plante", new Coordonnee(0,0), walking3, modele));
+
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,

@@ -53,7 +53,6 @@ public class Affichage {
 	}
 
 	public void ajouterPersonnage(Personnage p) {
-		System.out.println(entites.getChildren().size());
 		entites.getChildren().add(p.getSprite().getView());
 	}
 

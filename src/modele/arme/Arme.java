@@ -39,7 +39,7 @@ public class Arme extends Entity {
 	public Input attaquer(ArrayList<Input> direction) {
 		//instantiation d'une nouvelle attaque si une attaque n'est pas en cours
 		if(ticksRemaining == 0) {
-			modele.getAffichage().enleverArme(this);
+//			modele.getAffichage().enleverArme(this);
 			ticksRemaining--;
 			return Input.EMPTY;
 		}
@@ -48,8 +48,8 @@ public class Arme extends Entity {
 			//on passe l'attaque si il l'entrée est nulle
 			if (dirInputs[0] != 0 || dirInputs[1] != 0) {
 				idAttaque = idGenerator.nextLong();
-				modele.getAffichage().ajouterArme(this);
-				ticksRemaining = 24;
+//				modele.getAffichage().ajouterArme(this);
+				ticksRemaining = 20;
 				offsetPos = dirInputs;
 				collider = new Collider(
 						new Coordonnee(parent.getPosition().getX(),parent.getPosition().getY()),
@@ -63,7 +63,7 @@ public class Arme extends Entity {
 			position.setX(parent.getPosition().getX()+offsetPos[0]*16);
 			position.setY(parent.getPosition().getY()+offsetPos[1]*16);
 			collider.setPosition(position);
-			modele.getAffichage().mettreAJourPositionArme(this, position);
+//			modele.getAffichage().mettreAJourPositionArme(this, position);
 			//on détecte les collisions sur ce collider
 			ArrayList<Collider> collisions = collider.detecterCollisions(modele.getAllColliders(modele.getIdNiveau()));
 

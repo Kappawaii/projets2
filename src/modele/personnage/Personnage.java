@@ -136,7 +136,10 @@ public abstract class Personnage extends Entity {
 		}
 
 	}
-
+	
+	protected void animationAttackToMovement() {
+		getAnimation().animate(Input.directionToInt(direction));
+	}
 
 	protected void updateAnimation() {
 
@@ -144,7 +147,6 @@ public abstract class Personnage extends Entity {
 			if(direction != null) {
 				int[] orientation = direction.directiontoArray();
 				orientation[0] = orientation[0]*10 + orientation[1];
-				System.out.println(animOffset);
 				switch (orientation[0]) {
 				case 10: case 11: case 9:
 					animation.animate(0+animOffset);
