@@ -72,6 +72,7 @@ public class Arme extends Entity {
 				//si la collision est une collision non matérielle
 				if(!detectedCollider.isTrigger()) {
 					//TODO Maybe triggerEvent()?
+					System.out.println("dmg envoyé");
 					detectedCollider.receiveDamage(degats);
 				}
 

@@ -11,11 +11,11 @@ public class Plante extends Personnage {
 	public Plante(String nom, Coordonnee position, int vitesse, Tileset tileset, Animation a, Modele modele) {
 		super(5, position, 16, vitesse, a, modele);
 	}
-	
-	public void attaque(Personnage p) {
-		System.out.println("Que le soleil vous détruise");
+
+	@Override
+	public void jouer() {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	//TODO Polymorphism	
 
 }

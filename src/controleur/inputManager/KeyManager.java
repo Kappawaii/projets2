@@ -10,7 +10,8 @@ public class KeyManager {
 
 	private static final Input axenull = null;
 	private ArrayList<Key> keystates = new ArrayList<Key>();
-	
+	private ArrayList<Input> inputs;
+
 	public KeyManager(Scene scene) {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 			setKeyState(axenull,key.getCode().toString(), true);
@@ -69,26 +70,32 @@ public class KeyManager {
 		return false;
 	}
 
-	public ArrayList<Input> getMovementInputsList() {
-		ArrayList<Input> inputs = new ArrayList<Input>();
-		for (Key key : keystates) {
-			if (key.isPressed()) {
-				inputs.add(key.input);
+	public void updateInputs() {
+		if(inputs != null) {
+			inputs.clear();
+			for (Key key : keystates) {
+				if (key.isPressed()) {
+
+					inputs.add(key.input);
+				}
 			}
 		}
-		return inputs;
 	}
 	
-//	public Axe getMovementInputs(int a) {
-//		Axe inputs = Axe.EMPTY;
-//		inputs.clear();
-//		for (Key key : keystates) {
-//			if (key.isPressed())
-//				inputs.add(key.nom);
-//		}
-//		return inputs;
-//	}
-	
+	public ArrayList<Input> getInputList(){
+		return inputs;
+	}
+
+	//	public Axe getMovementInputs(int a) {
+	//		Axe inputs = Axe.EMPTY;
+	//		inputs.clear();
+	//		for (Key key : keystates) {
+	//			if (key.isPressed())
+	//				inputs.add(key.nom);
+	//		}
+	//		return inputs;
+	//	}
+
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -101,7 +108,7 @@ public class KeyManager {
 		else 
 			throw new Error("getKeyState : key '" + bind + "' not found");
 	}
-	
+
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -116,5 +123,9 @@ public class KeyManager {
 
 	private String refactorNom(String nom) {
 		return nom.toLowerCase();
+	}
+
+	public void setInputList(ArrayList<Input> inputs2) {
+		inputs = inputs2;
 	}
 }

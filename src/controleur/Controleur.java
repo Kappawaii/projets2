@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.ArrayList;
+
 import controleur.inputManager.KeyManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,19 +41,19 @@ public class Controleur {
 	private Label saisieDialogue = new Label();
 	@FXML
 	private Label cliquezPourContinuer = new Label();
-	
+
 	//Label debug position joueur
 	private Label joueurpos = new Label();
 	private Timeline gameLoop;
 	private Modele modele;
 	private Affichage affichage;
-	private boolean stopJeu = false;
 	private static int displayScale = 4;
 	private KeyManager keymanager;
 	boolean jeuEnPause = false;
 	boolean debugMode = false;
 	private KeyFrame play;
 	private Cinematique cinematiqueDebut;
+	ArrayList<Input> inputs = new ArrayList<Input>();
 
 	@FXML
 	public void initialize() {
@@ -66,34 +68,13 @@ public class Controleur {
 		initAnimation();
 		gameLoop.play();
 		//tests pathfinding
-//        Plateau currentPlateau = modele.getNiveau(0).getPlateau();
-//        PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
-//        ArrayList<Cellule> ccc = path.chemin();
-//        for (int i = 0; i < ccc.size(); i++) {
-//		 	Cellule cell = ccc.get(i);
-//   			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
+		//        Plateau currentPlateau = modele.getNiveau(0).getPlateau();
+		//        PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
+		//        ArrayList<Cellule> ccc = path.chemin();
+		//        for (int i = 0; i < ccc.size(); i++) {
+		//		 	Cellule cell = ccc.get(i);
+		//   			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
 
-	}
-
-	public int getScale() {
-		return displayScale;
-	}
-	
-	private void initTextAffichage() {
-		dialogueBox.getChildren().add(saisieDialogue);	
-		saisieDialogue.setLayoutX(290);
-		saisieDialogue.setLayoutY(600);
-		//saisieDialogue.setTextAlignment(TextAlignment.CENTER);
-		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
-		saisieDialogue.setFont(new Font("Open Sans", 22));
-		saisieDialogue.setText("");
-		
-		dialogueBox.getChildren().add(cliquezPourContinuer);	
-		cliquezPourContinuer.setLayoutX(450);
-		cliquezPourContinuer.setLayoutY(650);
-		cliquezPourContinuer.setTextFill(Color.web("#FFFFFF"));
-		cliquezPourContinuer.setFont(new Font("Open Sans", 12));
-		cliquezPourContinuer.setText("");
 	}
 
 	public void mouseClicked() {
@@ -106,53 +87,52 @@ public class Controleur {
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		joueurPane.getChildren().add(modele.getJoueur().getSprite().getView());
-		
+
 		joueurPane.getChildren().add(joueurpos);
 		joueurpos.setTextFill(Color.web("#AAEAAE"));
-		
+
 		affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
 		modele.getCurrentNiveau().getEntites().add(modele.getPersonnagesACharger(1).get(0));
 		modele.getAffichage().ajouterPersonnage(modele.getPersonnagesACharger(1).get(0));
-		
+
 		modele.getJoueur().setActive(true);
-//		modele.getJoueur().setControllable(false);
+		//		modele.getJoueur().setControllable(false);
 		modele.getJoueur().setControllable(true);
-		
+
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
-					if(stopJeu){
-						System.out.println("JEU FINI");
-						gameLoop.stop();
+					if(jeuEnPause){
+						System.out.println("Jeu en pause");
 					}
 					else {
-						if(!jeuEnPause) {
-							//test mode Frame par Frame activé
-							if(debugMode && !jeuEnPause)
-								jeuEnPause = true;
-							
-							modele.getJoueur().jouer(keymanager.getMovementInputsList());
-							
-//							if(!cinematiqueDebut.isfinished())
-//								cinematiqueDebut.play();
-							
-							//debug position joueur							
-							joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
+						keymanager.updateInputs();
+						
+						//test mode debug F/F activé
+						if(debugMode)
+							jeuEnPause = true;
 
-							//((Gobelin) modele.getEntitesACloner().get(0)).jouer(modele.getJoueur());
-							
-							//rafraichissement de l'affichage
+						modele.getJoueur().jouer();
 
-							//avec scrolling map
-							if(affichage.isScrollingMapEnabled()) {
-								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-								affichage.mettreAJourPositionPersonnage((Personnage) modele.getEntitesACloner().get(0), modele.getEntitesACloner().get(0).getPosition());
-								affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
-								affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
-							}
-							//sans scrolling map
-							else {
-								affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
-							}
+						//							if(!cinematiqueDebut.isfinished())
+						//								cinematiqueDebut.play();
+
+						//debug position joueur							
+						joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
+
+						((Gobelin) modele.getEntitesACloner().get(0)).jouer();
+
+						//rafraichissement de l'affichage
+
+						//avec scrolling map
+						if(affichage.isScrollingMapEnabled()) {
+							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
+							affichage.mettreAJourPositionPersonnage((Personnage) modele.getEntitesACloner().get(0), modele.getEntitesACloner().get(0).getPosition());
+							affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
+							affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
+						}
+						//sans scrolling map
+						else {
+							affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
 						}
 
 					}
@@ -160,8 +140,26 @@ public class Controleur {
 		gameLoop.getKeyFrames().add(play);
 	}
 
+	private void initTextAffichage() {
+		dialogueBox.getChildren().add(saisieDialogue);	
+		saisieDialogue.setLayoutX(290);
+		saisieDialogue.setLayoutY(600);
+		//saisieDialogue.setTextAlignment(TextAlignment.CENTER);
+		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
+		saisieDialogue.setFont(new Font("Open Sans", 22));
+		saisieDialogue.setText("");
+
+		dialogueBox.getChildren().add(cliquezPourContinuer);	
+		cliquezPourContinuer.setLayoutX(450);
+		cliquezPourContinuer.setLayoutY(650);
+		cliquezPourContinuer.setTextFill(Color.web("#FFFFFF"));
+		cliquezPourContinuer.setFont(new Font("Open Sans", 12));
+		cliquezPourContinuer.setText("");
+	}
+
 	public void initInputs() {
 		keymanager = new KeyManager(rootpane.getScene());
+		keymanager.setInputList(inputs);
 		keymanager.addKey(Input.HAUT,"Z");
 		keymanager.addKey(Input.GAUCHE,"Q");
 		keymanager.addKey(Input.BAS,"S");
@@ -199,7 +197,7 @@ public class Controleur {
 
 		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		affichage.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
-		
+
 		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 
@@ -208,12 +206,11 @@ public class Controleur {
 						new Coordonnee(0,0),16,
 						walking2,
 						modele));
-
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,
 						walking,
-						modele));
+						modele,inputs));
 
 		modele.addNiveau(
 				new Niveau("maps/level0.tmx",
@@ -230,6 +227,10 @@ public class Controleur {
 						displayScale,
 						1,
 						modele));
+	}
+
+	public int getScale() {
+		return displayScale;
 	}
 
 

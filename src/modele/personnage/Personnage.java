@@ -17,12 +17,11 @@ public abstract class Personnage extends Entity {
 	private Animation animation;
 	protected Collider collider;
 	protected Input direction;
-	private int pv; // 1 coeur = 4 pv
+	protected int pv; // 1 coeur = 4 pv
 	protected int vitesse;
 	protected Modele modele;
 	protected boolean isActive;
-	private boolean isControllable;
-	private Arme arme;
+	protected Arme arme;
 
 	public Personnage(int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
 		super(position);
@@ -32,26 +31,13 @@ public abstract class Personnage extends Entity {
 		this.pv=pv;
 		this.vitesse=vitesse;
 		isActive = false;
-		isControllable = false;
 		setActive(isActive);
 		arme = new Arme(modele, 10, this);
 	}
 
 	//TODO Polymorphism jouer();	
 	//@Override
-	public void jouer(ArrayList<Input> inputs) {
-		if(isActive && isControllable && inputs != null) {
-			int[] movInputs = getMovements(inputs, vitesse);
-			//on passe le déplacement si il n'y a pas de mouvement
-			if (movInputs[0] != 0 || movInputs[1] != 0) {
-				//calcul de la prochaine position
-				int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
-				moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
-			}
-			if(arme != null)
-				arme.executer(inputs);
-		}
-	}
+	public abstract void jouer();
 
 	/**
 	 * pour les cinématiques, ne prend pas en compte isControllable
@@ -181,8 +167,6 @@ public abstract class Personnage extends Entity {
 	//		}
 	//	}
 
-	public abstract void attaque(Personnage p);
-
 	public int getVitesse() {
 		return vitesse;
 	}
@@ -199,15 +183,6 @@ public abstract class Personnage extends Entity {
 	public boolean getActive() {
 		return isActive;
 	}
-
-	public boolean isControllable() {
-		return isControllable;
-	}
-
-	public void setControllable(boolean isControllable) {
-		this.isControllable = isControllable;
-	}
-
 	public void receiveDamage(int dmg) {
 		pv -= dmg;
 		//TODO gestion hp avancée
