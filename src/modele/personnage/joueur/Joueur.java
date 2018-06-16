@@ -32,6 +32,7 @@ public class Joueur extends Personnage{
 				Input armeDirection = arme.attaquer(inputs);
 				if( armeDirection != null && direction != null) {
 					System.err.println(direction);
+					//décalage animation déplacement
 					switch (direction) {
 					case DROITE:
 						animOffset = 4;
@@ -56,6 +57,8 @@ public class Joueur extends Personnage{
 					default:
 						break;
 					}
+
+					//décalage animation attaque
 					switch (armeDirection) {
 					case DROITE:
 						animOffset += 0;

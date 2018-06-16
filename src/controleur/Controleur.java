@@ -68,12 +68,6 @@ public class Controleur {
 		initAnimation();
 		gameLoop.play();
 		//tests pathfinding
-		//        Plateau currentPlateau = modele.getNiveau(0).getPlateau();
-		//        PathFinding path = new PathFinding(modele,  currentPlateau.getCellule(8, 8),currentPlateau.getCellule(6, 7));
-		//        ArrayList<Cellule> ccc = path.chemin();
-		//        for (int i = 0; i < ccc.size(); i++) {
-		//		 	Cellule cell = ccc.get(i);
-		//   			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
 
 	}
 
@@ -156,6 +150,7 @@ public class Controleur {
 		cliquezPourContinuer.setFont(new Font("Open Sans", 12));
 		cliquezPourContinuer.setText("");
 	}
+
 
 	public void initInputs() {
 		keymanager = new KeyManager(rootpane.getScene());
