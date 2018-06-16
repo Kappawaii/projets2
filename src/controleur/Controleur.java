@@ -71,7 +71,6 @@ public class Controleur {
 //        ArrayList<Cellule> ccc = path.chemin();
 //        for (int i = 0; i < ccc.size(); i++) {
 //		 	Cellule cell = ccc.get(i);
-//   			System.out.println("Passe par la case " + cell.getPos().getX() + " " + cell.getPos().getX());
 
 	}
 
@@ -138,7 +137,7 @@ public class Controleur {
 							//debug position joueur							
 							joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
 
-							//((Gobelin) modele.getEntitesACloner().get(0)).jouer(modele.getJoueur());
+							((Gobelin) modele.getEntitesACloner().get(0)).jouer(modele.getJoueur());
 							
 							//rafraichissement de l'affichage
 

@@ -212,5 +212,21 @@ public abstract class Personnage extends Entity {
 		pv -= dmg;
 		//TODO gestion hp avancée
 	}
+	
+	public Input directionAttack(Personnage adversaire) {
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
+			return Input.ADROITE;
+		}
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
+			return Input.AGAUCHE;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
+			return Input.AHAUT;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
+			return Input.ABAS;
+		}
+		return null;
+	}
 
 }

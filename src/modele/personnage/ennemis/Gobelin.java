@@ -27,7 +27,7 @@ public class Gobelin extends Personnage {
 							map.getCellule(joueur.getPosition().getX()/16, joueur.getPosition().getY()/16));
 		ArrayList<Cellule> pathToTheHero = path.chemin();
 		ArrayList<Input> inputs = new ArrayList<Input>();
-		if(!pathToTheHero.isEmpty() && isActive && inputs != null) {
+		if(pathToTheHero != null && !pathToTheHero.isEmpty() && isActive && inputs != null) {
 		
 //			//actions.add(Axe.DROITE);
 //			inputs.add(Input.randomMovement());
