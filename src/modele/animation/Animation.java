@@ -6,7 +6,7 @@ import vue.tileset.Tileset;
 
 public class Animation {
 
-	private AnimatedSprite spr;
+	protected AnimatedSprite spr;
 	private int animIndex;
 	private int ligneIndex;
 	private int framesBetweenSprites;
@@ -79,5 +79,9 @@ public class Animation {
 	public void setVisible(boolean b) {
 		spr.setVisible(b);
 		
+	}
+
+	public void die() {
+		spr.fadeDown();
 	}
 }

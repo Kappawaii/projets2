@@ -14,30 +14,62 @@ import vue.sprite.Sprite;
 
 public abstract class Personnage extends Entity {
 
-	private Animation animation;
-	protected Collider collider;
 	protected Input direction;
+	protected Modele modele;
+	
 	protected int pv; // 1 coeur = 4 pv
 	protected int vitesse;
-	protected Modele modele;
-	protected boolean isActive;
+	
+	private Animation animation;
+	protected Collider collider;
+	
 	protected Arme arme;
+	ArrayList<Long> idAttaques;
+	
+	protected boolean isActive;	
+	protected boolean dead;
+	protected int isDying;
+	protected int animOffset = 0;
+	
 
 	public Personnage(int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
 		super(position);
 		this.modele = modele;
-		animation = a;
-		collider = new Collider(position, false, taille, taille);
+		
 		this.pv=pv;
 		this.vitesse=vitesse;
-		isActive = false;
-		setActive(isActive);
-		arme = new Arme(modele, 10, this);
-	}
+		
+		animation = a;
+		collider = new Collider(position, false, taille, taille);
 
+		idAttaques = new ArrayList<Long>();
+		arme = new Arme(modele, 10, this);
+		
+		//le personnage est créé désactivé
+		setActive(false);
+		dead = false;
+		isDying = -1;
+	}
+	
+	public void unTour() {
+		if(!dead) {
+			jouer();
+		}
+		else {
+			if(isDying == -1) {
+				isDying = 10;
+				collider = null;
+			}
+			else if(isDying > 0) {
+				isDying --;
+				animation.die();
+			}
+		}
+	}
+	
 	//TODO Polymorphism jouer();	
 	//@Override
-	public abstract void jouer();
+	protected abstract void jouer();
 
 	/**
 	 * pour les cinématiques, ne prend pas en compte isControllable
@@ -106,29 +138,40 @@ public abstract class Personnage extends Entity {
 	}
 
 
-	private void updateAnimation() {
+	protected void updateAnimation() {
 
 		if(isActive) {
 			if(direction != null) {
 				int[] orientation = direction.directiontoArray();
 				orientation[0] = orientation[0]*10 + orientation[1];
-
+				System.out.println(animOffset);
 				switch (orientation[0]) {
 				case 10: case 11: case 9:
-					animation.animate(0);
+					animation.animate(0+animOffset);
 					break;
 				case 1:
-					animation.animate(1);
+					animation.animate(1+animOffset);
 					break;
 				case -10: case -11: case -9:
-					animation.animate(2);
+					animation.animate(2+animOffset);
 					break;			
 				case -1:
-					animation.animate(3);
+					animation.animate(3+animOffset);
 					break;
 				}
 			}
 			animation.nextFrame();
+		}
+	}
+
+	public void receiveDamage(int dmg, long id) {
+		if(!idAttaques.contains(id)) {
+			idAttaques.add(id);
+			pv -= dmg;
+			//mort
+			if(pv < 0) {
+				dead = true;
+			}
 		}
 	}
 
@@ -153,7 +196,7 @@ public abstract class Personnage extends Entity {
 	}
 
 	public boolean isAlive() {
-		if(this.getPV() > 0) {
+		if(pv > 0) {
 			return true;
 		}
 		return false;
@@ -183,9 +226,4 @@ public abstract class Personnage extends Entity {
 	public boolean getActive() {
 		return isActive;
 	}
-	public void receiveDamage(int dmg) {
-		pv -= dmg;
-		//TODO gestion hp avancée
-	}
-
 }

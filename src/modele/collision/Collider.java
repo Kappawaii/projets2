@@ -82,6 +82,8 @@ public class Collider {
 	}
 
 	public boolean detecterCollision(Collider other) {
+		if(other == null)
+			return false;
 		/*
 		 * Test de non-collision horizontale
 		 */
@@ -134,10 +136,9 @@ public class Collider {
 		return xy;
 	}
 
-	public void receiveDamage(int dmg) {
+	public void receiveDamage(int dmg, long idAttaque) {
 		if(parent != null) {
-			parent.receiveDamage(dmg);
-			System.out.println("reçu : parent= " + parent.getPosition());
+			parent.receiveDamage(dmg, idAttaque);
 		}
 //		else
 //			System.err.println("sans parent !");

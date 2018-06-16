@@ -57,6 +57,10 @@ public class Affichage {
 		entites.getChildren().add(p.getSprite().getView());
 	}
 
+	public void enleverArme(Arme arme) {
+		entites.getChildren().remove(arme.getSpr().getView());
+	}
+	
 	public void ajouterArme(Arme a) {
 		if(!entites.getChildren().contains(a.getSpr().getView()))
 			entites.getChildren().add(a.getSpr().getView());

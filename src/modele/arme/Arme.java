@@ -2,6 +2,7 @@ package modele.arme;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import controleur.Input;
 import modele.Modele;
@@ -22,7 +23,9 @@ public class Arme extends Entity {
 	int degats;
 	int ticksRemaining;
 	int[] offsetPos;
-
+	long idAttaque;
+	Random idGenerator;
+	
 	public Arme (Modele modele, int degats,Personnage parent) {
 		super(new Coordonnee(parent.getPosition().getX(),parent.getPosition().getY()));
 		this.parent = parent;
@@ -30,37 +33,36 @@ public class Arme extends Entity {
 		this.modele = modele;
 		ticksRemaining = 0;
 		spr = new Sprite(modele.getAffichage().getTileset(0), 4, 1);
+		idGenerator = new Random();
 	}
 
-	public void executer(ArrayList<Input> direction) {
-
+	public Input attaquer(ArrayList<Input> direction) {
 		//instantiation d'une nouvelle attaque si une attaque n'est pas en cours
 		if(ticksRemaining == 0) {
-			
-			spr.setVisible(false);
-			//TODO méthode modele.getAffichage().removeArme(this);
+			modele.getAffichage().enleverArme(this);
+			ticksRemaining--;
+			return Input.EMPTY;
+		}
+		if(ticksRemaining == -1) {
 			int[] dirInputs = getDirection(direction);
 			//on passe l'attaque si il l'entrée est nulle
 			if (dirInputs[0] != 0 || dirInputs[1] != 0) {
-				spr.setVisible(true);
+				idAttaque = idGenerator.nextLong();
 				modele.getAffichage().ajouterArme(this);
-				ticksRemaining = 30;
+				ticksRemaining = 24;
 				offsetPos = dirInputs;
 				collider = new Collider(
 						new Coordonnee(parent.getPosition().getX(),parent.getPosition().getY()),
 						true,
 						4, 4
 						);
-
 			}
 		}
-
 		if(ticksRemaining > 0) {
 			//mettre a jour position arme
 			position.setX(parent.getPosition().getX()+offsetPos[0]*16);
 			position.setY(parent.getPosition().getY()+offsetPos[1]*16);
 			collider.setPosition(position);
-
 			modele.getAffichage().mettreAJourPositionArme(this, position);
 			//on détecte les collisions sur ce collider
 			ArrayList<Collider> collisions = collider.detecterCollisions(modele.getAllColliders(modele.getIdNiveau()));
@@ -72,19 +74,17 @@ public class Arme extends Entity {
 				//si la collision est une collision non matérielle
 				if(!detectedCollider.isTrigger()) {
 					//TODO Maybe triggerEvent()?
-					System.out.println("dmg envoyé");
-					detectedCollider.receiveDamage(degats);
+					detectedCollider.receiveDamage(degats,idAttaque);
 				}
 
 			}
 			ticksRemaining--;
+			return Input.arrayToDirection(new int[] {offsetPos[0],offsetPos[1]});
 		}
+		return null;
 	}
-
-
 
 	public Sprite getSpr() {
 		return spr;
 	}
-
 }

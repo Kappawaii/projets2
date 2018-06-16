@@ -11,11 +11,11 @@ import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
 
 public class Joueur extends Personnage{
-	
+
 	private ArrayList<Objet> inventaire;
 	private boolean isControllable;
 	ArrayList<Input> inputs;
-	
+	boolean didAttack;
 	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Animation a, Modele modele, ArrayList<Input> inputs) {
 		super(pv, position, 16, vitesse,a, modele);
 		this.inventaire = new ArrayList<>(); 
@@ -25,17 +25,75 @@ public class Joueur extends Personnage{
 
 	@Override
 	public void jouer() {
-		System.out.println(inputs);
 		if(isActive && isControllable && inputs != null) {
 			int[] movInputs = getMovements(inputs, vitesse);
+
+			if(arme != null) {
+				Input armeDirection = arme.attaquer(inputs);
+				if( armeDirection != null && direction != null) {
+					System.err.println(direction);
+					switch (direction) {
+					case DROITE:
+						animOffset = 4;
+						didAttack = true;
+						break;
+					case BAS:
+						animOffset = 3;
+						didAttack = true;
+						break;
+					case GAUCHE:
+						animOffset = 2;
+						didAttack = true;
+						break;
+					case HAUT:
+						animOffset = 1;
+						didAttack = true;
+						break;
+					case EMPTY:
+						animOffset = 0;
+						didAttack = true;
+						break;
+					default:
+						break;
+					}
+					switch (armeDirection) {
+					case DROITE:
+						animOffset += 0;
+						didAttack = true;
+						break;
+					case BAS:
+						animOffset += 1;
+						didAttack = true;
+						break;
+					case GAUCHE:
+						animOffset += 2;
+						didAttack = true;
+						break;
+					case HAUT:
+						animOffset += 3;
+						didAttack = true;
+					case EMPTY:
+						animOffset += 0;
+						didAttack = true;
+						break;
+					default:
+						break;
+					}
+				}
+				else {
+				didAttack = false;
+				animOffset = 0;
+				}
+			}
 			//on passe le déplacement si il n'y a pas de mouvement
 			if (movInputs[0] != 0 || movInputs[1] != 0) {
 				//calcul de la prochaine position
 				int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
 				moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
 			}
-			if(arme != null)
-				arme.executer(inputs);
+			else if(didAttack) {
+				updateAnimation();
+			}
 		}
 	}
 
@@ -46,7 +104,7 @@ public class Joueur extends Personnage{
 	public void perdUnObjet(Objet unObjet) {
 		this.inventaire.remove(unObjet);
 	}
-	
+
 	public boolean isControllable() {
 		return isControllable;
 	}
@@ -54,10 +112,5 @@ public class Joueur extends Personnage{
 	public void setControllable(boolean isControllable) {
 		this.isControllable = isControllable;
 	}
-	
-	//TODO Polymorphism
-
-
-
 
 }

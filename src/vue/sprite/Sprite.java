@@ -6,7 +6,7 @@ import vue.tileset.Tileset;
 
 public class Sprite {
 
-	private ImageView view;
+	protected ImageView view;
 	
 	/**
 	 * sprite statique pour les tuiles

@@ -49,11 +49,11 @@ public class Controleur {
 	private Affichage affichage;
 	private static int displayScale = 4;
 	private KeyManager keymanager;
-	boolean jeuEnPause = false;
-	boolean debugMode = false;
+	private boolean jeuEnPause = false;
+	private boolean debugMode = false;
 	private KeyFrame play;
 	private Cinematique cinematiqueDebut;
-	ArrayList<Input> inputs = new ArrayList<Input>();
+	private ArrayList<Input> inputs = new ArrayList<Input>();
 
 	@FXML
 	public void initialize() {
@@ -111,7 +111,7 @@ public class Controleur {
 						if(debugMode)
 							jeuEnPause = true;
 
-						modele.getJoueur().jouer();
+						modele.getJoueur().unTour();
 
 						//							if(!cinematiqueDebut.isfinished())
 						//								cinematiqueDebut.play();
@@ -119,14 +119,14 @@ public class Controleur {
 						//debug position joueur							
 						joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
 
-						((Gobelin) modele.getEntitesACloner().get(0)).jouer();
+						modele.getPersonnages().get(0).unTour();
 
 						//rafraichissement de l'affichage
 
 						//avec scrolling map
 						if(affichage.isScrollingMapEnabled()) {
 							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-							affichage.mettreAJourPositionPersonnage((Personnage) modele.getEntitesACloner().get(0), modele.getEntitesACloner().get(0).getPosition());
+							affichage.mettreAJourPositionPersonnage((Personnage) modele.getPersonnages().get(0), modele.getPersonnages().get(0).getPosition());
 							affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
 							affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
 						}
@@ -148,7 +148,7 @@ public class Controleur {
 		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
 		saisieDialogue.setFont(new Font("Open Sans", 22));
 		saisieDialogue.setText("");
-
+		
 		dialogueBox.getChildren().add(cliquezPourContinuer);	
 		cliquezPourContinuer.setLayoutX(450);
 		cliquezPourContinuer.setLayoutY(650);
@@ -201,7 +201,7 @@ public class Controleur {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 
-		modele.getEntitesACloner().add(
+		modele.getPersonnages().add(
 				new Gobelin("plante", 10,
 						new Coordonnee(0,0),16,
 						walking2,

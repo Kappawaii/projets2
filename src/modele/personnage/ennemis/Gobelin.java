@@ -14,16 +14,16 @@ import modele.plateau.Plateau;
 
 public class Gobelin extends Personnage {
 
+	int counter;
+	int slowdown = 4;
 
 	public Gobelin(String nom, int pv, Coordonnee position, int taille, Animation a, Modele modele) {
 		super(pv, position, taille, 1, a, modele);
 		super.collider.setParent(this);
 	}
-	//TODO Polymorphism
-//	@Override
+
+	@Override
 	public void jouer() {
-//		System.out.println(pv);
-//		System.out.println(isActive);
 		if(isActive) {
 			Plateau map = this.modele.getCurrentNiveau().getPlateau();
 			PathFinding path = new PathFinding(this.modele, 
@@ -32,8 +32,7 @@ public class Gobelin extends Personnage {
 			ArrayList<Cellule> pathToTheHero = path.chemin();
 			ArrayList<Input> inputs = new ArrayList<Input>();
 
-			if(pathToTheHero != null && !pathToTheHero.isEmpty()) {	
-
+			if(pathToTheHero != null && !pathToTheHero.isEmpty()) {
 
 				//			//actions.add(Axe.DROITE);
 				//			inputs.add(Input.randomMovement());
@@ -52,16 +51,24 @@ public class Gobelin extends Personnage {
 						inputs.add(Input.BAS);
 					}
 				}
-
 				int[] movInputs = getMovements(inputs, vitesse);
-
-				//on passe le d�placement si il n'y a pas de mouvement
-				if (movInputs[0] != 0 || movInputs[1] != 0) {
-					//calcul de la prochaine position
-					int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
-					moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
+				for (int i = 0; i < movInputs.length; i++) {
+					movInputs[i] = Math.max(-1,movInputs[i]);
+					movInputs[i] = Math.min(movInputs[i],1);		
 				}
 
+				//on passe le déplacement si il n'y a pas de mouvement
+				if (movInputs[0] != 0 || movInputs[1] != 0) {
+					//calcul de la prochaine position
+					if(!(++counter >= slowdown)) {
+//						System.out.println(movInputs[0] + ";" +movInputs[1]);
+						int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
+						moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
+					}
+					else {
+						counter = 0;
+					}
+				}
 			}
 		}
 	}
