@@ -15,7 +15,6 @@ public class Joueur extends Personnage{
 	private ArrayList<Objet> inventaire;
 	private boolean isControllable;
 	ArrayList<Input> inputs;
-	boolean didAttack;
 	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Animation a, Modele modele, ArrayList<Input> inputs) {
 		super(pv, position, 16, vitesse,a, modele);
 		this.inventaire = new ArrayList<>(); 
@@ -29,64 +28,7 @@ public class Joueur extends Personnage{
 			int[] movInputs = getMovements(inputs, vitesse);
 
 			if(arme != null) {
-				Input armeDirection = arme.attaquer(inputs);
-				if( armeDirection != null && direction != null) {
-					//décalage animation déplacement
-					switch (direction) {
-					case DROITE:
-						animOffset = 4;
-						didAttack = true;
-						break;
-					case BAS:
-						animOffset = 3;
-						didAttack = true;
-						break;
-					case GAUCHE:
-						animOffset = 2;
-						didAttack = true;
-						break;
-					case HAUT:
-						animOffset = 1;
-						didAttack = true;
-						break;
-					case EMPTY:
-						animOffset = 0;
-						didAttack = true;
-						break;
-					default:
-						break;
-					}
-
-					//décalage animation attaque
-					switch (armeDirection) {
-					case DROITE:
-						animOffset += 0;
-						didAttack = true;
-						break;
-					case BAS:
-						animOffset += 1;
-						didAttack = true;
-						break;
-					case GAUCHE:
-						animOffset += 2;
-						didAttack = true;
-						break;
-					case HAUT:
-						animOffset += 3;
-						didAttack = true;
-					case EMPTY:
-						animOffset += 0;
-						didAttack = true;
-						break;
-					default:
-						break;
-					}
-				}
-				else if(didAttack) {
-				didAttack = false;
-				animationAttackToMovement();
-				animOffset = 0;
-				}
+				super.attaquer(inputs);
 			}
 			//on passe le déplacement si il n'y a pas de mouvement
 			if (movInputs[0] != 0 || movInputs[1] != 0) {

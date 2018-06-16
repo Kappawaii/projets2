@@ -30,6 +30,7 @@ public abstract class Personnage extends Entity {
 	protected boolean dead;
 	protected int isDying;
 	protected int animOffset = 0;
+	protected boolean didAttack;
 	
 
 	public Personnage(int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
@@ -248,6 +249,67 @@ public abstract class Personnage extends Entity {
 			return Input.ABAS;
 		}
 		return null;
+	}
+
+	public void attaquer(ArrayList<Input> inputs) {
+		Input armeDirection = arme.attaquer(inputs);
+		if( armeDirection != null && direction != null) {
+			//décalage animation déplacement
+			switch (direction) {
+			case DROITE:
+				animOffset = 4;
+				didAttack = true;
+				break;
+			case BAS:
+				animOffset = 3;
+				didAttack = true;
+				break;
+			case GAUCHE:
+				animOffset = 2;
+				didAttack = true;
+				break;
+			case HAUT:
+				animOffset = 1;
+				didAttack = true;
+				break;
+			case EMPTY:
+				animOffset = 0;
+				didAttack = true;
+				break;
+			default:
+				break;
+			}
+
+			//décalage animation attaque
+			switch (armeDirection) {
+			case DROITE:
+				animOffset += 0;
+				didAttack = true;
+				break;
+			case BAS:
+				animOffset += 1;
+				didAttack = true;
+				break;
+			case GAUCHE:
+				animOffset += 2;
+				didAttack = true;
+				break;
+			case HAUT:
+				animOffset += 3;
+				didAttack = true;
+			case EMPTY:
+				animOffset += 0;
+				didAttack = true;
+				break;
+			default:
+				break;
+			}
+		}
+		else if(didAttack) {
+		didAttack = false;
+		animationAttackToMovement();
+		animOffset = 0;
+		}
 	}
 
 }
