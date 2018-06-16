@@ -9,6 +9,7 @@ import modele.arme.Arme;
 import modele.cellule.Cellule;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
+import modele.personnage.ennemis.Plante;
 import vue.tileset.Tileset;
 
 public class Affichage {
@@ -96,6 +97,8 @@ public class Affichage {
 	}
 
 	public void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
+		if(pers instanceof Plante)
+			System.out.println(pers.getPosition());
 		pers.getSprite().getView().setX(pos.getX()*displayScale);
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
 	}

@@ -120,14 +120,18 @@ public class Controleur {
 							personnage.unTour();
 
 						}
-						System.out.println(modele.getPersonnages().get(1).getPosition());
+//						System.out.println(modele.getPersonnages().get(1).getPosition());
 						//rafraichissement de l'affichage
 
 						//avec scrolling map
 						if(affichage.isScrollingMapEnabled()) {
 							
 							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-							affichage.mettreAJourPositionPersonnage(modele.getPersonnages().get(0), modele.getPersonnages().get(0).getPosition());
+
+							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
+								Personnage personnage = iterator.next();
+								affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
+							}
 							affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
 							affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
 						}
@@ -214,7 +218,7 @@ public class Controleur {
 						walking2,
 						modele));
 		modele.getPersonnages().add(
-				new Plante("plante", new Coordonnee(0,0), walking3, modele));
+				new Plante(new Coordonnee(0,0), walking3, modele));
 
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
