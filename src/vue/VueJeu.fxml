@@ -11,5 +11,6 @@
 		<Pane fx:id="entites"/>
 		<Pane fx:id="joueurPane"/>
 		<Pane fx:id="dialogueBox"/>
+		<Pane fx:id="vie"/>
 	</children>
 </BorderPane>
