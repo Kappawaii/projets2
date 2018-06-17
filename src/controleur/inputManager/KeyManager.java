@@ -2,17 +2,16 @@ package controleur.inputManager;
 
 import java.util.ArrayList;
 
+import controleur.Input;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import modele.coordonnee.Axe;
 
 public class KeyManager {
 
-
-
-	private static final Axe axenull = null;
+	private static final Input axenull = null;
 	private ArrayList<Key> keystates = new ArrayList<Key>();
-	
+	private ArrayList<Input> inputs;
+
 	public KeyManager(Scene scene) {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 			setKeyState(axenull,key.getCode().toString(), true);
@@ -32,7 +31,7 @@ public class KeyManager {
 	}
 
 
-	private void setKeyState(Axe nom, String bind, boolean state) {
+	private void setKeyState(Input nom, String bind, boolean state) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
 			keystates.get(keystates.indexOf(new Key(nom,bind))).set(state);
@@ -42,7 +41,6 @@ public class KeyManager {
 		else {
 			System.out.println("unmapped Key released :" + bind);
 		}
-
 	}
 
 	/**
@@ -51,7 +49,7 @@ public class KeyManager {
 	 * @param bind
 	 * @throws Key already used error si la Key est déjà utilisée
 	 */
-	public void addKey(Axe nom, String bind) {
+	public void addKey(Input nom, String bind) {
 		bind = refactorNom(bind);
 		if (!isKeyUsed(nom, bind)) {
 			keystates.add(new Key(nom,bind));
@@ -64,7 +62,7 @@ public class KeyManager {
 	 * @param nom
 	 * @param bind
 	 */
-	public boolean isKeyUsed(Axe nom, String bind) {
+	public boolean isKeyUsed(Input nom, String bind) {
 		bind = refactorNom(bind);	
 		Key temp = new Key(nom,bind);
 		if (keystates.contains(temp))
@@ -72,27 +70,32 @@ public class KeyManager {
 		return false;
 	}
 
-	/**
-	 * Retourne vrai si la Key est appuyée, sinon retourne faux
-	 * @param key
-	 * @throws Key not found error si la Key n'existe pas
-	 */
-	public boolean getKeyState(Axe nom) {
-		if (isKeyUsed(nom,""))
-			return keystates.get(keystates.indexOf(new Key(nom,""))).get();
-		else 
-			throw new Error("getKeyState : key '" + nom + "' not found");
-	}
+	public void updateInputs() {
+		if(inputs != null) {
+			inputs.clear();
+			for (Key key : keystates) {
+				if (key.isPressed()) {
 
-	public Axe getMovementInputs(int a) {
-		Axe inputs = Axe.EMPTY;
-		inputs.clear();
-		for (Key key : keystates) {
-			if (key.get())
-				inputs.add(key.nom);
+					inputs.add(key.input);
+				}
+			}
 		}
+	}
+	
+	public ArrayList<Input> getInputList(){
 		return inputs;
 	}
+
+	//	public Axe getMovementInputs(int a) {
+	//		Axe inputs = Axe.EMPTY;
+	//		inputs.clear();
+	//		for (Key key : keystates) {
+	//			if (key.isPressed())
+	//				inputs.add(key.nom);
+	//		}
+	//		return inputs;
+	//	}
+
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -101,12 +104,28 @@ public class KeyManager {
 	public boolean getKeyState(String bind) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
-			return keystates.get(keystates.indexOf(new Key(axenull,bind))).get();
+			return keystates.get(keystates.indexOf(new Key(axenull,bind))).isPressed();
 		else 
 			throw new Error("getKeyState : key '" + bind + "' not found");
 	}
 
+	/**
+	 * Retourne vrai si la Key est appuyée, sinon retourne faux
+	 * @param key
+	 * @throws Key not found error si la Key n'existe pas
+	 */
+	public boolean getKeyState(Input nom) {
+		if (isKeyUsed(nom,""))
+			return keystates.get(keystates.indexOf(new Key(nom,""))).isPressed();
+		else 
+			throw new Error("getKeyState : key '" + nom + "' not found");
+	}
+
 	private String refactorNom(String nom) {
 		return nom.toLowerCase();
+	}
+
+	public void setInputList(ArrayList<Input> inputs2) {
+		inputs = inputs2;
 	}
 }

@@ -1,17 +1,89 @@
+
 package modele.personnage.ennemis;
 
+import java.util.ArrayList;
+
+import controleur.Input;
+import modele.Modele;
 import modele.animation.Animation;
+import modele.cellule.Cellule;
+import modele.chemin.PathFinding;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
-import vue.tileset.Tileset;
+import modele.plateau.Plateau;
 
 public class Gobelin extends Personnage {
-	
-	public Gobelin(String nom, Coordonnee position, int vitesse, Tileset tileset, Animation a) {
-		super(nom, 10, position, 16,vitesse, a);
+
+
+	public Gobelin(String nom, int pv, Coordonnee position, int taille, Animation a, Modele modele) {
+		super(pv, position, taille, 1, a, modele);
+		super.collider.setParent(this);
+	}
+	//TODO Polymorphism
+//	@Override
+	public void jouer() {
+//		System.out.println(pv);
+//		System.out.println(isActive);
+		if(isActive) {
+			Plateau map = this.modele.getCurrentNiveau().getPlateau();
+			PathFinding path = new PathFinding(this.modele, 
+					map.getCellule(this.getPosition().getX()/16, this.getPosition().getY()/16),
+					map.getCellule(modele.getJoueur().getPosition().getX()/16, modele.getJoueur().getPosition().getY()/16));
+			ArrayList<Cellule> pathToTheHero = path.chemin();
+			ArrayList<Input> inputs = new ArrayList<Input>();
+
+			if(pathToTheHero != null && !pathToTheHero.isEmpty()) {	
+
+
+				//			//actions.add(Axe.DROITE);
+				//			inputs.add(Input.randomMovement());
+
+				for (int i = 0; i < pathToTheHero.size(); i++) {
+					if(pathToTheHero.get(i).getPos().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
+						inputs.add(Input.DROITE);
+					}
+					if(pathToTheHero.get(i).getPos().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
+						inputs.add(Input.GAUCHE);
+					}
+					if(pathToTheHero.get(i).getPos().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
+						inputs.add(Input.HAUT);
+					}
+					if(pathToTheHero.get(i).getPos().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
+						inputs.add(Input.BAS);
+					}
+				}
+
+				int[] movInputs = getMovements(inputs, vitesse);
+				for (int i = 0; i < movInputs.length; i++) {
+					movInputs[i] = Math.max(-1, movInputs[i]);
+					movInputs[i] = Math.min(1, movInputs[i]);
+				}
+
+				//on passe le déplacement si il n'y a pas de mouvement
+				if (movInputs[0] != 0 || movInputs[1] != 0) {
+//					System.out.println(directionAttack(modele.getJoueur()));
+					//calcul de la prochaine position
+					int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
+					moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
+				}
+
+			}
+		}
 	}
 	
-	public void attaque(Personnage p) {
-		System.out.println("Mon maître est SA-ROUU-MAAAAANE");
+	public Input directionAttack(Personnage adversaire) {
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
+			return Input.ADROITE;
+		}
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
+			return Input.AGAUCHE;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
+			return Input.AHAUT;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
+			return Input.ABAS;
+		}
+		return null;
 	}
 }

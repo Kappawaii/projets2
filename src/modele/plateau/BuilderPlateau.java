@@ -10,9 +10,12 @@ import java.util.ArrayList;
 
 import modele.Modele;
 import modele.Event.Event;
+import modele.Event.GetArcEvent;
+import modele.Event.LoadEntitiesEvent;
 import modele.Event.LoadLevelEvent;
 import modele.Event.SetScrollingMapEvent;
 import modele.cellule.Cellule;
+import modele.coordonnee.Coordonnee;
 import vue.tileset.Tileset;
 
 public class BuilderPlateau {
@@ -27,6 +30,7 @@ public class BuilderPlateau {
 		int offsetX;
 		int offsetY;
 		ArrayList<Event> events = new ArrayList<Event>();
+		ArrayList<Coordonnee> pos = new ArrayList<Coordonnee>();
 		boolean isTrigger;
 		plateau.initCellules(notreMap.length, notreMap[0].length);
 		for (int x = 0; x < plateau.get().length; x++) {
@@ -100,7 +104,6 @@ public class BuilderPlateau {
 					isTrigger = false;
 				}
 
-
 				//Armoire
 				if(notreMap[x][y] == 1188) {
 					tailleX = 8;
@@ -110,7 +113,6 @@ public class BuilderPlateau {
 					isTrigger = false;
 				}
 
-
 				//Mur
 				if(notreMap[x][y] == 1186) {
 					tailleX = 8;
@@ -119,7 +121,7 @@ public class BuilderPlateau {
 					offsetY = 2;
 					isTrigger = false;
 				}
-
+				
 				//Porte
 				if(notreMap[x][y] == 90) {
 					tailleX = 4;
@@ -127,8 +129,31 @@ public class BuilderPlateau {
 					offsetX = 0;			//Armoire3;
 					offsetY = 0;
 					isTrigger = false;
-					events.add(new LoadLevelEvent(modele, id+1));
+					events.add(new LoadLevelEvent(modele, id+1,new Coordonnee(112,160)));
 					events.add(new SetScrollingMapEvent(modele));
+				}
+				//Arc
+				if(notreMap[x][y] == 67) {
+					tailleX = 4;
+					tailleY = 1;
+					offsetX = 0;			//Armoire3;
+					offsetY = 0;
+					isTrigger = true;
+					Coordonnee positionSpr = new Coordonnee(x*16,y*16);
+//					pos.add(positionSpr);
+					events.add(new GetArcEvent(modele,positionSpr));
+				}
+				
+				//Déclencheur entités Niveau 1
+				if(notreMap[x][y] == 63) {
+					tailleX = 16;
+					tailleY = 16;
+					offsetX = 0;
+					offsetY = 0;
+					isTrigger = true;
+					pos.add(new Coordonnee(300,150));
+					pos.add(new Coordonnee(150,150));
+					events.add(new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1),pos));
 				}
 				
 				plateau.get()[x][y] = 
@@ -169,7 +194,6 @@ public class BuilderPlateau {
 		try {
 			ligne=br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ligne=ligne.substring(ligne.indexOf("width"), ligne.indexOf(" tilewidth"));

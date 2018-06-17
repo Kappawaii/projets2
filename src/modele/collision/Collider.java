@@ -1,7 +1,9 @@
 package modele.collision;
 import java.util.ArrayList;
 
+import modele.Entity.Entity;
 import modele.coordonnee.Coordonnee;
+import modele.personnage.Personnage;
 
 public class Collider {
 	
@@ -12,26 +14,7 @@ public class Collider {
 	int tailleX;
 	int tailleY;
 	boolean isTrigger;
-	
-	public boolean isTrigger() {
-		return isTrigger;
-	}
-	
-	public Coordonnee getO() {
-		return o;
-	}
-
-	public Coordonnee getX() {
-		return x;
-	}
-
-	public Coordonnee getY() {
-		return y;
-	}
-
-	public Coordonnee getXY() {
-		return xy;
-	}
+	Personnage parent;
 	
 	/**
 	 * collider rectangulaire
@@ -99,6 +82,8 @@ public class Collider {
 	}
 
 	public boolean detecterCollision(Collider other) {
+		if(other == null)
+			return false;
 		/*
 		 * Test de non-collision horizontale
 		 */
@@ -121,16 +106,51 @@ public class Collider {
 		return true;
 	}
 	
-	public void sysout() {
-		System.out.print(getO());
-		System.out.print(getX());
-		System.out.print(getY());
-		System.out.print(getXY());
-		System.out.println(isTrigger);
+	@Override
+	public String toString() {
+		return Integer.toHexString(hashCode())+" "+getO()+getX()+getY()+getXY()+isTrigger;
 	}
 
 	public void setTrigger(boolean b) {
 		isTrigger = b;
 		
 	}
+	
+	public boolean isTrigger() {
+		return isTrigger;
+	}
+	
+	public Coordonnee getO() {
+		return o;
+	}
+
+	public Coordonnee getX() {
+		return x;
+	}
+
+	public Coordonnee getY() {
+		return y;
+	}
+
+	public Coordonnee getXY() {
+		return xy;
+	}
+
+	public void receiveDamage(int dmg, long idAttaque) {
+		if(parent != null) {
+			parent.receiveDamage(dmg, idAttaque);
+		}
+//		else
+//			System.err.println("sans parent !");
+	}
+	
+	public Entity getParent() {
+		return parent;
+	}
+
+
+	public void setParent(Personnage parent) {
+		this.parent = parent;
+	}
+	
 }
