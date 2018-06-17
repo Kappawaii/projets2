@@ -42,28 +42,26 @@ public class Controleur {
 	@FXML
 	private Pane dialogueBox;
 	@FXML
-	private Label saisieDialogue = new Label();
-	@FXML
-	private Label cliquezPourContinuer = new Label();
-	@FXML
-	private Label armeSelection = new Label();
-
-	@FXML
 	private Pane vie;
 
+	private Label saisieDialogue = new Label();
+	private Label cliquezPourContinuer = new Label();
+	private Label armeSelection = new Label();
+	
 	//Label debug position joueur
 	private Label joueurpos = new Label();
+	private ArrayList<Input> inputs = new ArrayList<Input>();
 	private Timeline gameLoop;
 	private Modele modele;
 	private Affichage affichage;
-	private static int displayScale = 4;
 	private KeyManager keymanager;
-	private boolean jeuEnPause = false;
-	private boolean debugMode = false;
 	private KeyFrame play;
 	private Cinematique cinematiqueDebut;
-	private ArrayList<Input> inputs = new ArrayList<Input>();
 
+	private static int displayScale = 4;
+	private boolean jeuEnPause = false;
+	private boolean debugMode = false;
+	
 	@FXML
 	public void initialize() {
 		//initialisation modele et Affichage
@@ -102,6 +100,7 @@ public class Controleur {
 
 	public void mouseClicked() {
 		cinematiqueDebut.unPause();
+//		modele.getJoueur().receiveDamage(1, (long) (Math.random()*10000));
 		jeuEnPause = false;
 	}
 

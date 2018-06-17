@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import controleur.Input;
 import modele.Modele;
 import modele.animation.Animation;
+import modele.arme.Arme;
 import modele.cellule.Cellule;
 import modele.chemin.PathFinding;
 import modele.coordonnee.Coordonnee;
@@ -13,12 +14,15 @@ import modele.personnage.Personnage;
 import modele.plateau.Plateau;
 
 public class Gobelin extends Personnage {
-
+	
+	Arme epee;
 
 	public Gobelin(String nom, int pv, Coordonnee position, int taille, Animation a, Modele modele) {
 		super(pv, position, taille, 1, a, modele);
 		super.collider.setParent(this);
+		epee = new Arme(modele, 3, this);
 	}
+	
 	//TODO Polymorphism
 //	@Override
 	public void jouer() {
@@ -69,21 +73,8 @@ public class Gobelin extends Personnage {
 
 			}
 		}
-	}
-	
-	public Input directionAttack(Personnage adversaire) {
-		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
-			return Input.ADROITE;
+		if(epee != null) {
+			super.attaquer(directionAttack(modele.getJoueur()),epee);
 		}
-		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
-			return Input.AGAUCHE;
-		}
-		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
-			return Input.AHAUT;
-		}
-		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
-			return Input.ABAS;
-		}
-		return null;
 	}
 }

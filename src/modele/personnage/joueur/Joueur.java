@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import controleur.Input;
 import modele.Modele;
-import modele.Objet;
 import modele.animation.Animation;
 import modele.arme.Arme;
 import modele.arme.LanceurProjectile;
@@ -15,12 +14,10 @@ import vue.sprite.Sprite;
 
 public class Joueur extends Personnage{
 
-	private ArrayList<Objet> inventaire;
 	private ArrayList<Input> inputs;
 	private boolean isControllable;
 
-	private LanceurProjectile arc;
-	private Arme epee;
+	private ArrayList<Arme> armes;
 
 	//true = arc, false = epee
 	private boolean switchArme;
@@ -33,15 +30,22 @@ public class Joueur extends Personnage{
 		super(pv, position, 16, vitesse,a, modele);
 		sprCoeurs1 = coeurs[0];
 		sprCoeurs2 = coeurs[1];
-		sprCoeurs2 = coeurs[2];
-		this.inventaire = new ArrayList<>(); 
+		sprCoeurs3 = coeurs[2];
+		armes = new ArrayList<Arme>(); 
 		this.inputs = inputs;
 		isControllable = false;
-		epee = new Arme(modele, 20, this);
+		armes.add(new Arme(modele, 20, this));
+		super.collider.setParent(this);
 	}
 
 	public void gererVie() {
 		switch(pv) {
+		case 0:
+			
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(4);
+			sprCoeurs1.setId(4);
+			break;
 		case 1:  
 			sprCoeurs3.setId(4);
 			sprCoeurs2.setId(4);
@@ -90,15 +94,14 @@ public class Joueur extends Personnage{
 			break;
 		}
 	}
+	
 	@Override
 	public void jouer() {
 		if(isActive && isControllable && inputs != null) {
 			if(inputs.contains(Input.UTILISER)) {
-				if(!hasSwitched) {
-					if(arc != null) {
-						hasSwitched = true;
-						switchArme = !switchArme;
-					}
+				if(!hasSwitched &&armes.size() > 1) {
+					hasSwitched = true;
+					switchArme = !switchArme;
 				}
 			}
 			else
@@ -121,29 +124,22 @@ public class Joueur extends Personnage{
 		}
 	}
 
+	@Override
+	public void receiveDamage(int dmg, long id) {
+		super.receiveDamage(dmg, id);
+		gererVie();
+	}
+
 	public Arme currentArme() {
 		if(switchArme)
-			return arc;
+			return armes.get(1);
 		else
-			return epee;
+			return armes.get(0);
 	}
 
 	public void obtenirArc() {
-		if(arc == null)
-			arc = new LanceurProjectile(modele, 10, this);		
-	}
-
-	public void obtenirEpee() {
-		if(epee == null)
-			epee = new Arme(modele, 25, this);
-	}
-
-	public void gagneUnObjet(Objet unObjet) {
-		this.inventaire.add(unObjet);
-	}
-
-	public void perdUnObjet(Objet unObjet) {
-		this.inventaire.remove(unObjet);
+		if(armes.size() < 2)
+			armes.add(new LanceurProjectile(modele, 10, this));		
 	}
 
 	public boolean isControllable() {

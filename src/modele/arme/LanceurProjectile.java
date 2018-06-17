@@ -57,8 +57,8 @@ public class LanceurProjectile extends Arme {
 
 		if(ticksRemaining > 0) {
 			//mettre a jour position arme
-			position.setX(position.getX()+offsetPos[0]);
-			position.setY(position.getY()+offsetPos[1]);
+			position.setX(position.getX()+offsetPos[0]*2);
+			position.setY(position.getY()+offsetPos[1]*2);
 			if(Input.arrayToDirection(new int[] {offsetPos[0],offsetPos[1]}) != null){
 				switch (Input.arrayToDirection(new int[] {offsetPos[0],offsetPos[1]})) {
 				case DROITE:
@@ -110,7 +110,7 @@ public class LanceurProjectile extends Arme {
 				Collider detectedCollider = iterator.next();
 
 				//si la collision est une collision non matérielle
-				if(!detectedCollider.isTrigger()) {
+				if(!detectedCollider.isTrigger() && detectedCollider != parent.getCollider()) {
 					detectedCollider.receiveDamage(degats,idAttaque);
 				}
 

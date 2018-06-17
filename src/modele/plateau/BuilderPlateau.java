@@ -23,7 +23,7 @@ public class BuilderPlateau {
 	private int notreMap[][];
 	private int width;
 	private int height;
-
+//	private static Map<Integer,TuileData> dicoMap = new HashMap<Integer, TuileData>();
 	public void remplirPlateau(Plateau plateau, Tileset tileset, Modele modele, int id) {
 		int tailleX;
 		int tailleY;
@@ -129,19 +129,18 @@ public class BuilderPlateau {
 					offsetX = 0;			//Armoire3;
 					offsetY = 0;
 					isTrigger = false;
-					events.add(new LoadLevelEvent(modele, id+1,new Coordonnee(112,160)));
+					events.add(new LoadLevelEvent(modele, id+1,new Coordonnee(64,144)));
 					events.add(new SetScrollingMapEvent(modele));
 				}
 				//Arc
-				if(notreMap[x][y] == 67) {
+				if(notreMap[x][y] == 124) {
 					tailleX = 4;
 					tailleY = 1;
 					offsetX = 0;			//Armoire3;
 					offsetY = 0;
 					isTrigger = true;
-					Coordonnee positionSpr = new Coordonnee(x*16,y*16);
 //					pos.add(positionSpr);
-					events.add(new GetArcEvent(modele,positionSpr));
+					events.add(new GetArcEvent(modele,plateau.get(),x,y));
 				}
 				
 				//Déclencheur entités Niveau 1

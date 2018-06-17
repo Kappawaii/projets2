@@ -21,7 +21,7 @@ public class Plante extends Personnage {
 	}
 
 	public void attaque(Personnage p) {
-//		System.out.println("Que le soleil vous détruise");
+		
 	}
 
 }
