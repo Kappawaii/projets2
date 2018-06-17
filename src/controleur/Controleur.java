@@ -87,18 +87,18 @@ public class Controleur {
 
 	public void initGestionVie() {
 		System.out.println(vie);
-		Tileset coeurs1 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale); //1e coeur en partant de la gauche
+		Tileset coeurs1 = new Tileset("sprites/gestionVie/coeursDeVie.png", displayScale); //1e coeur en partant de la gauche
 		Sprite sprCoeurs1 = new Sprite(coeurs1, 5, 0);
 		//		spr1.setId(4);
 		vie.getChildren().add(sprCoeurs1.getView());
 
-		Tileset coeurs2 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale);
+		Tileset coeurs2 = new Tileset("sprites/gestionVie/coeursDeVie.png", displayScale);
 		Sprite sprCoeurs2 = new Sprite(coeurs2, 5, 0);
 		ImageView iv2 = sprCoeurs2.getView();
 		vie.getChildren().add(iv2);
 		vie.getChildren().get(1).setLayoutX(80);
 
-		Tileset coeurs3 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale);
+		Tileset coeurs3 = new Tileset("sprites/gestionVie/coeursDeVie.png", displayScale);
 		Sprite sprCoeurs3 = new Sprite(coeurs3, 5, 0);
 		ImageView iv3 = sprCoeurs3.getView();
 		vie.getChildren().add(iv3);
