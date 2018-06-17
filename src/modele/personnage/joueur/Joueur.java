@@ -19,7 +19,8 @@ public class Joueur extends Personnage{
 	private boolean isControllable;
 
 	private ArrayList<Arme> armes;
-
+	
+	//inventaire
 	private ArrayList<Objet> inventaire;
 
 	//true = arc, false = epee
