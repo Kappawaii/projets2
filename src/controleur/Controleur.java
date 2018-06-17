@@ -43,6 +43,8 @@ public class Controleur {
 	private Label saisieDialogue = new Label();
 	@FXML
 	private Label cliquezPourContinuer = new Label();
+	@FXML
+	private Label armeSelection = new Label();
 
 	//Label debug position joueur
 	private Label joueurpos = new Label();
@@ -107,25 +109,28 @@ public class Controleur {
 						if(debugMode)
 							jeuEnPause = true;
 
-						modele.getJoueur().unTour();
-
+						//cinématique si activée
 						//							if(!cinematiqueDebut.isfinished())
 						//								cinematiqueDebut.play();
 
 						//debug position joueur							
 						joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
-
+						if(modele.getJoueur().currentArme() != null)
+							armeSelection.setText(modele.getJoueur().currentArme().toString());
+						//action du joueur
+						modele.getJoueur().unTour();
+						//action des personnages
 						for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
 							Personnage personnage = iterator.next();
 							personnage.unTour();
 
 						}
-//						System.out.println(modele.getPersonnages().get(1).getPosition());
+						//						System.out.println(modele.getPersonnages().get(1).getPosition());
 						//rafraichissement de l'affichage
 
 						//avec scrolling map
 						if(affichage.isScrollingMapEnabled()) {
-							
+
 							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
 
 							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
@@ -150,6 +155,11 @@ public class Controleur {
 	}
 
 	private void initTextAffichage() {
+		armeSelection.setLayoutX(0);
+		armeSelection.setLayoutY(100);
+		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
+		joueurPane.getChildren().add(armeSelection);
+
 		dialogueBox.getChildren().add(saisieDialogue);	
 		saisieDialogue.setLayoutX(290);
 		saisieDialogue.setLayoutY(600);

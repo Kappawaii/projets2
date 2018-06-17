@@ -61,6 +61,7 @@ public class Gobelin extends Personnage {
 
 				//on passe le déplacement si il n'y a pas de mouvement
 				if (movInputs[0] != 0 || movInputs[1] != 0) {
+//					System.out.println(directionAttack(modele.getJoueur()));
 					//calcul de la prochaine position
 					int[] nextPosXetY = getNextPos(movInputs[0], movInputs[1]);
 					moveAndAnimate(movInputs[0], movInputs[1], nextPosXetY[0], nextPosXetY[1]);
@@ -68,5 +69,21 @@ public class Gobelin extends Personnage {
 
 			}
 		}
+	}
+	
+	public Input directionAttack(Personnage adversaire) {
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
+			return Input.ADROITE;
+		}
+		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
+			return Input.AGAUCHE;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
+			return Input.AHAUT;
+		}
+		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
+			return Input.ABAS;
+		}
+		return null;
 	}
 }

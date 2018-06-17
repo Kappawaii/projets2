@@ -16,44 +16,44 @@ public abstract class Personnage extends Entity {
 
 	protected Input direction;
 	protected Modele modele;
-	
+
 	protected int pv; // 1 coeur = 4 pv
 	protected int vitesse;
-	
+
 	private Animation animation;
 	protected Collider collider;
-	
-	protected Arme arme;
+
 	ArrayList<Long> idAttaques;
-	
+
 	protected boolean isActive;	
 	protected boolean dead;
 	protected int isDying;
 	protected int animOffset = 0;
 	protected boolean didAttack;
-	
+	//flash rouge dommages
+	protected boolean hit = false;
 
 	public Personnage(int pv, Coordonnee position, int taille, int vitesse, Animation a, Modele modele) {
 		super(position);
 		this.modele = modele;
-		
+
 		this.pv=pv;
 		this.vitesse=vitesse;
-		
+
 		animation = a;
 		collider = new Collider(position, false, taille, taille);
 
 		idAttaques = new ArrayList<Long>();
-		arme = new Arme(modele, 10, this);
-		
+
 		//le personnage est créé désactivé
 		setActive(false);
 		dead = false;
 		isDying = -1;
 	}
-	
+
 	public void unTour() {
 		if(!dead) {
+			animation.unflash();
 			jouer();
 		}
 		else {
@@ -67,7 +67,7 @@ public abstract class Personnage extends Entity {
 			}
 		}
 	}
-	
+
 	//TODO Polymorphism jouer();	
 	//@Override
 	protected abstract void jouer();
@@ -137,7 +137,7 @@ public abstract class Personnage extends Entity {
 		}
 
 	}
-	
+
 	protected void animationAttackToMovement() {
 		getAnimation().animate(Input.directionToInt(direction));
 	}
@@ -169,6 +169,7 @@ public abstract class Personnage extends Entity {
 
 	public void receiveDamage(int dmg, long id) {
 		if(!idAttaques.contains(id)) {
+			animation.flash();
 			idAttaques.add(id);
 			pv -= dmg;
 			//mort
@@ -230,28 +231,7 @@ public abstract class Personnage extends Entity {
 		return isActive;
 	}
 
-	public void receiveDamage(int dmg) {
-		pv -= dmg;
-		//TODO gestion hp avancée
-	}
-	
-	public Input directionAttack(Personnage adversaire) {
-		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
-			return Input.ADROITE;
-		}
-		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)-1) {			//Gauche
-			return Input.AGAUCHE;
-		}
-		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)-1) {			//Haut
-			return Input.AHAUT;
-		}
-		if(adversaire.getPosition().getY()/16 == (this.getPosition().getY()/16)+1) {			//Bas
-			return Input.ABAS;
-		}
-		return null;
-	}
-
-	public void attaquer(ArrayList<Input> inputs) {
+	public void attaquer(ArrayList<Input> inputs, Arme arme) {
 		Input armeDirection = arme.attaquer(inputs);
 		if( armeDirection != null && direction != null) {
 			//décalage animation déplacement
@@ -306,9 +286,9 @@ public abstract class Personnage extends Entity {
 			}
 		}
 		else if(didAttack) {
-		didAttack = false;
-		animationAttackToMovement();
-		animOffset = 0;
+			didAttack = false;
+			animationAttackToMovement();
+			animOffset = 0;
 		}
 	}
 

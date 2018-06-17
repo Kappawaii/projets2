@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import modele.Modele;
 import modele.Event.Event;
+import modele.Event.GetArcEvent;
 import modele.Event.LoadEntitiesEvent;
 import modele.Event.LoadLevelEvent;
 import modele.Event.SetScrollingMapEvent;
@@ -130,6 +131,17 @@ public class BuilderPlateau {
 					isTrigger = false;
 					events.add(new LoadLevelEvent(modele, id+1,new Coordonnee(112,160)));
 					events.add(new SetScrollingMapEvent(modele));
+				}
+				//Arc
+				if(notreMap[x][y] == 67) {
+					tailleX = 4;
+					tailleY = 1;
+					offsetX = 0;			//Armoire3;
+					offsetY = 0;
+					isTrigger = true;
+					Coordonnee positionSpr = new Coordonnee(x*16,y*16);
+//					pos.add(positionSpr);
+					events.add(new GetArcEvent(modele,positionSpr));
 				}
 				
 				//Déclencheur entités Niveau 1

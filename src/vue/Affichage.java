@@ -3,13 +3,14 @@ package vue;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import modele.Modele;
-import modele.arme.Arme;
+import modele.arme.LanceurProjectile;
 import modele.cellule.Cellule;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
-import modele.personnage.ennemis.Plante;
+import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 
 public class Affichage {
@@ -31,8 +32,6 @@ public class Affichage {
 		this.displayScale = displayScale;
 		this.modele = modele;
 	}
-
-
 
 	public void addTileset(Tileset tileset) {
 		tilesets.add(tileset);
@@ -57,17 +56,6 @@ public class Affichage {
 		entites.getChildren().add(p.getSprite().getView());
 	}
 
-	public void enleverArme(Arme arme) {
-		entites.getChildren().remove(arme.getSpr().getView());
-	}
-	
-	public void ajouterArme(Arme a) {
-		if(!entites.getChildren().contains(a.getSpr().getView()))
-			entites.getChildren().add(a.getSpr().getView());
-//		else
-//			System.err.println("ajout de sprite déjà dans le pane !");
-	}
-
 	public void ajouterCarte(Cellule[][] cellules, boolean debug) {
 		nettoyerPane(tuiles);
 		nettoyerPane(entites);
@@ -77,12 +65,12 @@ public class Affichage {
 				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getY()*displayScale);
 				tuiles.autosize();
 				tuiles.getChildren().add(cellules[x][y].getSprite().getView());
-				//				if(debug) {
-				//					Label a = new Label(""+cellules[x][y].getCollider().isTrigger());
-				//					a.setLayoutX(cellules[x][y].getPos().getX()*displayScale);
-				//					a.setLayoutY(cellules[x][y].getPos().getY()*displayScale);
-				//					tuiles.getChildren().add(a);
-				//				}
+				if(debug) {
+					Label a = new Label(""+cellules[x][y].getCollider().isTrigger());
+					a.setLayoutX(cellules[x][y].getPos().getX()*displayScale);
+					a.setLayoutY(cellules[x][y].getPos().getY()*displayScale);
+					tuiles.getChildren().add(a);
+				}
 			}		
 		}
 	}
@@ -97,15 +85,10 @@ public class Affichage {
 	}
 
 	public void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
-		if(pers instanceof Plante)
-			System.out.println(pers.getPosition());
+		//		if(pers instanceof Plante)
+		//			System.out.println(pers.getPosition());
 		pers.getSprite().getView().setX(pos.getX()*displayScale);
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
-	}
-
-	public void mettreAJourPositionArme(Arme a,Coordonnee pos) {
-		a.getSpr().getView().setX(pos.getX()*displayScale);
-		a.getSpr().getView().setY(pos.getY()*displayScale);
 	}
 
 	//scrolling map
@@ -125,6 +108,23 @@ public class Affichage {
 
 	public Pane getTuiles() {
 		return tuiles;
+	}
+
+
+	public void ajouterArme(LanceurProjectile a) {
+		System.out.println("a");
+		if(!entites.getChildren().contains(a.getSpr().getView()))
+			entites.getChildren().add(a.getSpr().getView());
+	}
+
+	public void enleverArme(LanceurProjectile a) {
+		entites.getChildren().remove(a.getSpr().getView());
+	}
+
+	public void mettreAJourPositionProjectile(Coordonnee position, Sprite spr) {
+		spr.getView().setLayoutX(position.getX()*4);
+		spr.getView().setLayoutY(position.getY()*4);
+
 	}
 
 

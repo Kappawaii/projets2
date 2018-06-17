@@ -10,14 +10,12 @@ import modele.Entity.Entity;
 import modele.collision.Collider;
 import modele.coordonnee.Coordonnee;
 import modele.personnage.Personnage;
-import vue.sprite.Sprite;
 
 public class Arme extends Entity {
 
 	//READ-ONLY
 	Personnage parent;
 
-	Sprite spr;
 	Modele modele;
 	Collider collider;
 	int degats;
@@ -32,14 +30,12 @@ public class Arme extends Entity {
 		this.degats = degats;
 		this.modele = modele;
 		ticksRemaining = 0;
-		spr = new Sprite(modele.getAffichage().getTileset(0), 4, 1);
 		idGenerator = new Random();
 	}
 
 	public Input attaquer(ArrayList<Input> direction) {
 		//instantiation d'une nouvelle attaque si une attaque n'est pas en cours
 		if(ticksRemaining == 0) {
-//			modele.getAffichage().enleverArme(this);
 			ticksRemaining--;
 			return Input.EMPTY;
 		}
@@ -48,7 +44,6 @@ public class Arme extends Entity {
 			//on passe l'attaque si il l'entrée est nulle
 			if (dirInputs[0] != 0 || dirInputs[1] != 0) {
 				idAttaque = idGenerator.nextLong();
-//				modele.getAffichage().ajouterArme(this);
 				ticksRemaining = 20;
 				offsetPos = dirInputs;
 				collider = new Collider(
@@ -63,7 +58,6 @@ public class Arme extends Entity {
 			position.setX(parent.getPosition().getX()+offsetPos[0]*16);
 			position.setY(parent.getPosition().getY()+offsetPos[1]*16);
 			collider.setPosition(position);
-//			modele.getAffichage().mettreAJourPositionArme(this, position);
 			//on détecte les collisions sur ce collider
 			ArrayList<Collider> collisions = collider.detecterCollisions(modele.getAllColliders(modele.getIdNiveau()));
 
@@ -73,7 +67,6 @@ public class Arme extends Entity {
 
 				//si la collision est une collision non matérielle
 				if(!detectedCollider.isTrigger()) {
-					//TODO Maybe triggerEvent()?
 					detectedCollider.receiveDamage(degats,idAttaque);
 				}
 
@@ -83,8 +76,9 @@ public class Arme extends Entity {
 		}
 		return null;
 	}
-
-	public Sprite getSpr() {
-		return spr;
+	
+	@Override
+	public String toString() {
+		return "Epee Sélectionnée";
 	}
 }

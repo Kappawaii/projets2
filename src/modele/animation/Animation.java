@@ -13,6 +13,9 @@ public class Animation {
 	private int counter;
 	private int numberOfFrames;
 
+
+	private int flashcounter;
+
 	public Animation(int framesBetweenSprites, Tileset tileset, int displayScale, int ligne) {
 		if (framesBetweenSprites <= 0) {
 			throw new IllegalArgumentException("Valeur de framesBetweenSprites <= 0");
@@ -39,16 +42,16 @@ public class Animation {
 	protected int getAnimIndex() {
 		return animIndex;
 	}
-	
+
 	public void animate(int i) {
 		if(getCurrentLigne() != i)
 			setCurrentAnimation(i);
 		else 
 			nextFrame();
 	}
-	
+
 	private void setCurrentAnimation(int i) throws ArrayIndexOutOfBoundsException {
-		
+
 		counter = 0;
 		animIndex = 0;
 		ligneIndex = i;
@@ -61,7 +64,7 @@ public class Animation {
 			next();
 		}
 	}
-	
+
 	private void next() {
 		counter = 0;
 		animIndex = (animIndex+1)%numberOfFrames;
@@ -78,10 +81,20 @@ public class Animation {
 
 	public void setVisible(boolean b) {
 		spr.setVisible(b);
-		
+
 	}
 
 	public void die() {
 		spr.fadeDown();
+	}
+
+	public void flash() {
+		flashcounter = 10;
+		spr.getView().setOpacity(0.5);
+	}
+
+	public void unflash() {
+		if(!(--flashcounter > 0))
+			spr.getView().setOpacity(1);
 	}
 }

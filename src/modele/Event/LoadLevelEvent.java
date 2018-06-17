@@ -18,7 +18,7 @@ public class LoadLevelEvent extends Event {
 	@Override
 	public void execute() {
 		//debugMode activé ici
-		modele.changerMap(idNewNiveau, true);
+		modele.changerMap(idNewNiveau, false);
 		Cellule cell = new Cellule(
 						new Tileset("sprites/tilesets/tileset0.png",4),
 						1, 
