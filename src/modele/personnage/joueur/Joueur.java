@@ -36,6 +36,7 @@ public class Joueur extends Personnage{
 		sprCoeurs3 = coeurs[2];
 		armes = new ArrayList<Arme>(); 
 		inventaire = new ArrayList<Objet>();
+		sprCoeurs2 = coeurs[2];
 		this.inputs = inputs;
 		isControllable = false;
 		armes.add(new Arme(modele, 20, this));
