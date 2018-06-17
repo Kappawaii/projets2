@@ -230,7 +230,7 @@ public class Controleur {
 		cinematiqueDebut = new Cinematique(modele);
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "...\n"
 				+ "\n"
-				+ "Cliquez pour continuer la cinematique"));
+				+ "Cliquez pour commencer le jeu"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*baillement*"));
