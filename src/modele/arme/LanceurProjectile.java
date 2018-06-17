@@ -81,7 +81,6 @@ public class LanceurProjectile extends Arme {
 			else {
 				int value;
 				value = offsetPos[0]*10 + offsetPos[1];
-				System.out.println(value);
 				switch (value) {
 				case 11:
 					spr.getView().setRotate(45);					
