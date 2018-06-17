@@ -8,6 +8,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -25,6 +26,8 @@ import modele.personnage.ennemis.Gobelin;
 import modele.personnage.ennemis.Plante;
 import modele.personnage.joueur.Joueur;
 import vue.Affichage;
+import vue.sprite.AnimatedSprite;
+import vue.sprite.Sprite;
 import vue.tileset.Tileset;
 
 public class Controleur {
@@ -45,6 +48,9 @@ public class Controleur {
 	private Label cliquezPourContinuer = new Label();
 	@FXML
 	private Label armeSelection = new Label();
+
+	@FXML
+	private Pane vie;
 
 	//Label debug position joueur
 	private Label joueurpos = new Label();
@@ -71,8 +77,80 @@ public class Controleur {
 		initTextAffichage();
 		initAnimation();
 		gameLoop.play();
-		//tests pathfinding
 
+		//tests Gestion de Vie
+		modele.getJoueur().setPv(11);
+		initGestionVie();
+
+
+	}
+
+	public void initGestionVie() {
+		System.out.println(vie);
+		Tileset coeurs1 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale); //1e coeur en partant de la gauche
+		Sprite sprCoeurs1 = new Sprite(coeurs1, 5, 0);
+		//		spr1.setId(4);
+		vie.getChildren().add(sprCoeurs1.getView());
+
+		Tileset coeurs2 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale);
+		Sprite sprCoeurs2 = new Sprite(coeurs2, 5, 0);
+		ImageView iv2 = sprCoeurs2.getView();
+		vie.getChildren().add(iv2);
+		vie.getChildren().get(1).setLayoutX(80);
+
+		Tileset coeurs3 = new Tileset("sprites\\gestionVie\\coeursDeVie.png", displayScale);
+		Sprite sprCoeurs3 = new Sprite(coeurs3, 5, 0);
+		ImageView iv3 = sprCoeurs3.getView();
+		vie.getChildren().add(iv3);
+		vie.getChildren().get(2).setLayoutX(160);
+		System.out.println();
+		switch(modele.getJoueur().getPV()) {
+		case 1:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(4);
+			sprCoeurs1.setId(3);
+			break;
+		case 2:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(4);
+			sprCoeurs1.setId(2);
+			break;
+		case 3:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(4);
+			sprCoeurs1.setId(1);
+			break;
+		case 4:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(4);
+			break;
+		case 5:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(3);
+			break;
+		case 6:  
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(2);
+			break;
+		case 7: 
+			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(1);
+			break;
+		case 8:  
+			sprCoeurs3.setId(4);
+			break;
+		case 9:  
+			sprCoeurs3.setId(3);
+			break;
+		case 10: 
+			sprCoeurs3.setId(2);
+			break;
+		case 11: 
+			sprCoeurs3.setId(1);
+			break;
+		default:System.out.println("Probl�me gestion de vie");;
+		break;
+		}
 	}
 
 	public void mouseClicked() {
@@ -88,6 +166,7 @@ public class Controleur {
 
 		joueurPane.getChildren().add(joueurpos);
 		joueurpos.setTextFill(Color.web("#AAEAAE"));
+		joueurpos.setLayoutX(700);
 
 		affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
 		modele.getCurrentNiveau().getEntites().add(modele.getPersonnagesACharger(1).get(0));

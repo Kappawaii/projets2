@@ -7,6 +7,9 @@ import vue.tileset.Tileset;
 public class Sprite {
 
 	protected ImageView view;
+	private int id;
+	private Tileset tileset;
+	private int scale;
 	
 	/**
 	 * sprite statique pour les tuiles
@@ -15,6 +18,9 @@ public class Sprite {
 	 * @param id
 	 */
 	public Sprite(Tileset tileset, int scale, int id) {
+		this.id = id;
+		this.tileset = tileset;
+		this.scale = scale;
 		view = new ImageView(tileset.getImage());
 		setViewPort(new Rectangle2D(
 				id%((tileset.getLongueurImg()+1)/17)*17*scale,
@@ -24,6 +30,15 @@ public class Sprite {
 		view.setFitWidth(16*scale);
 		view.setFitHeight(16*scale);
 		view.setSmooth(true);
+	}
+	
+	public void setId(int i) {
+		this.id = i;
+		setViewPort(new Rectangle2D(
+				id%((tileset.getLongueurImg()+1)/17)*17*scale,
+				id/(tileset.getCasesParLigne())*17*scale,
+				16*scale,
+				16*scale));
 	}
 	
 	/**

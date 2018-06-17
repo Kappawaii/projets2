@@ -291,5 +291,9 @@ public abstract class Personnage extends Entity {
 			animOffset = 0;
 		}
 	}
+	
+	public void setPv(int pv) {
+		this.pv = pv;
+	}
 
 }
