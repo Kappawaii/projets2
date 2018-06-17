@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import controleur.Input;
 import modele.Modele;
+import modele.Objet;
 import modele.animation.Animation;
 import modele.arme.Arme;
 import modele.arme.LanceurProjectile;
@@ -19,6 +20,8 @@ public class Joueur extends Personnage{
 
 	private ArrayList<Arme> armes;
 
+	private ArrayList<Objet> inventaire;
+
 	//true = arc, false = epee
 	private boolean switchArme;
 	private boolean hasSwitched = false;
@@ -32,6 +35,7 @@ public class Joueur extends Personnage{
 		sprCoeurs2 = coeurs[1];
 		sprCoeurs3 = coeurs[2];
 		armes = new ArrayList<Arme>(); 
+		inventaire = new ArrayList<Objet>();
 		this.inputs = inputs;
 		isControllable = false;
 		armes.add(new Arme(modele, 20, this));
@@ -137,11 +141,6 @@ public class Joueur extends Personnage{
 			return armes.get(0);
 	}
 
-	public void obtenirArc() {
-		if(armes.size() < 2)
-			armes.add(new LanceurProjectile(modele, 10, this));		
-	}
-
 	public boolean isControllable() {
 		return isControllable;
 	}
@@ -150,5 +149,18 @@ public class Joueur extends Personnage{
 		this.isControllable = isControllable;
 	}
 
+	public void obtenirArc() {
+		if(armes.size() < 2)
+			armes.add(new LanceurProjectile(modele, 10, this));		
+	}
+	
+	public void obtenirObjet(Objet obj) {
+		if(!inventaire.contains(obj))
+			inventaire.add(obj);
+	}
+
+	public ArrayList<Objet> getInventaire() {
+		return inventaire;
+	}
 
 }

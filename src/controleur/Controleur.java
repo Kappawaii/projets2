@@ -47,7 +47,7 @@ public class Controleur {
 	private Label saisieDialogue = new Label();
 	private Label cliquezPourContinuer = new Label();
 	private Label armeSelection = new Label();
-	
+
 	//Label debug position joueur
 	private Label joueurpos = new Label();
 	private ArrayList<Input> inputs = new ArrayList<Input>();
@@ -61,7 +61,8 @@ public class Controleur {
 	private static int displayScale = 4;
 	private boolean jeuEnPause = false;
 	private boolean debugMode = false;
-	
+	private boolean gameOver;
+
 	@FXML
 	public void initialize() {
 		//initialisation modele et Affichage
@@ -71,8 +72,8 @@ public class Controleur {
 		//initialisation de toutes les ressources
 		initRessources();
 		//initialisation gameLoop
-		initTextAffichage();
 		initAnimation();
+		//démarrage gameLoop
 		gameLoop.play();
 	}
 
@@ -100,8 +101,10 @@ public class Controleur {
 
 	public void mouseClicked() {
 		cinematiqueDebut.unPause();
-//		modele.getJoueur().receiveDamage(1, (long) (Math.random()*10000));
+		//		modele.getJoueur().receiveDamage(1, (long) (Math.random()*10000));
 		jeuEnPause = false;
+		if(gameOver)
+			Runtime.getRuntime().exit(0);
 	}
 
 	private void initAnimation() {
@@ -120,7 +123,6 @@ public class Controleur {
 
 		modele.getJoueur().setActive(true);
 		modele.getJoueur().setControllable(false);
-//		modele.getJoueur().setControllable(true);
 
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
@@ -129,51 +131,55 @@ public class Controleur {
 					}
 					else {
 						keymanager.updateInputs();
-
-						//test mode debug F/F activé
-						if(debugMode)
-							jeuEnPause = true;
-
-						//cinématique si activée
-						if(!cinematiqueDebut.isfinished())
-							cinematiqueDebut.play();
-
-						//debug position joueur							
-						joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
-						if(modele.getJoueur().currentArme() != null)
-							armeSelection.setText(modele.getJoueur().currentArme().toString());
-						//action du joueur
-						modele.getJoueur().unTour();
-						//action des personnages
-						for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
-							Personnage personnage = iterator.next();
-							personnage.unTour();
-
+						if(!modele.getJoueur().isAlive()) {
+							saisieDialogue.setText("Game Over, Click to quit game");
+							gameOver = true;
 						}
-						//						System.out.println(modele.getPersonnages().get(1).getPosition());
-						//rafraichissement de l'affichage
-
-						//avec scrolling map
-						if(affichage.isScrollingMapEnabled()) {
-
-							affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
-
-							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
-								Personnage personnage = iterator.next();
-								affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
-							}
-							affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
-							affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
-						}
-						//sans scrolling map
 						else {
+							//test mode debug F/F activé
+							if(debugMode)
+								jeuEnPause = true;
+
+							//cinématique si activée
+							if(!cinematiqueDebut.isfinished())
+								cinematiqueDebut.play();
+
+							//debug position joueur							
+							joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
+							if(modele.getJoueur().currentArme() != null)
+								armeSelection.setText(modele.getJoueur().currentArme().toString());
+							//action du joueur
+							modele.getJoueur().unTour();
+							//action des personnages
 							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
 								Personnage personnage = iterator.next();
-								affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
-							}
-							affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
-						}
+								personnage.unTour();
 
+							}
+							//						System.out.println(modele.getPersonnages().get(1).getPosition());
+							//rafraichissement de l'affichage
+
+							//avec scrolling map
+							if(affichage.isScrollingMapEnabled()) {
+
+								affichage.mettreAJourPositionPersonnage(modele.getJoueur(), new Coordonnee(96,96));
+
+								for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
+									Personnage personnage = iterator.next();
+									affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
+								}
+								affichage.centerPanetoPosition(tuiles,modele.getJoueur().getPosition());
+								affichage.centerPanetoPosition(entites,modele.getJoueur().getPosition());
+							}
+							//sans scrolling map
+							else {
+								for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
+									Personnage personnage = iterator.next();
+									affichage.mettreAJourPositionPersonnage(personnage, personnage.getPosition());
+								}
+								affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());	
+							}
+						}
 					}
 				}));		
 		gameLoop.getKeyFrames().add(play);
@@ -225,102 +231,104 @@ public class Controleur {
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "...\n"
 				+ "\n"
 				+ "Cliquez pour continuer la cinematique"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*baillement*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*baillement*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : J'ai passe une tres bonne nuit !"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : J'ai passe une tres bonne nuit !"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*bruit bizarre*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
-				cinematiqueDebut.addClip(new PassiveClip(Input.BAS,16));
-				cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,28));
-				cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,50));
-				cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,20));
-				cinematiqueDebut.addClip(new PassiveClip(Input.GAUCHE,50));
-				cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,21));
-				cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,33));
-				cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,4));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*bruit bizarre*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PassiveClip(Input.BAS,16));
+		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,28));
+		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,50));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,20));
+		cinematiqueDebut.addClip(new PassiveClip(Input.GAUCHE,50));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,21));
+		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,33));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,4));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Le bruit vient de l'armoire je pense"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Le bruit vient de l'armoire je pense"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*ouvre l'armoire*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*ouvre l'armoire*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Il y a un truc bizarre sur mes vetements..."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Il y a un truc bizarre sur \n mes vetements..."));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : C'est..."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : C'est..."));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Une epee ?!"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Une epee ?!"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*Joueur prend l'epee*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*Joueur prend l'epee*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je devrai peut-Etre\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je devrai peut-Etre\n"
 				+ "aller la donner a  l'aubergiste..."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : non !!"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : non !!"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : QUOI ?! QUI A PARLE ?!"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : QUOI ?! QUI A PARLE ?!"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Euh... Moi."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Euh... Moi."));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*lache l'epee de stupeur*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*lache l'epee de stupeur*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Aie !!"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Aie !!"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Tu... es vivant ? Qui es-tu ?"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Tu... es vivant ? Qui es-tu ?"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Je m'appelle Aedriel.\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "?????? : Je m'appelle Aedriel.\n"
 				+ "\n"
 				+ "Et oui, je suis vivant.\n"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Aedriel : Pourrais tu ... m'aider ?\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Aedriel : Pourrais tu ... m'aider ?\n"
 				+ "\n"
 				+ "Je crois que je suis en danger."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue ,"J'aimerais retrouver mon proprietaire...\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue ,"J'aimerais retrouver mon proprietaire...\n"
 				+ "\n"
 				+ "je crois qu'il m'a oublié."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je viens d'arriver dans ce village,\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je viens d'arriver dans ce village,\n"
 				+ "\n"
 				+ "je suis en plein voyage."));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "On pourrait essayer de le retrouver\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "On pourrait essayer de le retrouver\n"
 				+ "\n"
 				+ "ensemble si tu le souhaites !"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Aedriel : Merci beaucoup !"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Aedriel : Merci beaucoup !"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*prend l'Epee*"));
-				cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
-				cinematiqueDebut.addClip(new TextClip(saisieDialogue, ""));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*prend l'Epee*"));
+		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, ""));
 		affichage.addTileset(new Tileset("sprites/tilesets/tileset0.png",displayScale));
 		affichage.addTileset(new Tileset("sprites/personnages/joueur/walking.png", displayScale));
+		affichage.addTileset(new Tileset("sprites/personnages/gobelin/walking.png", displayScale));
+		affichage.addTileset(new Tileset("sprites/personnages/plante/plantespr.png", displayScale));
 
 		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
-		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
-		Animation walking3 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
+		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(2),displayScale, 0);
+		Animation walking3 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(3),displayScale, 0);
 
 		modele.getPersonnages().add(
 				new Gobelin("gobelin", 10,
@@ -351,6 +359,14 @@ public class Controleur {
 						displayScale,
 						1,
 						modele));
+		modele.addNiveau(
+				new Niveau("maps/level2.tmx",
+						affichage.getTileset(0),
+						null,
+						displayScale,
+						2,
+						modele));
+		initTextAffichage();
 	}
 
 	public int getScale() {

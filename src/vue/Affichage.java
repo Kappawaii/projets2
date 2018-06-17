@@ -38,6 +38,7 @@ public class Affichage {
 	}
 
 	public Tileset getTileset(int index) {
+		System.out.println(tilesets.size());
 		return tilesets.get(index);
 	}
 

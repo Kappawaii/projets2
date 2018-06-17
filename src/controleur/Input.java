@@ -42,6 +42,7 @@ public enum Input{
 	public int y() {
 		return y;
 	}
+	
 	/**
 	 * Résultat de l'addition stocké dans le premier vecteur
 	 * N'additionne que les vecteurs de mouvement et n'aura aucun effet si movement est false
@@ -64,16 +65,6 @@ public enum Input{
 
 	public String toString() {
 		return this.name() + " " + x + ";" + y;
-	}
-
-	/**
-	 * à utiliser seulement sur empty
-	 */
-	public void clear() {
-		if (!this.name().equals("EMPTY"))
-			throw new Error("Only use on empty");
-		this.x = 0;
-		this.y = 0;
 	}
 
 	public int[] directiontoArray() {

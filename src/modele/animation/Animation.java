@@ -12,8 +12,6 @@ public class Animation {
 	private int framesBetweenSprites;
 	private int counter;
 	private int numberOfFrames;
-
-
 	private int flashcounter;
 
 	public Animation(int framesBetweenSprites, Tileset tileset, int displayScale, int ligne) {
@@ -42,7 +40,11 @@ public class Animation {
 	protected int getAnimIndex() {
 		return animIndex;
 	}
-
+	
+	/**
+	 * anime l'animation à la ligne correspondante
+	 * @param i
+	 */
 	public void animate(int i) {
 		if(getCurrentLigne() != i)
 			setCurrentAnimation(i);
@@ -57,14 +59,20 @@ public class Animation {
 		ligneIndex = i;
 		next();
 	}
-
+	
+	/**
+	 * passe à la prochaine frame de l'animation
+	 */
 	public void nextFrame() {
 		counter++;
 		if(counter%framesBetweenSprites==0) {
 			next();
 		}
 	}
-
+	
+	/**
+	 * itérateur
+	 */
 	private void next() {
 		counter = 0;
 		animIndex = (animIndex+1)%numberOfFrames;
@@ -78,16 +86,26 @@ public class Animation {
 	public int getCurrentLigne() {
 		return ligneIndex;
 	}
-
+	
+	/**
+	 * Définit l'état visible ou non de l'animation
+	 * @param b
+	 */
 	public void setVisible(boolean b) {
 		spr.setVisible(b);
 
 	}
 
+	/**
+	 * baisse l'opacité du sprite jusqu'à qu'il ne soit plus affiché
+	 */
 	public void die() {
 		spr.fadeDown();
 	}
-
+	
+	/**
+	 * fait clignoter le personnage
+	 */
 	public void flash() {
 		flashcounter = 10;
 		spr.getView().setOpacity(0.5);

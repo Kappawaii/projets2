@@ -1,5 +1,6 @@
 package modele.collision;
 
+import modele.Entity.Entity;
 import modele.cellule.Cellule;
 import modele.coordonnee.Coordonnee;
 
@@ -41,5 +42,10 @@ public class EventCollider extends Collider {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public Entity getParent() {
+		return owner;
 	}
 }

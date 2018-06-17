@@ -15,9 +15,11 @@ public class Cellule extends Entity{
 	Sprite spr;
 	EventCollider collider;
 	ArrayList<Event> events;
+	private int id;
 
 	public Cellule(Tileset tileset,int id, int x, int y, boolean isTrigger, int scale, int offsetX, int offsetY, int tailleX, int tailleY, ArrayList<Event> eventsToAdd) {
-		super(new Coordonnee(x, y));		
+		super(new Coordonnee(x, y));	
+		this.id = id;
 		this.spr = new Sprite(tileset,scale,id);
 		this.collider = new EventCollider(new Coordonnee(x+offsetX,y+offsetY), isTrigger, tailleX, tailleY, this);
 		this.events = new ArrayList<Event>();
@@ -26,7 +28,10 @@ public class Cellule extends Entity{
 				events.add(eventsToAdd.get(i));
 			}
 		}
+	}
 
+	public int getId() {
+		return id;
 	}
 
 	public Coordonnee getPos() {

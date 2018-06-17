@@ -30,7 +30,12 @@ public class KeyManager {
 		return temp;
 	}
 
-
+	/**
+	 * Définit l'état (appuyé ou non) de la Key
+	 * @param nom
+	 * @param bind
+	 * @param state
+	 */
 	private void setKeyState(Input nom, String bind, boolean state) {
 		bind = refactorNom(bind);
 		if (isKeyUsed(axenull,bind))
@@ -69,7 +74,10 @@ public class KeyManager {
 			return true;
 		return false;
 	}
-
+	
+	/**
+	 * Met à jour les entrées 
+	 */
 	public void updateInputs() {
 		if(inputs != null) {
 			inputs.clear();
@@ -82,20 +90,14 @@ public class KeyManager {
 		}
 	}
 	
+	/**
+	 * Retourne la liste des entrées
+	 * @return ArrayList<Input> : la liste des entrées
+	 */
 	public ArrayList<Input> getInputList(){
 		return inputs;
 	}
-
-	//	public Axe getMovementInputs(int a) {
-	//		Axe inputs = Axe.EMPTY;
-	//		inputs.clear();
-	//		for (Key key : keystates) {
-	//			if (key.isPressed())
-	//				inputs.add(key.nom);
-	//		}
-	//		return inputs;
-	//	}
-
+	
 	/**
 	 * Retourne vrai si la Key est appuyée, sinon retourne faux
 	 * @param key
@@ -120,7 +122,12 @@ public class KeyManager {
 		else 
 			throw new Error("getKeyState : key '" + nom + "' not found");
 	}
-
+	
+	/**
+	 * Retourne le string entré en minuscule 
+	 * @param nom
+	 * @return
+	 */
 	private String refactorNom(String nom) {
 		return nom.toLowerCase();
 	}

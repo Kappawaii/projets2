@@ -7,9 +7,11 @@ import modele.Modele;
 import modele.Entity.Entity;
 import modele.animation.Animation;
 import modele.arme.Arme;
+import modele.cellule.Cellule;
 import modele.collision.Collider;
 import modele.collision.EventCollider;
 import modele.coordonnee.Coordonnee;
+import modele.personnage.joueur.Joueur;
 import vue.sprite.Sprite;
 
 public abstract class Personnage extends Entity {
@@ -109,19 +111,25 @@ public abstract class Personnage extends Entity {
 		boolean pasDeCollisionMaterielle = true;
 		//tri des colliders récupérés
 		for (int i = 0; (i < collisions.size()); i++) {
+			Collider collision = collisions.get(i);
 
 			//pas d'autocollision
-			if(!collider.equals(collisions.get(i))) {
+			if(!collider.equals(collision)) {
 				//si le collider n'est pas un trigger, on enregistre une collision matérielle
-				if(!collisions.get(i).isTrigger()) {
+				if(!collision.isTrigger()) {
 					pasDeCollisionMaterielle = false;
 				}
 				//si le collider est un collider évenementiel, on active sa méthode triggerEvent()
-				if(collisions.get(i) instanceof EventCollider)
-					((EventCollider) collisions.get(i)).triggerEvent();
+				if(collisions.get(i) instanceof EventCollider) {
+					EventCollider evcollider = ((EventCollider) collision);
+					evcollider.triggerEvent();
+					if(this instanceof Joueur && evcollider.getParent() instanceof Cellule && hasBateau() && ((Cellule) evcollider.getParent()).getId() == 231) {
+							pasDeCollisionMaterielle = true;
+					}
+				}
 			}
-
 		}
+
 
 		//si il n'y a pas de collision matérielle, le personnage peut se déplacer
 		if (pasDeCollisionMaterielle) {
@@ -165,6 +173,10 @@ public abstract class Personnage extends Entity {
 			}
 			animation.nextFrame();
 		}
+	}
+	
+	public boolean hasBateau() {
+		return ((Joueur)this).getInventaire().size() > 1;
 	}
 
 	public void receiveDamage(int dmg, long id) {
@@ -291,7 +303,7 @@ public abstract class Personnage extends Entity {
 			animOffset = 0;
 		}
 	}
-	
+
 	public void setPv(int pv) {
 		this.pv = pv;
 	}
@@ -302,7 +314,7 @@ public abstract class Personnage extends Entity {
 		attaquer(list,arme);
 	}
 
-	
+
 	public Input directionAttack(Personnage adversaire) {
 		if(adversaire.getPosition().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite
 			return Input.ADROITE;

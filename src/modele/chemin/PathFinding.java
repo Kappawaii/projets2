@@ -31,21 +31,15 @@ public class PathFinding {
 			this.coordDepart = map.getCellulePositionInPlateau(depart);
 			this.depart = new Node(null, map.getCellule(coordDepart[0], coordDepart[1]));
 			this.coordArrive = map.getCellulePositionInPlateau(arrive);
-//			this.arrive = arrive;
 			this.coordArriveX = coordArrive[0];
 			this.coordArriveY = coordArrive[1];
 			this.aVisiter = new ArrayList<>();
 			this.chemin  = new ArrayList<>();
 			this.dejaVisiter = new ArrayList<>();
 			this.path = new ArrayList<Cellule>();
-//			System.out.println("le constructeur marche!");
-//			System.out.println("la case depart est marchable : "+depart.getCollider().isTrigger());
-//			System.out.println("la case arrive est marchable : "+arrive.getCollider().isTrigger());
 		}
 		else {
 			System.out.println("chemin impossible");
-//			System.out.println(depart.getCollider().isTrigger());
-//			System.out.println(arrive.getCollider().isTrigger());
 		}
 		
 		
@@ -58,11 +52,7 @@ public class PathFinding {
 		}
 		aVisiter.add(depart);
 		Node victoire = null;
-//		System.out.println("ça marche1");
 		do {
-//				System.out.println();
-//				System.out.println("aVisiter contient : "+aVisiter);
-//				System.out.println();
 				current = aVisiter.get(0);
 				current.setVisite();
 				dejaVisiter.add(current);
@@ -76,10 +66,6 @@ public class PathFinding {
 					currentY = map.getCellulePositionInPlateau(current.getCord())[1];
 					
 					Node voisinD = new Node(current, map.getCellule(currentX+1, currentY));                 //voisin Droite de Current
-//					System.out.println("voisinD : " + voisinD);
-//					System.out.println("voisinD is trigger : " + voisinD.getCord().getCollider().isTrigger());
-//					System.out.println("voisinD position : " + voisinD.getCord().getPos());
-//					System.out.println();
 					if(voisinD!=null 
 							&& voisinD.getCord().getCollider().isTrigger() 
 							&& !voisinD.getDejaVisite() && !aVisiterContient(voisinD) 
@@ -89,10 +75,6 @@ public class PathFinding {
 					}
 					
 					Node voisinG = new Node(current, map.getCellule(currentX-1, currentY));                 //voisin Gauche de Current
-//					System.out.println("voisinG : " + voisinG);
-//					System.out.println("voisinG is trigger : " + voisinG.getCord().getCollider().isTrigger());
-//					System.out.println("voisinG position : " + voisinG.getCord().getPos());
-//					System.out.println();
 					if(voisinG!=null 
 							&& voisinG.getCord().getCollider().isTrigger() 
 							&& !voisinG.getDejaVisite() && !aVisiterContient(voisinG) 
@@ -102,10 +84,6 @@ public class PathFinding {
 					}
 					
 					Node voisinH = new Node(current, map.getCellule(currentX, currentY-1));                 //voisin Haut de Current
-//					System.out.println("voisinH : " + voisinH);
-//					System.out.println("voisinH is trigger : " + voisinH.getCord().getCollider().isTrigger());
-//					System.out.println("voisinH position : " + voisinH.getCord().getPos());
-//					System.out.println();
 					if(voisinH!=null 
 							&& voisinH.getCord().getCollider().isTrigger() 
 							&& !voisinH.getDejaVisite() && !aVisiterContient(voisinH) 
@@ -115,10 +93,6 @@ public class PathFinding {
 					}
 					
 					Node voisinB = new Node(current, map.getCellule(currentX, currentY+1));                //voisin Bas de Current
-//					System.out.println("voisinB : " + voisinB);
-//					System.out.println("voisinB is trigger : " + voisinB.getCord().getCollider().isTrigger());
-//					System.out.println("voisinB position : " + voisinB.getCord().getPos());
-//					System.out.println();
 					if(voisinD!=null 
 							&& voisinB.getCord().getCollider().isTrigger() 
 							&& !voisinB.getDejaVisite() && !aVisiterContient(voisinB) 
@@ -126,10 +100,6 @@ public class PathFinding {
 								
 							aVisiter.add(voisinB);
 					}
-					
-					
-//					System.out.println("aVisiter est vide : " + aVisiter.isEmpty() );
-//					System.out.println();
 							
 							
 
@@ -137,8 +107,6 @@ public class PathFinding {
 			
 			
 		} while (victoire == null && !aVisiter.isEmpty());
-		
-//		System.out.println("case victoire : " + victoire);
 		
 	  if(victoire!=null) {
 		  while(victoire.getAvant()!=null) {

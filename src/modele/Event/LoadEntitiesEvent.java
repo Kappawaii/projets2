@@ -9,13 +9,13 @@ import modele.personnage.Personnage;
 public class LoadEntitiesEvent extends Event {
 
 	ArrayList<Personnage> personnage;
-	ArrayList<Coordonnee> coordonnee;
+	Coordonnee[] coordonnee;
 	
 	boolean executed = false;
-	public LoadEntitiesEvent(Modele modele, ArrayList<Personnage> arrayList, ArrayList<Coordonnee> arrayListPos) {
+	public LoadEntitiesEvent(Modele modele, ArrayList<Personnage> arrayList, Coordonnee[] coordonnees) {
 		super(modele);
 		this.personnage = arrayList;
-		this.coordonnee = arrayListPos;
+		this.coordonnee = coordonnees;
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class LoadEntitiesEvent extends Event {
 			System.out.println("executed");
 			for (int i = 0;i < personnage.size(); i++) {
 				Personnage p = personnage.get(i);
-				Coordonnee c = coordonnee.get(i);
+				Coordonnee c = coordonnee[i];
 				modele.getCurrentNiveau().getEntites().add(p);
 				modele.getAffichage().ajouterPersonnage(p);
 				p.setPosition(c);
