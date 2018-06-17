@@ -48,8 +48,6 @@ public class Controleur {
 	private Label cliquezPourContinuer = new Label();
 	private Label armeSelection = new Label();
 
-	//Label debug position joueur
-	private Label joueurpos = new Label();
 	private ArrayList<Input> inputs = new ArrayList<Input>();
 	private Timeline gameLoop;
 	private Modele modele;
@@ -113,10 +111,6 @@ public class Controleur {
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		joueurPane.getChildren().add(modele.getJoueur().getSprite().getView());
 
-		joueurPane.getChildren().add(joueurpos);
-		joueurpos.setTextFill(Color.web("#AAEAAE"));
-		joueurpos.setLayoutX(700);
-
 		affichage.mettreAJourPositionPersonnage(modele.getJoueur(),modele.getJoueur().getPosition());
 		modele.getCurrentNiveau().getEntites().add(modele.getPersonnagesACharger(1).get(0));
 		modele.getAffichage().ajouterPersonnage(modele.getPersonnagesACharger(1).get(0));
@@ -143,9 +137,7 @@ public class Controleur {
 							//cinématique si activée
 							if(!cinematiqueDebut.isfinished())
 								cinematiqueDebut.play();
-
-							//debug position joueur							
-							joueurpos.setText(modele.getJoueur().getPosition().toString() + "\n" + modele.getPersonnagesACharger(1).get(0).getPosition().toString());
+					
 							if(modele.getJoueur().currentArme() != null)
 								armeSelection.setText(modele.getJoueur().currentArme().toString());
 							//action du joueur
