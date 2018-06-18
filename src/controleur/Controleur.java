@@ -153,6 +153,7 @@ public class Controleur {
 
 							if(modele.getJoueur().currentArme() != null)
 								armeSelection.setText(modele.getJoueur().currentArme().toString());
+								armeSelection.setTextFill(Color.web("#FEFEFE"));
 							//action du joueur
 							modele.getJoueur().unTour();
 							//action des personnages
@@ -246,16 +247,11 @@ public class Controleur {
 
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*bruit bizarre*"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
-		cinematiqueDebut.addClip(new PassiveClip(Input.BAS,16));
-		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,28));
-		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,50));
-		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,20));
-		cinematiqueDebut.addClip(new PassiveClip(Input.GAUCHE,50));
-		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,21));
-		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,33));
-		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,4));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,25));
+		cinematiqueDebut.addClip(new PassiveClip(Input.DROITE,60));
+		cinematiqueDebut.addClip(new PassiveClip(Input.HAUT,10));
 
-		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Le bruit vient de l'armoire je pense"));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Le bruit vient de l'armoire je pense"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*ouvre l'armoire*"));
@@ -273,7 +269,7 @@ public class Controleur {
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*Joueur prend l'epee*"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je devrai peut-Etre\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : Je devrai peut-etre\n"
 				+ "aller la donner a  l'aubergiste..."));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
@@ -315,7 +311,7 @@ public class Controleur {
 				+ "je suis en plein voyage."));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
-		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "On pourrait essayer de le retrouver\n"
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Joueur : On pourrait essayer de le retrouver\n"
 				+ "\n"
 				+ "ensemble si tu le souhaites !"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
