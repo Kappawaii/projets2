@@ -32,13 +32,12 @@ public class Joueur extends Personnage{
 
 	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Animation a, Modele modele, ArrayList<Input> inputs, Sprite[] coeurs) {
 		super(pv, position, 16, vitesse,a, modele);
-		sprCoeurs2 = coeurs[0];
-		sprCoeurs1 = coeurs[1];
+		sprCoeurs1 = coeurs[0];
+		sprCoeurs2 = coeurs[1];
 		System.out.println(coeurs[1]);
 		sprCoeurs3 = coeurs[2];
 		armes = new ArrayList<Arme>(); 
 		inventaire = new ArrayList<Objet>();
-		sprCoeurs2 = coeurs[2];
 		this.inputs = inputs;
 		isControllable = false;
 		armes.add(new Arme(modele, 20, this));

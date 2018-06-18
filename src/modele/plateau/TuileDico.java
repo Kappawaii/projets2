@@ -51,7 +51,7 @@ public class TuileDico {
 			dicoMap.put(1496,mur);
 			dicoMap.put(1439,mur);
 			dicoMap.put(1495,mur);
-			dicoMap.put(1086,new TuileData(4, 1, 0, 0, new Event[]{level2,e2}, null, false));
+			dicoMap.put(1086,new TuileData(16, 32, 0, 0, new Event[]{level2,e2}, null, false));
 			dicoMap.put(1438,mur);
 			dicoMap.put(1552,mur);	
 			dicoMap.put(1553,mur);		

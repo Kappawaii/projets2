@@ -61,6 +61,8 @@ public class Controleur {
 	private boolean debugMode = false;
 	private boolean gameOver;
 
+	private boolean wasEnterPressed = false;
+
 	@FXML
 	public void initialize() {
 		//initialisation modele et Affichage
@@ -96,13 +98,23 @@ public class Controleur {
 	}
 
 	public void mouseClicked() {
-		cinematiqueDebut.unPause();
-		//		modele.getJoueur().receiveDamage(1, (long) (Math.random()*10000));
 		jeuEnPause = false;
-		if(gameOver)
-			Runtime.getRuntime().exit(0);
 	}
 
+	public void gestionEnter() {
+		if(inputs.contains(Input.ENTREE)) {
+			if(!wasEnterPressed) {
+				cinematiqueDebut.unPause();
+				if(gameOver)
+					Runtime.getRuntime().exit(0);
+				wasEnterPressed = true;
+			}
+
+		}
+		else {
+			wasEnterPressed = false;
+		}
+	}
 	private void initAnimation() {
 		modele.changerMap(0,debugMode);
 		gameLoop = new Timeline();
@@ -118,11 +130,14 @@ public class Controleur {
 
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
+					keymanager.updateInputs();
+
 					if(jeuEnPause){
 						System.out.println("Jeu en pause");
 					}
 					else {
-						keymanager.updateInputs();
+						gestionEnter();
+
 						if(!modele.getJoueur().isAlive()) {
 							saisieDialogue.setText("Game Over, Click to quit game");
 							gameOver = true;
@@ -135,7 +150,7 @@ public class Controleur {
 							//cinématique si activée
 							if(!cinematiqueDebut.isfinished())
 								cinematiqueDebut.play();
-					
+
 							if(modele.getJoueur().currentArme() != null)
 								armeSelection.setText(modele.getJoueur().currentArme().toString());
 							//action du joueur
@@ -327,7 +342,7 @@ public class Controleur {
 						modele));
 		modele.getPersonnages().add(
 				new Plante(new Coordonnee(0,0), walking3, modele));
-		
+
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,
