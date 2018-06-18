@@ -184,7 +184,7 @@ public class Controleur {
 		joueurPane.getChildren().add(armeSelection);
 
 		dialogueBox.getChildren().add(saisieDialogue);	
-		saisieDialogue.setLayoutX(290);
+		saisieDialogue.setLayoutX(200);
 		saisieDialogue.setLayoutY(600);
 		//saisieDialogue.setTextAlignment(TextAlignment.CENTER);
 		saisieDialogue.setTextFill(Color.web("#FFFFFF"));
