@@ -29,9 +29,7 @@ public class Gobelin extends Personnage {
 		if(isActive) {
 			Plateau map = this.modele.getCurrentNiveau().getPlateau();
 			if(pathMemory != null) {
-//				System.out.println(1);
 				if(this.getPosition().equals(pathMemory.getPosition())) {
-//					System.out.println(2);
 					pathMemory = null;
 				}
 			}

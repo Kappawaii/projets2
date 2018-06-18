@@ -42,7 +42,6 @@ public class AnimationTest {
 			new Animation(5, new Tileset("sprites/gestionVie/coeursDeVie.png", 4), 0, 5);
 		} catch (Throwable ex) {
 			e = ex;
-			System.out.println(e);
 		}
 		assertTrue(e instanceof  RuntimeException);
 	}

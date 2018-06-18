@@ -30,12 +30,8 @@ public class Niveau {
 			throw new IllegalArgumentException("url null");
 		if(tileset == null)
 			throw new IllegalArgumentException("tileset null");
-//		if(liste == null)
-//			throw new IllegalArgumentException("liste null");
 		if(displayScale == 0)
 			throw new IllegalArgumentException("displayScale = 0");
-//		if(id < 1)
-//			throw new IndexOutOfBoundsException("id < 1");
 		if(modele == null)
 			throw new IllegalArgumentException("modele null");
 			

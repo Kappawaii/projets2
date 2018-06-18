@@ -93,7 +93,6 @@ public class Controleur {
 		ImageView iv3 = sprCoeurs3.getView();
 		vie.getChildren().add(iv3);
 		vie.getChildren().get(2).setLayoutX(160);
-		System.out.println();
 		return new Sprite[] {sprCoeurs1,sprCoeurs2,sprCoeurs3};
 	}
 
@@ -126,7 +125,7 @@ public class Controleur {
 		modele.getAffichage().ajouterPersonnage(modele.getPersonnagesACharger(1).get(0));
 
 		modele.getJoueur().setActive(true);
-		modele.getJoueur().setControllable(true);
+		modele.getJoueur().setControllable(false);
 
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
@@ -139,7 +138,7 @@ public class Controleur {
 						gestionEnter();
 
 						if(!modele.getJoueur().isAlive()) {
-							saisieDialogue.setText("Game Over, Click to quit game");
+							saisieDialogue.setText("Game Over, Appuyez sur Entrée pour quitter");
 							gameOver = true;
 						}
 						else {
@@ -148,8 +147,8 @@ public class Controleur {
 								jeuEnPause = true;
 
 							//cinématique si activée
-//							if(!cinematiqueDebut.isfinished())
-//								cinematiqueDebut.play();
+							if(!cinematiqueDebut.isfinished())
+								cinematiqueDebut.play();
 
 							if(modele.getJoueur().currentArme() != null)
 								armeSelection.setText(modele.getJoueur().currentArme().toString());
@@ -160,10 +159,7 @@ public class Controleur {
 							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
 								Personnage personnage = iterator.next();
 								personnage.unTour();
-								System.out.println(personnage.getClass());
-
 							}
-							//						System.out.println(modele.getPersonnages().get(1).getPosition());
 							//rafraichissement de l'affichage
 
 							//avec scrolling map
@@ -235,9 +231,7 @@ public class Controleur {
 		 * cinématique début du jeu
 		 */
 		cinematiqueDebut = new Cinematique(modele);
-		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "...\n"
-				+ "\n"
-				+ "Cliquez pour commencer le jeu"));
+		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "Appuyez sur Entrée pour commencer le jeu"));
 		cinematiqueDebut.addClip(new PauseClip(cinematiqueDebut));
 
 		cinematiqueDebut.addClip(new TextClip(saisieDialogue, "*baillement*"));

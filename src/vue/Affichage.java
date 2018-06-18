@@ -114,7 +114,6 @@ public class Affichage {
 
 
 	public void ajouterArme(LanceurProjectile a) {
-		System.out.println("a");
 		if(!entites.getChildren().contains(a.getSpr().getView()))
 			entites.getChildren().add(a.getSpr().getView());
 	}

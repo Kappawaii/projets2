@@ -34,7 +34,6 @@ public class Joueur extends Personnage{
 		super(pv, position, 16, vitesse,a, modele);
 		sprCoeurs1 = coeurs[0];
 		sprCoeurs2 = coeurs[1];
-		System.out.println(coeurs[1]);
 		sprCoeurs3 = coeurs[2];
 		armes = new ArrayList<Arme>(); 
 		inventaire = new ArrayList<Objet>();
