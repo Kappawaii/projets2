@@ -6,13 +6,13 @@ import controleur.Input;
 import modele.Modele;
 
 public class Cinematique  {
-	
+
 	private ArrayList<Clip> clips;
 	private int cineTime;
 	private boolean finished;
 	protected boolean inPause;
 	private Modele modele;
-	
+
 	public Cinematique(Modele modele) {
 		finished = false;
 		cineTime = 0;
@@ -20,7 +20,7 @@ public class Cinematique  {
 		this.modele = modele;
 
 	}
-	
+
 	/**
 	 * retourne vrai lorsque la cinématique est finie
 	 * @return
@@ -34,10 +34,9 @@ public class Cinematique  {
 			modele.getAffichage().mettreAJourPositionPersonnage(
 					modele.getJoueur(),
 					modele.getJoueur().getPosition());
-//			System.out.println(numberOfFrames);	
 		}
 	}
-	
+
 	/**
 	 * itérateur entre les clips de la cinématique
 	 * @return
@@ -51,7 +50,6 @@ public class Cinematique  {
 				return null;
 			}
 		}
-		//System.out.println(cineTime);
 		return clips.get(cineTime).getActions();
 	}
 

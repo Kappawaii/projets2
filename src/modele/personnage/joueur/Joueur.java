@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import controleur.Input;
 import modele.Modele;
-import modele.Objet;
 import modele.animation.Animation;
 import modele.arme.Arme;
 import modele.arme.LanceurProjectile;
 import modele.coordonnee.Coordonnee;
+import modele.objet.Objet;
 import modele.personnage.Personnage;
 import vue.sprite.Sprite;
 
@@ -96,7 +96,7 @@ public class Joueur extends Personnage{
 			sprCoeurs3.setId(1);
 			break;
 		default:
-			System.out.println("Probl�me gestion de vie");;
+			System.out.println("Problème gestion de vie");;
 			break;
 		}
 	}

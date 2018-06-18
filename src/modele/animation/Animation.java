@@ -22,7 +22,7 @@ public class Animation {
 			throw new NullPointerException("Valeur de tileset : null");
 		}
 		else if (displayScale <= 0) {
-			throw new IllegalArgumentException("Valeur de displayScale <= 0");
+			throw new RuntimeException("Valeur de displayScale <= 0");
 		}
 		this.animIndex = 0;
 		this.counter = 0;

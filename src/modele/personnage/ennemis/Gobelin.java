@@ -26,8 +26,6 @@ public class Gobelin extends Personnage {
 	//TODO Polymorphism
 //	@Override
 	public void jouer() {
-//		System.out.println(pv);
-//		System.out.println(isActive);
 		if(isActive) {
 			Plateau map = this.modele.getCurrentNiveau().getPlateau();
 			PathFinding path = new PathFinding(this.modele, 
@@ -37,10 +35,6 @@ public class Gobelin extends Personnage {
 			ArrayList<Input> inputs = new ArrayList<Input>();
 
 			if(pathToTheHero != null && !pathToTheHero.isEmpty()) {	
-
-
-				//			//actions.add(Axe.DROITE);
-				//			inputs.add(Input.randomMovement());
 
 				for (int i = 0; i < pathToTheHero.size(); i++) {
 					if(pathToTheHero.get(i).getPos().getX()/16 == (this.getPosition().getX()/16)+1) {			//Droite

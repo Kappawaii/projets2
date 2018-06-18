@@ -123,6 +123,7 @@ public abstract class Personnage extends Entity {
 				if(collisions.get(i) instanceof EventCollider) {
 					EventCollider evcollider = ((EventCollider) collision);
 					evcollider.triggerEvent();
+					
 					if(this instanceof Joueur && evcollider.getParent() instanceof Cellule && hasBateau() && ((Cellule) evcollider.getParent()).getId() == 231) {
 							pasDeCollisionMaterielle = true;
 					}

@@ -3,11 +3,11 @@ package controleur.inputManager;
 import controleur.Input;
 
 class Key {
-	
+
 	private boolean pressed;
 	String bind;
 	Input input;
-	
+
 	/**
 	 * Crée une nouvelle Key
 	 * @param input le nom de la Key
@@ -27,9 +27,6 @@ class Key {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
-			return false;
-		}
-		if (!Key.class.isAssignableFrom(obj.getClass())) {
 			return false;
 		}
 		final Key other = (Key) obj;

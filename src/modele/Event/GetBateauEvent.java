@@ -1,8 +1,8 @@
 package modele.Event;
 
-import modele.Bateau;
 import modele.Modele;
 import modele.cellule.Cellule;
+import modele.objet.Bateau;
 import modele.personnage.joueur.Joueur;
 
 public class GetBateauEvent extends Event {
@@ -26,7 +26,6 @@ public class GetBateauEvent extends Event {
 		if(!executed) {
 			joueur.obtenirObjet(new Bateau());
 			cellules[x][y].getSprite().setId(66);
-			System.out.println("done");
 		}
 	}
 

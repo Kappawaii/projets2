@@ -329,7 +329,7 @@ public class Controleur {
 						modele));
 		modele.getPersonnages().add(
 				new Plante(new Coordonnee(0,0), walking3, modele));
-
+		
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,

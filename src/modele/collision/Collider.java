@@ -140,8 +140,6 @@ public class Collider {
 		if(parent != null) {
 			parent.receiveDamage(dmg, idAttaque);
 		}
-//		else
-//			System.err.println("sans parent !");
 	}
 	
 	public Entity getParent() {

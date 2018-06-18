@@ -37,12 +37,7 @@ public class PathFinding {
 			this.chemin  = new ArrayList<>();
 			this.dejaVisiter = new ArrayList<>();
 			this.path = new ArrayList<Cellule>();
-		}
-		else {
-			System.out.println("chemin impossible");
-		}
-		
-		
+		}		
 	}
 	
 	public ArrayList<Cellule> chemin() {

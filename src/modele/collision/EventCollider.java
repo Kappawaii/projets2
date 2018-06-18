@@ -31,14 +31,12 @@ public class EventCollider extends Collider {
 
 	public void triggerEvent() {
 		owner.triggerEvent();
-		//System.out.println("Collision avec" + super.o);
 	}
 
 	@Override
 	public boolean detecterCollision(Collider other) {
 		if(super.detecterCollision(other)) {
 			triggerEvent();
-			//System.out.println("omegalul");
 			return true;
 		}
 		return false;

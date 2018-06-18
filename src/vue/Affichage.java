@@ -38,7 +38,6 @@ public class Affichage {
 	}
 
 	public Tileset getTileset(int index) {
-		System.out.println(tilesets.size());
 		return tilesets.get(index);
 	}
 
@@ -86,10 +85,12 @@ public class Affichage {
 	}
 
 	public void mettreAJourPositionPersonnage(Personnage pers,Coordonnee pos) {
-		//		if(pers instanceof Plante)
-		//			System.out.println(pers.getPosition());
 		pers.getSprite().getView().setX(pos.getX()*displayScale);
 		pers.getSprite().getView().setY(pos.getY()*displayScale);
+		if(!isScrollingMapEnabled()) {
+			tuiles.setTranslateX(0);
+			tuiles.setTranslateY(0);
+		}		
 	}
 
 	//scrolling map

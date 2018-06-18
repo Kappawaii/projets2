@@ -21,7 +21,6 @@ public class LoadEntitiesEvent extends Event {
 	@Override
 	public void execute() {
 		if(!executed) {
-			System.out.println("executed");
 			for (int i = 0;i < personnage.size(); i++) {
 				Personnage p = personnage.get(i);
 				Coordonnee c = coordonnee[i];

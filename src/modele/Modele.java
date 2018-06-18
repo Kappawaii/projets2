@@ -30,7 +30,6 @@ public class Modele {
 	
 	public void changerMap(int idNewNiveau, boolean debugMode) {
 		idNiveau = idNewNiveau;
-		//affichage.nettoyerEntites();
 		affichage.ajouterCarte(niveaux.get(idNiveau).getPlateau().get(), debugMode);
 	}
 	

@@ -32,8 +32,7 @@ public class BuilderPlateau {
 
 				TuileDico.load(modele, plateau, x, y);
 				TuileData data = TuileDico.get(notreMap[x][y]);
-//				if(data == null)
-//					System.out.println(x + ";" + y + ";" + notreMap[x][y] + ";"  + data);
+
 				if(data == null) {
 					plateau.get()[x][y] = 
 							new Cellule(tileset,
@@ -105,7 +104,6 @@ public class BuilderPlateau {
 			if(url.contains(".tmx")) {
 
 			}
-			//System.out.println("Fichier TMX détecté !");
 			while(!Character.isDigit(ligne.charAt(0))) {
 				try {
 					ligne = br.readLine();
@@ -114,10 +112,7 @@ public class BuilderPlateau {
 					e.printStackTrace();
 				}
 			}
-			//System.out.println("ligne " + ligne );
 			while (ligne  != null && Character.isDigit(ligne.charAt(0))) {
-				//System.out.println(ligne);
-				//System.out.println("ligne ++  " + ligne );
 				sampleString = ligne.split(",");
 				plateau[i] = stringTableCaster(sampleString);
 				i++;
@@ -140,8 +135,6 @@ public class BuilderPlateau {
 		int[][] returntableau = new int[this.width][this.height];
 		for (int i = 0; i < returntableau.length; i++) {
 			for (int j = 0; j < returntableau[i].length; j++) {
-				//System.out.println(returntableau[i].length);
-				//System.out.println(plateau[i].length);
 				returntableau[i][j] = plateau[j][i];
 			}
 		}

@@ -13,6 +13,8 @@ public abstract class Entity {
 //	public abstract void jouer();
 	
 	public Entity(Coordonnee position) {
+		if(position == null)
+			throw new IllegalArgumentException("null position");
 		this.position = position;
 	}
 	

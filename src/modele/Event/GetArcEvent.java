@@ -25,7 +25,6 @@ public class GetArcEvent extends Event {
 		if(!executed) {
 			joueur.obtenirArc();
 			cellules[x][y].getSprite().setId(66);
-			System.out.println("done");
 		}
 		executed = true;
 	}
