@@ -35,7 +35,7 @@ public class Node {
     }
     
     public boolean equals(Node other) {
-    	if(this.cord.getPos()==other.cord.getPos()) {
+    	if(this.cord.getPosition()==other.cord.getPosition()) {
     		return true;
     	}
     	return false;

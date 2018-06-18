@@ -76,6 +76,8 @@ public class Modele {
 		case 1:
 			 personnagesACharger.add(entites.get(0));
 			 personnagesACharger.add(entites.get(1));
+			 personnagesACharger.add(entites.get(2));
+			 personnagesACharger.add(entites.get(3));
 
 			break;
 		}

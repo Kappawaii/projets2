@@ -107,9 +107,6 @@ public class Joueur extends Personnage{
 			sprCoeurs2.setId(0);
 			sprCoeurs1.setId(0);
 			break;
-		default:
-			System.out.println("Problème gestion de vie");;
-			break;
 		}
 	}
 	
@@ -117,7 +114,7 @@ public class Joueur extends Personnage{
 	public void jouer() {
 		if(isActive && isControllable && inputs != null) {
 			if(inputs.contains(Input.UTILISER)) {
-				if(!hasSwitched &&armes.size() > 1) {
+				if(!hasSwitched && armes.size() > 1) {
 					hasSwitched = true;
 					switchArme = !switchArme;
 				}
@@ -128,6 +125,8 @@ public class Joueur extends Personnage{
 			int[] movInputs = getMovements(inputs, vitesse);
 
 			if(currentArme() != null) {
+				if(FlecheLancee())
+					super.attaquer(new ArrayList<Input>(), armes.get(1));
 				super.attaquer(inputs,currentArme());
 			}
 			//on passe le déplacement si il n'y a pas de mouvement
@@ -141,6 +140,7 @@ public class Joueur extends Personnage{
 			}
 		}
 	}
+
 
 	@Override
 	public void receiveDamage(int dmg, long id) {
@@ -177,4 +177,8 @@ public class Joueur extends Personnage{
 		return inventaire;
 	}
 
+	private boolean FlecheLancee() {
+		return (!(currentArme() instanceof LanceurProjectile) && armes.size() > 1);
+	}
+	
 }

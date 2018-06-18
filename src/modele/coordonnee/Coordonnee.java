@@ -34,4 +34,14 @@ public class Coordonnee {
 	public String toString() {
 		return x + ";" + y + ";";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Coordonnee) {
+			Coordonnee other = (Coordonnee) obj;
+			if(this.x == other.x && this.y == other.y)
+				return true;
+		}
+		return false;
+	}
 }

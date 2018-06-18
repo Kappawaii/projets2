@@ -102,6 +102,23 @@ public enum Input{
 		}
 		throw new Error("Something very weird happened here");
 	}
+	
+
+	public static Input randomDirection() {
+		int val = 0;
+		val = rand.nextInt(4);
+		switch (val) {
+		case 0:
+			return Input.AGAUCHE;
+		case 1:
+			return Input.AHAUT;
+		case 2:
+			return Input.ADROITE;
+		case 3:
+			return Input.ABAS;
+		}
+		throw new Error("Something very weird happened here");
+	}
 
 	public static int directionToInt(Input in) {
 		if(in != null) {

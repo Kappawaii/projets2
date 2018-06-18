@@ -33,7 +33,7 @@ public class TuileDico {
 		Event level2 = new LoadLevelEvent(modele, 2,new Coordonnee(64,144));
 		Event e2 = new SetScrollingMapEvent(modele);
 		Event e3 = new GetArcEvent(modele,plateau.get(),x,y);
-		Event e4 = new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1),new Coordonnee[] {new Coordonnee(300,150),new Coordonnee(150,150)});
+		Event e4 = new LoadEntitiesEvent(modele,modele.getPersonnagesACharger(1),new Coordonnee[] {new Coordonnee(300,150),new Coordonnee(40,250),new Coordonnee(250,40),new Coordonnee(40,50)});
 		Event e5 = new GetBateauEvent(modele,plateau.get(),x,y);
 		
 			dicoMap.put(348,mur);

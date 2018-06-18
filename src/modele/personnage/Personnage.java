@@ -123,9 +123,9 @@ public abstract class Personnage extends Entity {
 				if(collisions.get(i) instanceof EventCollider) {
 					EventCollider evcollider = ((EventCollider) collision);
 					evcollider.triggerEvent();
-					
-					if(this instanceof Joueur && evcollider.getParent() instanceof Cellule && hasBateau() && ((Cellule) evcollider.getParent()).getId() == 231) {
-							pasDeCollisionMaterielle = true;
+
+					if(caseEau(evcollider)) {
+						pasDeCollisionMaterielle = true;
 					}
 				}
 			}
@@ -175,10 +175,6 @@ public abstract class Personnage extends Entity {
 			animation.nextFrame();
 		}
 	}
-	
-	public boolean hasBateau() {
-		return ((Joueur)this).getInventaire().size() > 1;
-	}
 
 	public void receiveDamage(int dmg, long id) {
 		if(!idAttaques.contains(id)) {
@@ -190,58 +186,6 @@ public abstract class Personnage extends Entity {
 				dead = true;
 			}
 		}
-	}
-
-	public Collider getCollider() {
-		return collider;
-	}
-
-	public Animation getAnimation() {
-		return animation;
-	}
-
-	public Coordonnee getPosition() {
-		return this.position;
-	}
-
-	public Sprite getSprite() {
-		return animation.getSprite();
-	}
-
-	public int getPV() {
-		return this.pv;
-	}
-
-	public boolean isAlive() {
-		if(pv > 0) {
-			return true;
-		}
-		return false;
-	}
-
-	//TODO Calcul distance ici
-	//	public void attaquePersoVisible(Joueur joueur) {
-	//		double distance = Math.sqrt(Math.pow((this.getPosition().getX()-joueur.getPosition().getX()), 2) + Math.pow((this.getPosition().getY()-joueur.getPosition().getY()), 2));
-	//		if(this.isAlive() && distance < 4) {
-	//			this.attaque(joueur);
-	//		}
-	//	}
-
-	public int getVitesse() {
-		return vitesse;
-	}
-
-	public void setVitesse(int vitesse) {
-		this.vitesse = vitesse;
-	}
-
-	public void setActive(boolean b) {
-		animation.setVisible(b);
-		isActive = b;
-	}
-
-	public boolean getActive() {
-		return isActive;
 	}
 
 	public void attaquer(ArrayList<Input> inputs, Arme arme) {
@@ -300,13 +244,10 @@ public abstract class Personnage extends Entity {
 		}
 		else if(didAttack) {
 			didAttack = false;
-			animationAttackToMovement();
+			if(!inputs.isEmpty())
+				animationAttackToMovement();
 			animOffset = 0;
 		}
-	}
-
-	public void setPv(int pv) {
-		this.pv = pv;
 	}
 
 	public void attaquer(Input direction, Arme arme) {
@@ -332,4 +273,57 @@ public abstract class Personnage extends Entity {
 		}
 		return listInputs;
 	}
+
+	public Collider getCollider() {
+		return collider;
+	}
+
+	public Animation getAnimation() {
+		return animation;
+	}
+
+	public Coordonnee getPosition() {
+		return this.position;
+	}
+
+	public Sprite getSprite() {
+		return animation.getSprite();
+	}
+
+	public int getPV() {
+		return this.pv;
+	}
+
+	public boolean isAlive() {
+		if(pv > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public int getVitesse() {
+		return vitesse;
+	}
+
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+	
+	public void setActive(boolean b) {
+		animation.setVisible(b);
+		isActive = b;
+	}
+
+	public boolean getActive() {
+		return isActive;
+	}	
+	
+	public void setPv(int pv) {
+		this.pv = pv;
+	}
+	
+	public boolean caseEau(EventCollider evcollider) {
+		return (this instanceof Joueur && evcollider.getParent() instanceof Cellule && ((Joueur)this).getInventaire().size() > 1 && ((Cellule) evcollider.getParent()).getId() == 231);
+	}	
+
 }

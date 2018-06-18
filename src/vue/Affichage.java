@@ -61,14 +61,14 @@ public class Affichage {
 		nettoyerPane(entites);
 		for(int x = 0; x < cellules.length; x++) {
 			for(int y = 0; y < cellules[x].length; y++) {
-				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPos().getX()*displayScale);
-				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPos().getY()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutX(cellules[x][y].getPosition().getX()*displayScale);
+				cellules[x][y].getSprite().getView().setLayoutY(cellules[x][y].getPosition().getY()*displayScale);
 				tuiles.autosize();
 				tuiles.getChildren().add(cellules[x][y].getSprite().getView());
 				if(debug) {
-					Label a = new Label(""+cellules[x][y].getCollider().isTrigger());
-					a.setLayoutX(cellules[x][y].getPos().getX()*displayScale);
-					a.setLayoutY(cellules[x][y].getPos().getY()*displayScale);
+					Label a = new Label(""+cellules[x][y].getPosition());
+					a.setLayoutX(cellules[x][y].getPosition().getX()*displayScale);
+					a.setLayoutY(cellules[x][y].getPosition().getY()*displayScale);
 					tuiles.getChildren().add(a);
 				}
 			}		

@@ -34,14 +34,6 @@ public class Cellule extends Entity{
 		return id;
 	}
 
-	public Coordonnee getPos() {
-		return position;
-	}
-
-	public Coordonnee setPos() {
-		return position;
-	}
-
 	public Collider getCollider() {
 		return collider;
 	}

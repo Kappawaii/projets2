@@ -77,6 +77,10 @@ public class Arme extends Entity {
 		return null;
 	}
 	
+	public int getTicksRemaining() {
+		return ticksRemaining;
+	}
+
 	@Override
 	public String toString() {
 		return "Epee Sélectionnée";

@@ -80,6 +80,10 @@ public class LanceurProjectile extends Arme {
 			}
 			else {
 				int value;
+				for (int i = 0; i < offsetPos.length; i++) {
+					offsetPos[i] = Math.max(-1, offsetPos[i]);
+					offsetPos[i] = Math.min(1, offsetPos[i]);
+				}
 				value = offsetPos[0]*10 + offsetPos[1];
 				switch (value) {
 				case 11:
@@ -94,7 +98,6 @@ public class LanceurProjectile extends Arme {
 				case 9:
 					spr.getView().setRotate(315);					
 					break;
-
 				default:
 					break;
 				}

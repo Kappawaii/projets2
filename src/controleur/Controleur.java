@@ -126,7 +126,7 @@ public class Controleur {
 		modele.getAffichage().ajouterPersonnage(modele.getPersonnagesACharger(1).get(0));
 
 		modele.getJoueur().setActive(true);
-		modele.getJoueur().setControllable(false);
+		modele.getJoueur().setControllable(true);
 
 		play = new KeyFrame(Duration.seconds(0.017),
 				(ev ->{
@@ -148,8 +148,8 @@ public class Controleur {
 								jeuEnPause = true;
 
 							//cinématique si activée
-							if(!cinematiqueDebut.isfinished())
-								cinematiqueDebut.play();
+//							if(!cinematiqueDebut.isfinished())
+//								cinematiqueDebut.play();
 
 							if(modele.getJoueur().currentArme() != null)
 								armeSelection.setText(modele.getJoueur().currentArme().toString());
@@ -159,6 +159,7 @@ public class Controleur {
 							for (Iterator<Personnage> iterator = modele.getPersonnages().iterator(); iterator.hasNext();) {
 								Personnage personnage = iterator.next();
 								personnage.unTour();
+								System.out.println(personnage.getClass());
 
 							}
 							//						System.out.println(modele.getPersonnages().get(1).getPosition());
@@ -334,15 +335,20 @@ public class Controleur {
 		Animation walking = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(1),displayScale, 0);
 		Animation walking2 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(2),displayScale, 0);
 		Animation walking3 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(3),displayScale, 0);
+		Animation walking4 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(3),displayScale, 0);
+		Animation walking5 = new Animation(6/*framesBetweenSprites*/, affichage.getTileset(3),displayScale, 0);
 
 		modele.getPersonnages().add(
-				new Gobelin("gobelin", 10,
+				new Gobelin("gobelin", 6,
 						new Coordonnee(0,0),16,
 						walking2,
 						modele));
 		modele.getPersonnages().add(
-				new Plante(new Coordonnee(0,0), walking3, modele));
-
+				new Plante(new Coordonnee(0,0), walking3, modele, 20));
+		modele.getPersonnages().add(
+				new Plante(new Coordonnee(0,0), walking4, modele, 20));
+		modele.getPersonnages().add(
+				new Plante(new Coordonnee(0,0), walking5, modele, 20));
 		modele.setJoueur(
 				new Joueur("joueur", 12, 
 						new Coordonnee(53,108),1,
