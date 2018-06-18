@@ -32,8 +32,9 @@ public class Joueur extends Personnage{
 
 	public Joueur (String nom, int pv, Coordonnee position, int vitesse, Animation a, Modele modele, ArrayList<Input> inputs, Sprite[] coeurs) {
 		super(pv, position, 16, vitesse,a, modele);
-		sprCoeurs1 = coeurs[0];
-		sprCoeurs2 = coeurs[1];
+		sprCoeurs2 = coeurs[0];
+		sprCoeurs1 = coeurs[1];
+		System.out.println(coeurs[1]);
 		sprCoeurs3 = coeurs[2];
 		armes = new ArrayList<Arme>(); 
 		inventaire = new ArrayList<Objet>();
@@ -70,30 +71,42 @@ public class Joueur extends Personnage{
 		case 4:  
 			sprCoeurs3.setId(4);
 			sprCoeurs2.setId(4);
+			sprCoeurs1.setId(0);
 			break;
 		case 5:  
 			sprCoeurs3.setId(4);
 			sprCoeurs2.setId(3);
+			sprCoeurs1.setId(0);
 			break;
 		case 6:  
 			sprCoeurs3.setId(4);
 			sprCoeurs2.setId(2);
+			sprCoeurs1.setId(0);
 			break;
 		case 7: 
 			sprCoeurs3.setId(4);
 			sprCoeurs2.setId(1);
+			sprCoeurs1.setId(0);
 			break;
 		case 8:  
 			sprCoeurs3.setId(4);
+			sprCoeurs2.setId(0);
+			sprCoeurs1.setId(0);
 			break;
 		case 9:  
 			sprCoeurs3.setId(3);
+			sprCoeurs2.setId(0);
+			sprCoeurs1.setId(0);
 			break;
 		case 10: 
 			sprCoeurs3.setId(2);
+			sprCoeurs2.setId(0);
+			sprCoeurs1.setId(0);
 			break;
 		case 11: 
 			sprCoeurs3.setId(1);
+			sprCoeurs2.setId(0);
+			sprCoeurs1.setId(0);
 			break;
 		default:
 			System.out.println("Probl�me gestion de vie");;

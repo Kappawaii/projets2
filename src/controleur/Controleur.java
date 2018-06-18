@@ -76,10 +76,8 @@ public class Controleur {
 	}
 
 	public Sprite[] initGestionVie() {
-		System.out.println(vie);
 		Tileset coeurs1 = new Tileset("sprites/gestionVie/coeursDeVie.png", displayScale); //1e coeur en partant de la gauche
 		Sprite sprCoeurs1 = new Sprite(coeurs1, 5, 0);
-		//		spr1.setId(4);
 		vie.getChildren().add(sprCoeurs1.getView());
 
 		Tileset coeurs2 = new Tileset("sprites/gestionVie/coeursDeVie.png", displayScale);
